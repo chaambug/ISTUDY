@@ -37,6 +37,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
@@ -322,10 +323,7 @@ public class PerformancePdfController extends IStudyPdfGenerator {
             File dest = new File(currentDirPath + File.separator + fopConfFileName);
             if (!dest.exists()) {
                 final String content = getFile(fopConfFileName);
-                FileOutputStream fileOutputStream = new FileOutputStream(dest.getAbsolutePath());
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, "utf-8");
-                Writer writer = new BufferedWriter(outputStreamWriter);
-                writer.write(content);
+                FileUtils.writeByteArrayToFile(dest, content.getBytes());
             }
             fopXconfPath = dest.getAbsolutePath();
 
