@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: unknown.binary:DateChooser:SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/unknown/binary/DateChooser/SNAPSHOT/DateChooser-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/unknown/binary/DateChooser/SNAPSHOT/DateChooser-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/unknown/binary/DateChooser/SNAPSHOT/DateChooser-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

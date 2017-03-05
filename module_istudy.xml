@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_istudy" default="compile.module.istudy">
+  <dirname property="module.istudy.basedir" file="${ant.file.module_istudy}"/>
+  
+  <property name="module.jdk.home.istudy" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.istudy" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.istudy" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.istudy" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="istudy.output.dir" value="${module.istudy.basedir}/out/production/ISTUDY"/>
+  <property name="istudy.testoutput.dir" value="${module.istudy.basedir}/out/test/ISTUDY"/>
+  
+  <path id="istudy.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="istudy.module.production.classpath">
+    <path refid="${module.jdk.classpath.istudy}"/>
+  </path>
+  
+  <path id="istudy.runtime.production.module.classpath">
+    <pathelement location="${istudy.output.dir}"/>
+  </path>
+  
+  <path id="istudy.module.classpath">
+    <path refid="${module.jdk.classpath.istudy}"/>
+    <pathelement location="${istudy.output.dir}"/>
+  </path>
+  
+  <path id="istudy.runtime.module.classpath">
+    <pathelement location="${istudy.testoutput.dir}"/>
+    <pathelement location="${istudy.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.istudy">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.istudy">
+    <patternset refid="excluded.from.module.istudy"/>
+  </patternset>
+  
+  <path id="istudy.module.sourcepath">
+    <dirset dir="${module.istudy.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.istudy" depends="compile.module.istudy.production,compile.module.istudy.tests" description="Compile module ISTUDY"/>
+  
+  <target name="compile.module.istudy.production" depends="register.custom.compilers" description="Compile module ISTUDY; production classes">
+    <mkdir dir="${istudy.output.dir}"/>
+    <javac2 destdir="${istudy.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.istudy}/javac">
+      <compilerarg line="${compiler.args.istudy}"/>
+      <bootclasspath refid="istudy.module.bootclasspath"/>
+      <classpath refid="istudy.module.production.classpath"/>
+      <src refid="istudy.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.istudy"/>
+    </javac2>
+    
+    <copy todir="${istudy.output.dir}">
+      <fileset dir="${module.istudy.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.istudy.tests" depends="register.custom.compilers,compile.module.istudy.production" description="compile module ISTUDY; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.istudy" description="cleanup module">
+    <delete dir="${istudy.output.dir}"/>
+    <delete dir="${istudy.testoutput.dir}"/>
+  </target>
+</project>

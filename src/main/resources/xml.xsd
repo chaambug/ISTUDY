@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+    <xs:element name="student" type="studentType"/>
+    <xs:complexType name="weekType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="nrofweek" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="investedType">
+        <xs:sequence>
+            <xs:element type="weekType" name="week" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="recordType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="nr" use="optional"/>
+                <xs:attribute type="xs:string" name="date" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="academicrecordsType">
+        <xs:sequence>
+            <xs:element type="recordType" name="record" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="moduleType">
+        <xs:sequence>
+            <xs:element type="investedType" name="invested"/>
+            <xs:element type="academicrecordsType" name="academicrecords"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="name" use="optional"/>
+        <xs:attribute type="xs:string" name="etcpostrings" use="optional"/>
+        <xs:attribute type="xs:string" name="studyhours" use="optional"/>
+        <xs:attribute type="xs:string" name="needStudyHoursPerWeek" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="modulesType">
+        <xs:sequence>
+            <xs:element type="moduleType" name="module" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="semesterType">
+        <xs:sequence>
+            <xs:element type="modulesType" name="modules"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="nr" use="optional"/>
+        <xs:attribute type="xs:string" name="start" use="optional"/>
+        <xs:attribute type="xs:string" name="end" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="semestersType">
+        <xs:sequence>
+            <xs:element type="semesterType" name="semester" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="universityType">
+        <xs:sequence>
+            <xs:element type="semestersType" name="semesters"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="university"/>
+        <xs:attribute type="xs:string" name="faculty"/>
+        <xs:attribute type="xs:string" name="subjectstream"/>
+    </xs:complexType>
+    <xs:complexType name="studentType">
+        <xs:sequence>
+            <xs:element type="universityType" name="university"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="matnr"/>
+        <xs:attribute type="xs:string" name="firstname"/>
+        <xs:attribute type="xs:string" name="lastname"/>
+    </xs:complexType>
+</xs:schema>
