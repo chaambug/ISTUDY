@@ -20,10 +20,10 @@ public class DataBaseStarter extends Thread{
     private void startDB() {
         try {
             //Read file name and path of xampp home directory
-            Properties props = new Properties();
-            props.load(getClass().getResourceAsStream("system.properties"));
-            final String xampp_home_dir = props.getProperty("xampp.dir");
-            final String mysql_start_file = props.getProperty("mysql.file");
+            IstudyProperties istudyProperties = new IstudyProperties();
+            Properties props = istudyProperties.getConfig();
+            final String xampp_home_dir = props.getProperty(istudyProperties.XAMPP_DIR);
+            final String mysql_start_file = props.getProperty(istudyProperties.MYSQL_FILE);
 
             //create command
             String command = String.format("%s/%s", xampp_home_dir, mysql_start_file);

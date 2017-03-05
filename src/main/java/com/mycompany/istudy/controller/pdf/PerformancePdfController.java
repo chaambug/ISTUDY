@@ -14,9 +14,9 @@ import com.mycompany.istudy.db.services.impl.ModulManager;
 import com.mycompany.istudy.db.entities.*;
 import com.mycompany.istudy.gui.UserWin;
 import com.mycompany.istudy.principalservices.GuiServices;
+import com.mycompany.istudy.principalservices.IstudyProperties;
 import com.mycompany.istudy.principalservices.JaxBUtility;
 import com.mycompany.istudy.xml.entities.*;
-import java.io.BufferedWriter;
 import org.apache.fop.apps.FOUserAgent;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
@@ -29,12 +29,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.StringWriter;
-import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import org.apache.commons.io.FileUtils;
@@ -277,21 +274,17 @@ public class PerformancePdfController extends IStudyPdfGenerator {
         final String pattern = "yyyyMMdd_hhmm";
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 
-        //Get file from resources folder
-        ClassLoader classLoader = getClass().getClassLoader();
         try {
-            final String propertyName = "config.properties";
             final File currentDirPath = new File(System.getProperty("user.dir"));
 
-            props = new Properties();
-            InputStream is = classLoader.getResourceAsStream(propertyName);
-            props.load(is);
+            IstudyProperties istudyProperties = new IstudyProperties();
+            props = istudyProperties.getConfig();
 
-            String inputDirValue = (String) props.get("inputDir");
-            String chartsDirValue = (String) props.get("chartsDir");
-            String xmlDirValue = (String) props.get("xmlDir");
-            String xmlFileValue = (String) props.get("xmlFile");
-            String pdfOutputValue = (String) props.get("pdfOutput");
+            String inputDirValue = props.getProperty(istudyProperties.INPUT_DIR);
+            String chartsDirValue = props.getProperty(istudyProperties.CHARTS_DIR);
+            String xmlDirValue = props.getProperty(istudyProperties.XML_DIR);
+            String xmlFileValue = props.getProperty(istudyProperties.XML_FILE);
+            String pdfOutputValue = props.getProperty(istudyProperties.PDF_OUTPUT_DIR);
 
             File input = new File(currentDirPath + inputDirValue);
             if (!input.exists()) {
