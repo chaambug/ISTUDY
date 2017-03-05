@@ -34,8 +34,8 @@ public class CalendarViewController extends BaseController{
         String[] headers = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}; //All headers
         for (int i=0; i<7; i++){
             modelCalendarTable.addColumn(headers[i]);
-            scrollTableCalendar.setVisible(true);
         }
+        scrollTableCalendar.setVisible(true);
         
         //No resize/reorder
         instance.getcalendarjTable().getTableHeader().setResizingAllowed(false);
@@ -110,7 +110,7 @@ public class CalendarViewController extends BaseController{
             if (investedHoursPerDayOfActualMonth == null){
                 modelCalendarTable.setValueAt(i, row, column);
             } else {
-                modelCalendarTable.setValueAt(i+"    "+investedHoursPerDayOfActualMonth.get(i-1)+" Std.", row, column);
+                modelCalendarTable.setValueAt(i+"  sdfolizseflkgjhsdfgjkhsdfkgjshdfglkjsdhfglkjsdfhglsdkjf  "+investedHoursPerDayOfActualMonth.get(i-1)+" Std.", row, column);
             }
             
         }

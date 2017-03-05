@@ -27,6 +27,7 @@ public class TableCalendarRenderer extends DefaultTableCellRenderer {
         currentYear = realYear;    
     }
 
+    @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
         super.getTableCellRendererComponent(table, value, selected, focused, row, column);
         if (column == 0 || column == 6) { //Week-end

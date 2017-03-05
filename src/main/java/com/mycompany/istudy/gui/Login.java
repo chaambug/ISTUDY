@@ -31,6 +31,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         logger.info("iStudy system started..");
         initComponents();
+        usernameTextfield.grabFocus();
     }
 
     /**
