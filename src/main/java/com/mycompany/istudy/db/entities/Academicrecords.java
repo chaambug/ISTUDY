@@ -24,13 +24,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Varuni
  */
-@Entity
+ @Entity
 @Table(name = "academicrecords", catalog = "istudy", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Academicrecords.findAll", query = "SELECT a FROM Academicrecords a")
     , @NamedQuery(name = "Academicrecords.findById", query = "SELECT a FROM Academicrecords a WHERE a.id = :id")
     , @NamedQuery(name = "Academicrecords.findAllRecords", query = "SELECT a FROM Academicrecords a WHERE a.studentid = :student AND a.moduleid = :module")    
+    , @NamedQuery(name = "Academicrecords.findRecordForStudentAndModul", query = "SELECT a FROM Academicrecords a WHERE a.studentid = :student AND a.moduleid = :module AND a.grade = 0") 
     , @NamedQuery(name = "Academicrecords.findByGrade", query = "SELECT a FROM Academicrecords a WHERE a.grade = :grade")})
 public class Academicrecords implements Serializable {
 

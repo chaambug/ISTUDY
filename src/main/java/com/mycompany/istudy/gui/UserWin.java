@@ -96,10 +96,25 @@ public class UserWin extends javax.swing.JFrame {
         homefaculty = new javax.swing.JLabel();
         homesubject = new javax.swing.JLabel();
         homematno = new javax.swing.JLabel();
-        StatusPanel = new javax.swing.JPanel();
-        notificationjPanel = new javax.swing.JPanel();
-        noftificationjScrollPane = new javax.swing.JScrollPane();
-        notificationjTextArea = new javax.swing.JTextArea();
+        ProfilePanel1 = new javax.swing.JPanel();
+        activeSemesterJLabel = new javax.swing.JLabel();
+        activeModulesJLabel = new javax.swing.JLabel();
+        nextExamJLabel = new javax.swing.JLabel();
+        averageJLabel = new javax.swing.JLabel();
+        activeSemesterJLabelValue = new javax.swing.JLabel();
+        activeModulesJLabelValue = new javax.swing.JLabel();
+        nextExamJLabelValue = new javax.swing.JLabel();
+        averageJLabelValue = new javax.swing.JLabel();
+        savedcpJLabel = new javax.swing.JLabel();
+        savedcpJLabelValue = new javax.swing.JLabel();
+        cpToAchieveJLabel = new javax.swing.JLabel();
+        cpToAchieveJLabelValue = new javax.swing.JLabel();
+        failedExamsJLabel = new javax.swing.JLabel();
+        failedExamsJLabelValue = new javax.swing.JLabel();
+        passedExamsJLabel = new javax.swing.JLabel();
+        passedExamsJLabelValue = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        areaLog = new javax.swing.JTextArea();
         SubjectStreamPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         modulAndSemesterOverviewJTree = new javax.swing.JTree();
@@ -270,7 +285,7 @@ public class UserWin extends javax.swing.JFrame {
                     .addGroup(ProfilePanelLayout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(homematno, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
+                        .addComponent(homematno, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))
                     .addGroup(ProfilePanelLayout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -278,23 +293,23 @@ public class UserWin extends javax.swing.JFrame {
                     .addGroup(ProfilePanelLayout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(homefirstname, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
+                        .addComponent(homefirstname, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))
                     .addGroup(ProfilePanelLayout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(homelastname, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
+                        .addComponent(homelastname, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))
                     .addGroup(ProfilePanelLayout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(homeuniversity, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
+                        .addComponent(homeuniversity, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))
                     .addGroup(ProfilePanelLayout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(homefaculty, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
+                        .addComponent(homefaculty, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))
                     .addGroup(ProfilePanelLayout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(homesubject, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)))
+                        .addComponent(homesubject, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         ProfilePanelLayout.setVerticalGroup(
@@ -333,42 +348,136 @@ public class UserWin extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        StatusPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Status"));
+        ProfilePanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Info Board"));
 
-        notificationjPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Please read your notifications!"));
+        activeSemesterJLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        activeSemesterJLabel.setText("Active semester");
 
-        notificationjTextArea.setColumns(20);
-        notificationjTextArea.setRows(5);
-        noftificationjScrollPane.setViewportView(notificationjTextArea);
+        activeModulesJLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        activeModulesJLabel.setText("Active modules");
 
-        javax.swing.GroupLayout notificationjPanelLayout = new javax.swing.GroupLayout(notificationjPanel);
-        notificationjPanel.setLayout(notificationjPanelLayout);
-        notificationjPanelLayout.setHorizontalGroup(
-            notificationjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(notificationjPanelLayout.createSequentialGroup()
+        nextExamJLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        nextExamJLabel.setText("Next exam");
+
+        averageJLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        averageJLabel.setText("Average");
+
+        activeSemesterJLabelValue.setForeground(new java.awt.Color(0, 51, 255));
+        activeSemesterJLabelValue.setText("-");
+
+        activeModulesJLabelValue.setForeground(new java.awt.Color(0, 51, 255));
+        activeModulesJLabelValue.setText("-");
+
+        nextExamJLabelValue.setForeground(new java.awt.Color(0, 51, 255));
+        nextExamJLabelValue.setText("-");
+
+        averageJLabelValue.setForeground(new java.awt.Color(0, 51, 255));
+        averageJLabelValue.setText("-");
+
+        savedcpJLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        savedcpJLabel.setText("CP (saved)");
+
+        savedcpJLabelValue.setForeground(new java.awt.Color(0, 51, 255));
+        savedcpJLabelValue.setText("-");
+
+        cpToAchieveJLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        cpToAchieveJLabel.setText("CP (to achieve)");
+
+        cpToAchieveJLabelValue.setForeground(new java.awt.Color(0, 51, 255));
+        cpToAchieveJLabelValue.setText("-");
+
+        failedExamsJLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        failedExamsJLabel.setText("Failed exams");
+
+        failedExamsJLabelValue.setForeground(new java.awt.Color(0, 51, 255));
+        failedExamsJLabelValue.setText("-");
+
+        passedExamsJLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        passedExamsJLabel.setText("Passed exams");
+
+        passedExamsJLabelValue.setForeground(new java.awt.Color(0, 51, 255));
+        passedExamsJLabelValue.setText("-");
+
+        areaLog.setEditable(false);
+        areaLog.setBackground(new java.awt.Color(249, 249, 249));
+        areaLog.setColumns(20);
+        areaLog.setRows(5);
+        jScrollPane3.setViewportView(areaLog);
+
+        javax.swing.GroupLayout ProfilePanel1Layout = new javax.swing.GroupLayout(ProfilePanel1);
+        ProfilePanel1.setLayout(ProfilePanel1Layout);
+        ProfilePanel1Layout.setHorizontalGroup(
+            ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ProfilePanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(noftificationjScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
+                .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
+                    .addGroup(ProfilePanel1Layout.createSequentialGroup()
+                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(averageJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(nextExamJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(activeSemesterJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                            .addComponent(activeModulesJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(activeModulesJLabelValue, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                            .addComponent(activeSemesterJLabelValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(nextExamJLabelValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(averageJLabelValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(passedExamsJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(failedExamsJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(savedcpJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cpToAchieveJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(savedcpJLabelValue, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cpToAchieveJLabelValue, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(failedExamsJLabelValue, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(passedExamsJLabelValue, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
-        notificationjPanelLayout.setVerticalGroup(
-            notificationjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(notificationjPanelLayout.createSequentialGroup()
+        ProfilePanel1Layout.setVerticalGroup(
+            ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ProfilePanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(noftificationjScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(199, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout StatusPanelLayout = new javax.swing.GroupLayout(StatusPanel);
-        StatusPanel.setLayout(StatusPanelLayout);
-        StatusPanelLayout.setHorizontalGroup(
-            StatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(StatusPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(notificationjPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        StatusPanelLayout.setVerticalGroup(
-            StatusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(notificationjPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ProfilePanel1Layout.createSequentialGroup()
+                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(savedcpJLabel)
+                            .addComponent(savedcpJLabelValue))
+                        .addGap(11, 11, 11)
+                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cpToAchieveJLabel)
+                            .addComponent(cpToAchieveJLabelValue))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(failedExamsJLabel)
+                            .addComponent(failedExamsJLabelValue))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(passedExamsJLabel)
+                            .addComponent(passedExamsJLabelValue)))
+                    .addGroup(ProfilePanel1Layout.createSequentialGroup()
+                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(activeSemesterJLabel)
+                            .addComponent(activeSemesterJLabelValue))
+                        .addGap(11, 11, 11)
+                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(activeModulesJLabel)
+                            .addComponent(activeModulesJLabelValue))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(nextExamJLabel)
+                            .addComponent(nextExamJLabelValue))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(averageJLabel)
+                            .addComponent(averageJLabelValue, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout HomePanelLayout = new javax.swing.GroupLayout(HomePanel);
@@ -378,8 +487,8 @@ public class UserWin extends javax.swing.JFrame {
             .addGroup(HomePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(ProfilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(StatusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ProfilePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         HomePanelLayout.setVerticalGroup(
@@ -387,9 +496,7 @@ public class UserWin extends javax.swing.JFrame {
             .addGroup(HomePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(HomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(HomePanelLayout.createSequentialGroup()
-                        .addComponent(StatusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(ProfilePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(ProfilePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1064,7 +1171,7 @@ public class UserWin extends javax.swing.JFrame {
                 .addGroup(CalenderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel26)
                     .addComponent(moduleListCalendarjComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(CalenderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(monthjLabel, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(previousjButton, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1186,7 +1293,7 @@ public class UserWin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(graphicalViewjTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 941, Short.MAX_VALUE)
+                .addComponent(graphicalViewjTabbedPane)
                 .addGap(11, 11, 11))
         );
         layout.setVerticalGroup(
@@ -1314,18 +1421,27 @@ public class UserWin extends javax.swing.JFrame {
     private javax.swing.JPanel ModulPerformancejPanel;
     private javax.swing.JPanel OrganiserPanel;
     private javax.swing.JPanel ProfilePanel;
-    private javax.swing.JPanel StatusPanel;
+    private javax.swing.JPanel ProfilePanel1;
     private javax.swing.JPanel SubjectStreamPanel;
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JTable academicRecordsJTable;
     private javax.swing.JButton activateDeactivateModuleButton;
     private javax.swing.JButton activateDeactivateSemesterButton;
     private javax.swing.JTable activeModuleJTable;
+    private javax.swing.JLabel activeModulesJLabel;
+    private javax.swing.JLabel activeModulesJLabelValue;
+    private javax.swing.JLabel activeSemesterJLabel;
+    private javax.swing.JLabel activeSemesterJLabelValue;
+    private javax.swing.JTextArea areaLog;
+    private javax.swing.JLabel averageJLabel;
+    private javax.swing.JLabel averageJLabelValue;
     private javax.swing.JComboBox<String> calendarjComboBox;
     private javax.swing.JScrollPane calendarjScrollPane;
     private javax.swing.JTable calendarjTable;
     private javax.swing.JMenuItem contentsMenuItem;
     private javax.swing.JLayeredPane controllLayeredPane;
+    private javax.swing.JLabel cpToAchieveJLabel;
+    private javax.swing.JLabel cpToAchieveJLabelValue;
     private javax.swing.JButton createModuleButton;
     private javax.swing.JButton createSemesterJButton;
     private javax.swing.JTextField creditpoints;
@@ -1338,6 +1454,8 @@ public class UserWin extends javax.swing.JFrame {
     private javax.swing.JButton editModuleButton;
     private com.toedter.calendar.JDateChooser examinationStartDateJCalender;
     private javax.swing.JMenuItem exitMenuItem;
+    private javax.swing.JLabel failedExamsJLabel;
+    private javax.swing.JLabel failedExamsJLabelValue;
     private javax.swing.JPanel feedInfoPanel;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JTabbedPane graphicalViewjTabbedPane;
@@ -1384,6 +1502,7 @@ public class UserWin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
@@ -1399,15 +1518,18 @@ public class UserWin extends javax.swing.JFrame {
     private javax.swing.JTextField modulename;
     private javax.swing.JTextField modulnameModulBPanel;
     private javax.swing.JLabel monthjLabel;
+    private javax.swing.JLabel nextExamJLabel;
+    private javax.swing.JLabel nextExamJLabelValue;
     private javax.swing.JButton nextjButton;
-    private javax.swing.JScrollPane noftificationjScrollPane;
-    private javax.swing.JPanel notificationjPanel;
-    private javax.swing.JTextArea notificationjTextArea;
     private javax.swing.JMenuItem openMenuItem;
+    private javax.swing.JLabel passedExamsJLabel;
+    private javax.swing.JLabel passedExamsJLabelValue;
     private javax.swing.JButton previousjButton;
     private javax.swing.JButton pushInvestedHoursButton;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JLabel savedcpJLabel;
+    private javax.swing.JLabel savedcpJLabelValue;
     private javax.swing.JLabel selectedModuleLabel;
     private javax.swing.JPanel semesterBoardPanel;
     private javax.swing.JLabel semesterLabel;
@@ -1552,10 +1674,6 @@ public class UserWin extends javax.swing.JFrame {
         return academicRecordsJTable;
     }
 
-    public JTextArea getnotificationTextArea() {
-        return notificationjTextArea;
-    }
-
     public JTable getcalendarjTable() {
         return calendarjTable;
     }
@@ -1583,5 +1701,135 @@ public class UserWin extends javax.swing.JFrame {
     public JLabel getMonthjLabel() {
         return monthjLabel;
     }
+
+    public JLabel getActiveModulesJLabel() {
+        return activeModulesJLabel;
+    }
+
+    public void setActiveModulesJLabel(JLabel activeModulesJLabel) {
+        this.activeModulesJLabel = activeModulesJLabel;
+    }
+
+    public JLabel getActiveModulesJLabelValue() {
+        return activeModulesJLabelValue;
+    }
+
+    public void setActiveModulesJLabelValue(JLabel activeModulesJLabelValue) {
+        this.activeModulesJLabelValue = activeModulesJLabelValue;
+    }
+
+    public JLabel getActiveSemesterJLabel() {
+        return activeSemesterJLabel;
+    }
+
+    public void setActiveSemesterJLabel(JLabel activeSemesterJLabel) {
+        this.activeSemesterJLabel = activeSemesterJLabel;
+    }
+
+    public JLabel getActiveSemesterJLabelValue() {
+        return activeSemesterJLabelValue;
+    }
+
+    public void setActiveSemesterJLabelValue(JLabel activeSemesterJLabelValue) {
+        this.activeSemesterJLabelValue = activeSemesterJLabelValue;
+    }
+
+    public JLabel getAverageJLabel() {
+        return averageJLabel;
+    }
+
+    public void setAverageJLabel(JLabel averageJLabel) {
+        this.averageJLabel = averageJLabel;
+    }
+
+    public JLabel getAverageJLabelValue() {
+        return averageJLabelValue;
+    }
+
+    public void setAverageJLabelValue(JLabel averageJLabelValue) {
+        this.averageJLabelValue = averageJLabelValue;
+    }
+
+    public JLabel getCpToAchieveJLabel() {
+        return cpToAchieveJLabel;
+    }
+
+    public void setCpToAchieveJLabel(JLabel cpToAchieveJLabel) {
+        this.cpToAchieveJLabel = cpToAchieveJLabel;
+    }
+
+    public JLabel getCpToAchieveJLabelValue() {
+        return cpToAchieveJLabelValue;
+    }
+
+    public void setCpToAchieveJLabelValue(JLabel cpToAchieveJLabelValue) {
+        this.cpToAchieveJLabelValue = cpToAchieveJLabelValue;
+    }
+
+    public JLabel getFailedExamsJLabel() {
+        return failedExamsJLabel;
+    }
+
+    public void setFailedExamsJLabel(JLabel failedExamsJLabel) {
+        this.failedExamsJLabel = failedExamsJLabel;
+    }
+
+    public JLabel getFailedExamsJLabelValue() {
+        return failedExamsJLabelValue;
+    }
+
+    public void setFailedExamsJLabelValue(JLabel failedExamsJLabelValue) {
+        this.failedExamsJLabelValue = failedExamsJLabelValue;
+    }
+
+    public JLabel getNextExamJLabel() {
+        return nextExamJLabel;
+    }
+
+    public void setNextExamJLabel(JLabel nextExamJLabel) {
+        this.nextExamJLabel = nextExamJLabel;
+    }
+
+    public JLabel getNextExamJLabelValue() {
+        return nextExamJLabelValue;
+    }
+
+    public void setNextExamJLabelValue(JLabel nextExamJLabelValue) {
+        this.nextExamJLabelValue = nextExamJLabelValue;
+    }
+
+    public JLabel getPassedExamsJLabel() {
+        return passedExamsJLabel;
+    }
+
+    public void setPassedExamsJLabel(JLabel passedExamsJLabel) {
+        this.passedExamsJLabel = passedExamsJLabel;
+    }
+
+    public JLabel getPassedExamsJLabelValue() {
+        return passedExamsJLabelValue;
+    }
+
+    public void setPassedExamsJLabelValue(JLabel passedExamsJLabelValue) {
+        this.passedExamsJLabelValue = passedExamsJLabelValue;
+    }
+
+    public JLabel getSavedcpJLabel() {
+        return savedcpJLabel;
+    }
+
+    public void setSavedcpJLabel(JLabel savedcpJLabel) {
+        this.savedcpJLabel = savedcpJLabel;
+    }
+
+    public JLabel getSavedcpJLabelValue() {
+        return savedcpJLabelValue;
+    }
+
+    public void setSavedcpJLabelValue(JLabel savedcpJLabelValue) {
+        this.savedcpJLabelValue = savedcpJLabelValue;
+    }
+    
+    
 
 }

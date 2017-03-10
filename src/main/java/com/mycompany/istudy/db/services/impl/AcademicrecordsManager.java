@@ -19,7 +19,7 @@ import org.apache.log4j.Logger;
  *
  * @author Varuni
  */
-public class AcademicrecordsManager implements AcademicrecordsManagerIntf{
+public class AcademicrecordsManager implements AcademicrecordsManagerIntf {
 
     private final EntityManager em;
     private static AcademicrecordsManager instance;
@@ -72,5 +72,22 @@ public class AcademicrecordsManager implements AcademicrecordsManagerIntf{
         } catch (Exception e) {
             LOGGER.error("removeRecord not successfull", e);
         }
+    }
+
+    @Override
+    public Academicrecords getAcademicrecord(Student student, Modul modul) {
+        try {
+            LOGGER.info("service call getAcademicrecord");
+            List<Academicrecords> resultList = em.createNamedQuery("Academicrecords.findRecordForStudentAndModul", Academicrecords.class)
+                    .setParameter("student", student)
+                    .setParameter("module", modul)
+                    .getResultList();
+            if (!resultList.isEmpty()) {
+                return resultList.get(0);
+            }
+        } catch (Exception e) {
+            LOGGER.error("getAcademicrecord not successfull", e);
+        }
+        return null;
     }
 }

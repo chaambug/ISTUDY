@@ -5,8 +5,13 @@
  */
 package com.mycompany.istudy.controller;
 
+import com.mycompany.istudy.db.entities.Academicrecords;
+import com.mycompany.istudy.db.entities.Modul;
+import com.mycompany.istudy.db.entities.Semester;
 import com.mycompany.istudy.db.entities.Student;
 import com.mycompany.istudy.db.entities.Userloginentries;
+import com.mycompany.istudy.db.services.impl.AcademicrecordsManager;
+import com.mycompany.istudy.db.services.impl.ModulManager;
 import com.mycompany.istudy.db.services.impl.SemesterManager;
 import com.mycompany.istudy.db.services.impl.StudentManager;
 import com.mycompany.istudy.db.services.impl.UserLoginEntriesManager;
@@ -14,9 +19,12 @@ import com.mycompany.istudy.gui.UserWin;
 import com.mycompany.istudy.principalservices.GuiServices;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import javax.swing.JTextArea;
+import java.util.logging.Level;
 import javax.swing.table.DefaultTableModel;
 import org.apache.log4j.Logger;
 
@@ -27,7 +35,7 @@ import org.apache.log4j.Logger;
 public class HomeController extends BaseController {
 
     private final static Logger LOGGER = Logger.getLogger(HomeController.class);
-    
+
     public HomeController(UserWin instance) {
         super(instance);
     }
@@ -57,29 +65,11 @@ public class HomeController extends BaseController {
         userloginentry.setLogindate(sdf.format(new Date()));
         userloginentry.setUserid(s);
         userLoginInstance.insertLoginEntry(userloginentry);
-        //active semester and modules
-        GuiServices.deleteNotificationTextAreaContent(instance.getnotificationTextArea());
-        
-        try {
-            if(totalDaysToExam()== 28){
-                addToNotificationWindow(totalDaysToExam() + " Days to the examination period!Be aware that you are in takt!");
-            }else if (totalDaysToExam()< 28){
-                addToNotificationWindow(totalDaysToExam() + " Days to the examination period!\n Please check whether you are performing well with all the modules");
-            }else {
-                addToNotificationWindow(totalDaysToExam() + " Days to examination period!\n PLease make sure that you are covering all the choosen modules!");
-            }
-        } catch (Exception ex) {
-            LOGGER.error("System error", ex);
-        }
+
+        initInfoBoard();
     }
-    
-    public void addToNotificationWindow(String text){
-        JTextArea notificationTExtArea = instance.getnotificationTextArea();
-        notificationTExtArea.append("\n"+text);
-        
-    }
-    
-    public int totalDaysToExam() throws Exception{
+
+    public int totalDaysToExam() throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         Date todaysDate = new Date();
         int days = 0;
@@ -88,7 +78,51 @@ public class HomeController extends BaseController {
             days = (int) GuiServices.getCalenderDays(todaysDate, e);
         } catch (ParseException ex) {
             LOGGER.error("System error", ex);
-        }             
+        }
         return days;
+    }
+
+    public void initInfoBoard() {
+        try {
+            //helper
+            Student student = StudentManager.getInstance().getStudent();
+
+            //set active semester
+            Semester activeSemester = SemesterManager.getInstance().getActiveSemester(student);
+            instance.getActiveSemesterJLabelValue().setText(activeSemester == null ? "" : "" + activeSemester.getNumber());
+
+            //next coming exam date
+            List<Modul> allActiveModules = ModulManager.getInstance().getAllActiveModules(student);
+            List<Academicrecords> academicrecordList = new ArrayList<>();
+            for (Modul modul : allActiveModules) {
+                Academicrecords academicrecord = AcademicrecordsManager.getInstance().getAcademicrecord(student, modul);
+                if (academicrecord != null) {
+                    academicrecordList.add(academicrecord);
+                }
+            }
+
+            Collections.sort(academicrecordList, (Academicrecords o1, Academicrecords o2) -> {
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+                    String examinationdateOfO1 = o1.getExaminationdate();
+                    String examinationdateOfO2 = o2.getExaminationdate();
+
+                    Date date1 = sdf.parse(examinationdateOfO1);
+                    Date date2 = sdf.parse(examinationdateOfO2);
+                    return date1.compareTo(date2);
+                } catch (ParseException ex) {
+                    LOGGER.error("System error", ex);
+                }
+                return -1;
+            });
+
+            if (!academicrecordList.isEmpty()) {
+                Academicrecords ar = academicrecordList.get(0);
+                instance.getNextExamJLabelValue().setText(ar.getExaminationdate() + " - " + ar.getModuleid().getModulname());
+            }
+        } catch (Exception ex) {
+            LOGGER.error("System error", ex);
+        }
     }
 }
