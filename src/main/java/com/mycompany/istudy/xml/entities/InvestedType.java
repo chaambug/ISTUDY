@@ -20,7 +20,7 @@ public class InvestedType {
    
     public List<WeekType> getWeek() {
         if (week == null) {
-            week = new ArrayList<WeekType>();
+            week = new ArrayList<>();
         }
         return this.week;
     }

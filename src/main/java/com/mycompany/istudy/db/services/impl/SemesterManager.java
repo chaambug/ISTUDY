@@ -23,7 +23,7 @@ public class SemesterManager implements SemesterManagerIntf{
 
     private final EntityManager em;
     private static SemesterManager instance;
-    private final static Logger logger = Logger.getLogger(SemesterManager.class);
+    private final static Logger LOGGER = Logger.getLogger(SemesterManager.class);
 
     public SemesterManager(EntityManager em) {
         this.em = em;
@@ -39,12 +39,12 @@ public class SemesterManager implements SemesterManagerIntf{
     @Override
     public List<Semester> getAllSemesterOfStudent(Student student) {
         try {
-            logger.info("service call getAllSemesterOfStudent");
+            LOGGER.info("service call getAllSemesterOfStudent");
             return em.createNamedQuery("Semester.findSemesterByStudent", Semester.class)
                     .setParameter("student", student)
                     .getResultList();
         } catch (Exception e) {
-            logger.error("getAllSemesterOfStudent not successfull", e);
+            LOGGER.error("getAllSemesterOfStudent not successfull", e);
         }
         return null;
 
@@ -53,19 +53,19 @@ public class SemesterManager implements SemesterManagerIntf{
     @Override
     public void insertSemester(Semester obj) {
         try {
-            logger.info("service call insertSemester");
+            LOGGER.info("service call insertSemester");
             em.getTransaction().begin();
             em.persist(obj);
             em.getTransaction().commit();
         } catch (Exception e) {
-            logger.error("insertSemester not successfull", e);
+            LOGGER.error("insertSemester not successfull", e);
         }
     }
 
     @Override
     public void deleteSemester(int nr) {
         try {
-            logger.info("service call deleteSemester");
+            LOGGER.info("service call deleteSemester");
             List<Semester> resultList = em.createNativeQuery("select * from semester where number = " + nr, Semester.class).getResultList();
             Student student = StudentManager.getInstance().getStudent();
             for (Semester s : resultList) {
@@ -77,14 +77,14 @@ public class SemesterManager implements SemesterManagerIntf{
                 }
             }
         } catch (Exception e) {
-            logger.error("deleteSemester not successfull", e);
+            LOGGER.error("deleteSemester not successfull", e);
         }
     }
 
     @Override
     public Semester getSemesterByNumber(int number) {
         try {
-            logger.info("service call getSemesterByNumber");
+            LOGGER.info("service call getSemesterByNumber");
             List<Semester> resultList = em.createNativeQuery("select * from semester where number = " + number, Semester.class).getResultList();
             Student student = StudentManager.getInstance().getStudent();
             for (Semester s : resultList) {
@@ -93,7 +93,7 @@ public class SemesterManager implements SemesterManagerIntf{
                 }
             }
         } catch (Exception e) {
-            logger.error("getSemesterByNumber not successfull", e);
+            LOGGER.error("getSemesterByNumber not successfull", e);
         }
         return null;
     }
@@ -101,22 +101,22 @@ public class SemesterManager implements SemesterManagerIntf{
     @Override
     public void updateSemester(Semester semester) {
         try {
-            logger.info("service call updateSemester");
+            LOGGER.info("service call updateSemester");
             em.getTransaction().begin();
             em.merge(semester);
             em.getTransaction().commit();
         } catch (Exception e) {
-            logger.error("updateSemester not successfull", e);
+            LOGGER.error("updateSemester not successfull", e);
         }
     }
 
     @Override
     public List<Semester> getAllSemester() {
         try {
-            logger.info("service call getAllSemester");
+            LOGGER.info("service call getAllSemester");
             return em.createNamedQuery("Semester.findAll", Semester.class).getResultList();
         } catch (Exception e) {
-            logger.error("getAllSemester not successfull", e);
+            LOGGER.error("getAllSemester not successfull", e);
         }
         return Collections.EMPTY_LIST;
     }
@@ -124,32 +124,32 @@ public class SemesterManager implements SemesterManagerIntf{
     @Override
     public void setSemesterActive(int semester, boolean b) {
         try {
-            logger.info("service call setSemesterActive");
+            LOGGER.info("service call setSemesterActive");
             List<Semester> allSemester = getAllSemester();
             em.getTransaction().begin();
-            for (Semester s : allSemester) {
+            allSemester.stream().forEach((s) -> {
                 if (s.getNumber() == semester) {
                     s.setSemesterstatus(b);
                 } else {
                     s.setSemesterstatus(false);
                 }
-            }
+            });
             em.getTransaction().commit();
         } catch (Exception e) {
-            logger.error("setSemesterActive not successfull", e);
+            LOGGER.error("setSemesterActive not successfull", e);
         }
     }
 
     @Override
     public Semester getActiveSemester(Student student) {
         try {
-            logger.info("service call getActiveSemester");
+            LOGGER.info("service call getActiveSemester");
             List<Semester> resultList = em.createNamedQuery("Semester.findActiveSemesterAndStudent", Semester.class)
                     .setParameter("student", student)
                     .getResultList();
             return resultList.isEmpty() ? null : resultList.get(0);
         } catch (Exception e) {
-            logger.error("getActiveSemester not successfull", e);
+            LOGGER.error("getActiveSemester not successfull", e);
         }
         return null;
     }

@@ -10,16 +10,16 @@ import javax.persistence.Persistence;
  */
 public class Connection {
 
-    private final static Logger logger = Logger.getLogger(Connection.class);
+    private final static Logger LOGGER = Logger.getLogger(Connection.class);
     private static Connection connection;
     private EntityManager em;
 
     private Connection() {
         try {
             em = Persistence.createEntityManagerFactory("istudydb").createEntityManager();
-            logger.info("singleton connection setup to database");
+            LOGGER.info("singleton connection setup to database");
         } catch (Exception e) {
-            logger.error("Error during creation connection pool to the database", e);
+            LOGGER.error("Error during creation connection pool to the database", e);
         }
     }
 

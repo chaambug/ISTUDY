@@ -46,8 +46,6 @@ public class TableCalendarRenderer extends DefaultTableCellRenderer {
         setForeground(Color.black);
         return this;
     }
-    
-    
 }
     
 

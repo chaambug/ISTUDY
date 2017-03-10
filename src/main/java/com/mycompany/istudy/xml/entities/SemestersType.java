@@ -16,7 +16,7 @@ public class SemestersType {
 
     public List<SemesterType> getSemester() {
         if (semester == null) {
-            semester = new ArrayList<SemesterType>();
+            semester = new ArrayList<>();
         }
         return this.semester;
     }

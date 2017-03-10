@@ -26,7 +26,7 @@ import org.apache.log4j.Logger;
  */
 public class HomeController extends BaseController {
 
-    private final static Logger logger = Logger.getLogger(HomeController.class);
+    private final static Logger LOGGER = Logger.getLogger(HomeController.class);
     
     public HomeController(UserWin instance) {
         super(instance);
@@ -48,9 +48,9 @@ public class HomeController extends BaseController {
         //Show in table
         DefaultTableModel model = (DefaultTableModel) instance.getLoginentriesTable().getModel();
         GuiServices.deleteTableContent(instance.getLoginentriesTable());
-        for (Userloginentries login : loginEntriesForUser) {
+        loginEntriesForUser.stream().forEach((login) -> {
             model.addRow(new Object[]{login.getLogindate().substring(10), login.getLogindate().substring(0, 10)});
-        }
+        });
         //insert login to db
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
         Userloginentries userloginentry = new Userloginentries();
@@ -69,7 +69,7 @@ public class HomeController extends BaseController {
                 addToNotificationWindow(totalDaysToExam() + " Days to examination period!\n PLease make sure that you are covering all the choosen modules!");
             }
         } catch (Exception ex) {
-            logger.error("System error", ex);
+            LOGGER.error("System error", ex);
         }
     }
     
@@ -87,7 +87,7 @@ public class HomeController extends BaseController {
             Date e = sdf.parse(SemesterManager.getInstance().getActiveSemester(StudentManager.getInstance().getStudent()).getExaminationStart());
             days = (int) GuiServices.getCalenderDays(todaysDate, e);
         } catch (ParseException ex) {
-            logger.error("System error", ex);
+            LOGGER.error("System error", ex);
         }             
         return days;
     }

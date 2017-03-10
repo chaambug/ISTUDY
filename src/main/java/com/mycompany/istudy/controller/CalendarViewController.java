@@ -53,13 +53,13 @@ public class CalendarViewController extends BaseController{
        
          //Populate table
         GregorianCalendar cal = new GregorianCalendar(); //Create calendar
-        int realMonth = cal.get(GregorianCalendar.MONTH); //Get month
-        int realYear = cal.get(GregorianCalendar.YEAR); //Get year
+        int theRealMonth = cal.get(GregorianCalendar.MONTH); //Get month
+        int theRealYear = cal.get(GregorianCalendar.YEAR); //Get year
         instance.getCalendarjComboBox().removeAllItems();
-        for (int i=realYear-100; i<=realYear+100; i++){
+        for (int i=theRealYear-100; i<=theRealYear+100; i++){
             instance.getCalendarjComboBox().addItem(String.valueOf(i));
         }
-        refreshCalendar(realMonth, realYear);
+        refreshCalendar(theRealMonth, theRealYear);
         actualizeListOfActiveModulesForCalendar();
     } 
     
@@ -154,9 +154,9 @@ public class CalendarViewController extends BaseController{
         ModulManager modulManager = ModulManager.getInstance();
         List<Modul> modulList = modulManager.getAllActiveModules(student);
         instance.getModuleListCalendarjComboBox().removeAllItems();
-        for (Modul module : modulList) {
-            instance.getModuleListCalendarjComboBox().addItem(module.getModulname());   
-        }
+        modulList.stream().forEach((module) -> {
+            instance.getModuleListCalendarjComboBox().addItem(module.getModulname());
+        });
     }
     
     public void showInvestedHoursForModule(){

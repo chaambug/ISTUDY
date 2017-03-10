@@ -37,14 +37,4 @@ public class GuiServices {
         return TimeUnit.DAYS.convert(millis, TimeUnit.MILLISECONDS);
     }
 }   
-    
-
-//if (month == 4 || month == 6 || month == 9 || month == 11)
-//daysInMonth = 30;
-//else 
-//if (month == 2) 
-//daysInMonth = (leapYear) ? 29 : 28;
-//else 
-//daysInMonth = 31;
-
 

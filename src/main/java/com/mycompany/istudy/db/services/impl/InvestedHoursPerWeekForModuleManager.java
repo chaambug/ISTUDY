@@ -17,7 +17,7 @@ public class InvestedHoursPerWeekForModuleManager implements InvestedHoursPerWee
 
     private final EntityManager em;
     private static InvestedHoursPerWeekForModuleManager instance;
-    private final static Logger logger = Logger.getLogger(InvestedHoursPerWeekForModuleManager.class);
+    private final static Logger LOGGER = Logger.getLogger(InvestedHoursPerWeekForModuleManager.class);
 
     private InvestedHoursPerWeekForModuleManager() {
         em = Connection.getInstance().getEntityManager();
@@ -34,13 +34,13 @@ public class InvestedHoursPerWeekForModuleManager implements InvestedHoursPerWee
     @Override
     public List<Investedhoursperweekformodule> getAllEntriesForModule(Modul module, Semester activeSemester) {
         try {
-            logger.info("service call getAllEntriesForModule");
+            LOGGER.info("service call getAllEntriesForModule");
             return em.createNamedQuery("Investedhoursperweekformodule.findAllByModuleAndSemester", Investedhoursperweekformodule.class)
                     .setParameter("module", module)
                     .setParameter("semester", activeSemester)
                     .getResultList();
         } catch (Exception e) {
-            logger.error("getAllEntriesForModule not successfull", e);
+            LOGGER.error("getAllEntriesForModule not successfull", e);
         }
         return Collections.EMPTY_LIST;
     }
@@ -48,7 +48,7 @@ public class InvestedHoursPerWeekForModuleManager implements InvestedHoursPerWee
     @Override
     public Investedhoursperweekformodule getByModuleAndWeek(Modul module, int week, Semester activeSemester) {
         try {
-            logger.info("service call getByModuleAndWeek");
+            LOGGER.info("service call getByModuleAndWeek");
             List<Investedhoursperweekformodule> resultList = em.createNamedQuery("Investedhoursperweekformodule.findByModuleAndWeekAndSemester", Investedhoursperweekformodule.class)
                     .setParameter("module", module)
                     .setParameter("week", week)
@@ -56,7 +56,7 @@ public class InvestedHoursPerWeekForModuleManager implements InvestedHoursPerWee
                     .getResultList();
             return resultList.isEmpty() ? null : resultList.get(0);
         } catch (Exception e) {
-            logger.error("getByModuleAndWeek not successfull", e);
+            LOGGER.error("getByModuleAndWeek not successfull", e);
         }
         return null;
     }
@@ -64,24 +64,24 @@ public class InvestedHoursPerWeekForModuleManager implements InvestedHoursPerWee
     @Override
     public void updateEntity(Investedhoursperweekformodule entity) {
         try {
-            logger.info("service call updateEntity");
+            LOGGER.info("service call updateEntity");
             em.getTransaction().begin();
             em.merge(entity);
             em.getTransaction().commit();
         } catch (Exception e) {
-            logger.error("updateEntity not successfull", e);
+            LOGGER.error("updateEntity not successfull", e);
         }
     }
 
     @Override
     public void insertEntity(Investedhoursperweekformodule entity) {
         try {
-            logger.info("service call insertEntity");
+            LOGGER.info("service call insertEntity");
             em.getTransaction().begin();
             em.persist(entity);
             em.getTransaction().commit();
         } catch (Exception e) {
-            logger.error("insertEntity not successfull", e);
+            LOGGER.error("insertEntity not successfull", e);
         }
     }
 }

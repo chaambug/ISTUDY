@@ -8,7 +8,7 @@ package com.mycompany.istudy.controller.pdf;
 import com.mycompany.istudy.db.services.impl.StudentManager;
 import com.mycompany.istudy.db.services.impl.AcademicrecordsManager;
 import com.mycompany.istudy.db.services.impl.InvestedHoursPerWeekForModuleManager;
-import com.mycompany.istudy.db.services.impl.IStudyDefaultJFreeSvgService;
+import com.mycompany.istudy.principalservices.IStudyDefaultJFreeService;
 import com.mycompany.istudy.db.services.impl.SemesterManager;
 import com.mycompany.istudy.db.services.impl.ModulManager;
 import com.mycompany.istudy.db.entities.*;
@@ -44,11 +44,11 @@ import org.apache.log4j.Logger;
  */
 public class PerformancePdfController extends IStudyPdfGenerator {
 
-    private final static Logger logger = Logger.getLogger(PerformancePdfController.class);
+    private final static Logger LOGGER = Logger.getLogger(PerformancePdfController.class);
 
     private String xmlFilePath;
     private String pdfFilePath;
-    private String svgDirPath;
+    private String chartsDirPath;
     private String fopXconfPath;
     private Student student;
     private List<Semester> allSemesterOfStudent;
@@ -112,9 +112,9 @@ public class PerformancePdfController extends IStudyPdfGenerator {
     //4
     private List<SemesterType> createSemesterList() {
         List<SemesterType> result = new ArrayList<>();
-        for (Semester semester : allSemesterOfStudent) {
+        allSemesterOfStudent.stream().forEach((semester) -> {
             result.add(createSemesterType(semester));
-        }
+        });
         return result;
     }
 
@@ -170,9 +170,9 @@ public class PerformancePdfController extends IStudyPdfGenerator {
     private List<WeekType> createWeekTypeList(Semester semester, Modul modul) {
         List<WeekType> result = new ArrayList<>();
         List<Investedhoursperweekformodule> allEntriesForModule = InvestedHoursPerWeekForModuleManager.getInstance().getAllEntriesForModule(modul, semester);
-        for (Investedhoursperweekformodule investedhoursperweekformodule : allEntriesForModule) {
+        allEntriesForModule.stream().forEach((investedhoursperweekformodule) -> {
             result.add(createWeekType(investedhoursperweekformodule));
-        }
+        });
         return result;
     }
 
@@ -250,7 +250,7 @@ public class PerformancePdfController extends IStudyPdfGenerator {
             final long kw = getKwForModule(semester);
             return String.valueOf(modul.getStudyhours() / kw);
         } catch (Exception e) {
-            logger.error("System error", e);
+            LOGGER.error("System error", e);
         }
         return "";
     }
@@ -262,11 +262,15 @@ public class PerformancePdfController extends IStudyPdfGenerator {
             Date e = sdf.parse(semester.getExaminationStart());
             return GuiServices.getCalendarWeeks(s, e);
         } catch (Exception e) {
-            logger.error("System error", e);
+            LOGGER.error("System error", e);
         }
         return 0;
     }
 
+    /**
+     * 
+     * All paths are loaded from properties and configured for geberating process
+     */
     private void initAttributes() {
         student = StudentManager.getInstance().getStudent();
         allSemesterOfStudent = SemesterManager.getInstance().getAllSemesterOfStudent(student);
@@ -321,7 +325,7 @@ public class PerformancePdfController extends IStudyPdfGenerator {
             fopXconfPath = dest.getAbsolutePath();
 
             xmlFilePath = xmlFile.getAbsolutePath();
-            svgDirPath = chartsDirFile.getAbsolutePath();
+            chartsDirPath = chartsDirFile.getAbsolutePath();
             pdfFilePath = outputDir == null
                     ? String.format("%s%sresult.pdf", pdfOutputDirFile.getAbsolutePath(), File.separator)
                     : String.format("%s%sgenerated_performance_%s.pdf",
@@ -330,7 +334,7 @@ public class PerformancePdfController extends IStudyPdfGenerator {
                             sdf.format(new Date()));
 
         } catch (Exception e) {
-            logger.error("System error", e);
+            LOGGER.error("System error", e);
         }
     }
 
@@ -348,14 +352,14 @@ public class PerformancePdfController extends IStudyPdfGenerator {
                     .getSemesters()
                     .getSemester();
 
-            for (SemesterType sem : semester) {
-                for (ModuleType module : sem.getModules().getModule()) {
+            semester.stream().forEach((SemesterType sem) -> {
+                sem.getModules().getModule().stream().forEach((module) -> {
                     String generatedChartCsvFilePath = generateSvg(module);
                     module.getInvested().setSvgPath(generatedChartCsvFilePath);
-                }
-            }
+                });
+            });
         } catch (Exception e) {
-            logger.error("System error", e);
+            LOGGER.error("System error", e);
         }
     }
 
@@ -369,8 +373,8 @@ public class PerformancePdfController extends IStudyPdfGenerator {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
         String currTime = sdf.format(new Date());
 
-        IStudyDefaultJFreeSvgService iStudyDefaultJFreeSvgService
-                = new IStudyDefaultJFreeSvgService();
+        IStudyDefaultJFreeService iStudyDefaultJFreeSvgService
+                = new IStudyDefaultJFreeService();
 
         Map<String, String> invested = new HashMap<>();
         invested.put("0", "0");
@@ -390,7 +394,7 @@ public class PerformancePdfController extends IStudyPdfGenerator {
         final String fileName = String.format(svgChartFileNamePattern,
                 module.getName().replaceAll("\\s+", ""),
                 currTime);
-        final String path = svgDirPath + fileName;
+        final String path = chartsDirPath + fileName;
         iStudyDefaultJFreeSvgService.create2DLineChart(
                 path,
                 module.getName(),

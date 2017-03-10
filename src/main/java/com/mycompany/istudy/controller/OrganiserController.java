@@ -27,7 +27,7 @@ import org.apache.log4j.Logger;
  */
 public class OrganiserController extends BaseController{
 
-    private final static Logger logger = Logger.getLogger(OrganiserController.class);
+    private final static Logger LOGGER = Logger.getLogger(OrganiserController.class);
     
     GraphicalViewController graphicalViewController;
     
@@ -44,7 +44,7 @@ public class OrganiserController extends BaseController{
         if (!allActiveModules.isEmpty()) {
             DefaultTableModel modelActiveModule = (DefaultTableModel) instance.getActiveModuleJTable().getModel();
             GuiServices.deleteTableContent(instance.getActiveModuleJTable());
-            for (Modul modul : allActiveModules) {
+            allActiveModules.stream().forEach((modul) -> {
                 Semester semester = modul.getSemesternummer();
                 String expected = "";
                 try {
@@ -58,10 +58,10 @@ public class OrganiserController extends BaseController{
                         expected = expected.substring(0, indexOfPoint + 2);
                     }
                 } catch (Exception e) {
-                    logger.error("System error", e);
+                    LOGGER.error("System error", e);
                 }
                 modelActiveModule.addRow(new Object[]{modul.getSemesternummer().getNumber(), modul.getModulname(), expected, modul.getEctspunkte(), modul.getStudyhours()});
-            }
+            });
         }
 
         Semester activeSemester = SemesterManager.getInstance().getActiveSemester(StudentManager.getInstance().getStudent());
@@ -71,7 +71,7 @@ public class OrganiserController extends BaseController{
                 Date e = sdf.parse(activeSemester.getExaminationStart());
                 instance.getTotalCalenderWeeks().setText(String.valueOf(GuiServices.getCalendarWeeks(s, e)));
             } catch (Exception e) {
-                logger.error("System error", e);
+                LOGGER.error("System error", e);
             }
         } else {
             instance.getTotalCalenderWeeks().setText("");
@@ -102,7 +102,7 @@ public class OrganiserController extends BaseController{
                         "Date of examination period and start of semester are missing...!",
                         "Semester dates missing",
                         JOptionPane.ERROR_MESSAGE);
-                logger.error("System error", ex);
+                LOGGER.error("System error", ex);
             }
         }
     }
@@ -113,9 +113,9 @@ public class OrganiserController extends BaseController{
             return;
         }
         DefaultTableModel model = (DefaultTableModel) instance.getInvestedHoursForAModuleJTable().getModel();
-        for (Investedhoursperweekformodule entry : InvestedHoursPerWeekForModuleManager.getInstance().getAllEntriesForModule(modul, activeSemester)) {
+        InvestedHoursPerWeekForModuleManager.getInstance().getAllEntriesForModule(modul, activeSemester).stream().forEach((entry) -> {
             model.addRow(new Object[]{entry.getWeek(), entry.getInvestedHours()});
-        }
+        });
     }
     
     public void pushHours() {
@@ -168,7 +168,7 @@ public class OrganiserController extends BaseController{
                         "Input Error",
                         JOptionPane.ERROR_MESSAGE);
                 updateInvestedHoursForAModuleJTable(null, null);
-                logger.error("System error", nfe);
+                LOGGER.error("System error", nfe);
                 return;
             }
             JOptionPane.showMessageDialog(instance,

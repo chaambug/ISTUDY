@@ -20,6 +20,4 @@ public class NotificationColllector extends Observable{
         setChanged();
         notifyObservers();
     }
-    
-    
 }

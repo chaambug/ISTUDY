@@ -16,7 +16,7 @@ public class StudentManager implements StudentManagerIntf{
     private final EntityManager em;
     private Student student;
     private static StudentManager instance;
-    private final static Logger logger = Logger.getLogger(StudentManager.class);
+    private final static Logger LOGGER = Logger.getLogger(StudentManager.class);
 
     private StudentManager(EntityManager em) {
         this.em = em;
@@ -40,23 +40,23 @@ public class StudentManager implements StudentManagerIntf{
     @Override
     public void addToStudent(String streetnr, String cityzip, Integer phone, Date date) {
         try {
-            logger.info("service call addToStudent");
+            LOGGER.info("service call addToStudent");
             student.setStreetNr(streetnr);
             student.setCityAndZip(cityzip);
             student.setGeburtsdatum(date);
             updateStudent(student);
         } catch (Exception e) {
-            logger.error("addToStudent not successfull", e);
+            LOGGER.error("addToStudent not successfull", e);
         }
     }
 
     @Override
     public List<Student> getAllStudents() {
         try {
-            logger.info("service call getAllStudents");
+            LOGGER.info("service call getAllStudents");
             return em != null ? em.createNamedQuery("Student.findAll", Student.class).getResultList() : null;
         } catch (Exception e) {
-            logger.error("getAllStudents students not successfull", e);
+            LOGGER.error("getAllStudents students not successfull", e);
         }
         return null;
     }
@@ -64,10 +64,10 @@ public class StudentManager implements StudentManagerIntf{
     @Override
     public Student getStudent(int studentid) {
         try {
-            logger.info("service call getStudent - id : " + studentid);
+            LOGGER.info("service call getStudent - id : " + studentid);
             return em.find(Student.class, studentid);
         } catch (Exception e) {
-            logger.error("getStudent not successfull", e);
+            LOGGER.error("getStudent not successfull", e);
         }
         return null;
     }
@@ -80,12 +80,12 @@ public class StudentManager implements StudentManagerIntf{
     @Override
     public boolean insertStudent(Student inStudent) {
         try {
-            logger.info("service call insertStudent - user : " + inStudent.getBenutzername());
+            LOGGER.info("service call insertStudent - user : " + inStudent.getBenutzername());
             em.getTransaction().begin();
             em.persist(inStudent);
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            logger.error("insertStudent not successfull", e);
+            LOGGER.error("insertStudent not successfull", e);
             return false;
         }
         return true;
@@ -94,12 +94,12 @@ public class StudentManager implements StudentManagerIntf{
     @Override
     public boolean deleteStudent(Student delStudent) {
         try {
-            logger.info("service call deleteStudent - user : " + delStudent.getBenutzername());
+            LOGGER.info("service call deleteStudent - user : " + delStudent.getBenutzername());
             em.getTransaction().begin();
             em.remove(delStudent);
             em.getTransaction().commit();
         } catch (Exception e) {
-            logger.error("deleteStudent not successfull", e);
+            LOGGER.error("deleteStudent not successfull", e);
             return false;
         }
         return true;
@@ -108,12 +108,12 @@ public class StudentManager implements StudentManagerIntf{
     @Override
     public void updateStudent(Student updateStudent) {
         try {
-            logger.info("service call updateStudent - user : " + updateStudent.getBenutzername());
+            LOGGER.info("service call updateStudent - user : " + updateStudent.getBenutzername());
             em.getTransaction().begin();
             em.merge(updateStudent);
             em.getTransaction().commit();
         } catch (Exception e) {
-            logger.error("updateStudent not successfull", e);
+            LOGGER.error("updateStudent not successfull", e);
         }
     }
 }

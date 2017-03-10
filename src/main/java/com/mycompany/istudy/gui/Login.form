@@ -147,11 +147,6 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JLabel" name="icon">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Varuni\Documents\NetBeansProjects\ISTUDY\src\main\resources\com\mycompany\istudy\gui\img\loginlogo.png"/>
-            </Property>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="mainTitleLabel">
           <Properties>

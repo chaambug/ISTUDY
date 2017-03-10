@@ -23,7 +23,7 @@ public class AcademicrecordsManager implements AcademicrecordsManagerIntf{
 
     private final EntityManager em;
     private static AcademicrecordsManager instance;
-    private final static Logger logger = Logger.getLogger(ModulManager.class);
+    private final static Logger LOGGER = Logger.getLogger(AcademicrecordsManager.class);
 
     private AcademicrecordsManager() {
         em = Connection.getInstance().getEntityManager();
@@ -39,25 +39,25 @@ public class AcademicrecordsManager implements AcademicrecordsManagerIntf{
     @Override
     public void insertTry(Academicrecords obj) {
         try {
-            logger.info("service call insertTry");
+            LOGGER.info("service call insertTry");
             em.getTransaction().begin();
             em.persist(obj);
             em.getTransaction().commit();
         } catch (Exception e) {
-            logger.error("insertTry not successfull", e);
+            LOGGER.error("insertTry not successfull", e);
         }
     }
 
     @Override
     public List<Academicrecords> getAllRecords(Student student, Modul modul) {
         try {
-            logger.info("service call getAllRecords");
+            LOGGER.info("service call getAllRecords");
             return em.createNamedQuery("Academicrecords.findAllRecords", Academicrecords.class)
                     .setParameter("student", student)
                     .setParameter("module", modul)
                     .getResultList();
         } catch (Exception e) {
-            logger.error("getAllRecords not successfull", e);
+            LOGGER.error("getAllRecords not successfull", e);
         }
         return Collections.EMPTY_LIST;
     }
@@ -65,12 +65,12 @@ public class AcademicrecordsManager implements AcademicrecordsManagerIntf{
     @Override
     public void removeRecord(Academicrecords obj) {
         try {
-            logger.info("service call removeRecord");
+            LOGGER.info("service call removeRecord");
             em.getTransaction().begin();
             em.remove(obj);
             em.getTransaction().commit();
         } catch (Exception e) {
-            logger.error("removeRecord not successfull", e);
+            LOGGER.error("removeRecord not successfull", e);
         }
     }
 }

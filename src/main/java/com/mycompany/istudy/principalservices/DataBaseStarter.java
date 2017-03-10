@@ -10,7 +10,7 @@ import javax.swing.JTextArea;
  */
 public class DataBaseStarter extends Thread{
 
-    private final static Logger logger = Logger.getLogger(DataBaseStarter.class);
+    private final static Logger LOGGER = Logger.getLogger(DataBaseStarter.class);
     private final JTextArea textArea;
     
     public DataBaseStarter(JTextArea report) {
@@ -32,14 +32,14 @@ public class DataBaseStarter extends Thread{
             CommandProcessor.process(command);
             textArea.append(">> Database started successfully\n");
         } catch (Exception e) {
-            logger.error("Database could not be started. Check for installation of mysql.", e);
+            LOGGER.error("Database could not be started. Check for installation of mysql.", e);
             textArea.append(">> Database could not be started (check system log)\n");
         }
     }
 
     @Override
     public void run() {
-        logger.info(String.format("Thread started..."));
+        LOGGER.info(String.format("Thread started..."));
         startDB();
     }
 }

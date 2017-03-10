@@ -56,6 +56,6 @@ public class ObjectFactory {
 
     @XmlElementDecl(namespace = "", name = "student")
     public JAXBElement<StudentType> createStudent(StudentType value) {
-        return new JAXBElement<StudentType>(_Student_QNAME, StudentType.class, null, value);
+        return new JAXBElement<>(_Student_QNAME, StudentType.class, null, value);
     }
 }

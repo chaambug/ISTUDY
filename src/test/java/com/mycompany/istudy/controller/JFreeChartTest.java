@@ -1,14 +1,14 @@
 package com.mycompany.istudy.controller;
 
 
-import com.mycompany.istudy.db.services.impl.IStudyDefaultJFreeSvgService;
+import com.mycompany.istudy.principalservices.IStudyDefaultJFreeService;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.log4j.Logger;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,20 +20,20 @@ import org.junit.Test;
  *
  * @author Varuni
  */
-public class SvgGeneratorTest {
+public class JFreeChartTest {
     
-    private final static Logger logger = Logger.getLogger(SvgGeneratorTest.class);
+    private final static Logger LOGGER = Logger.getLogger(JFreeChartTest.class);
     
-    IStudyDefaultJFreeSvgService  iStudyDefaultJFreeSvgService;
+    IStudyDefaultJFreeService  iStudyDefaultJFreeSvgService;
     
     @Before
     public void init() {
-       iStudyDefaultJFreeSvgService = new IStudyDefaultJFreeSvgService();
+       iStudyDefaultJFreeSvgService = new IStudyDefaultJFreeService();
     }
     
     @Test
-    public void generateSvg() {
-        logger.info("TEST : generateSvg()");
+    public void generate() {
+        LOGGER.info("TEST : generate()");
         Map<String, String> invested = new HashMap<>();
         invested.put("0", "0");
         invested.put("1", "5");
@@ -65,7 +65,7 @@ public class SvgGeneratorTest {
         expected.put("12", "120");
         
         assertTrue(iStudyDefaultJFreeSvgService.create2DLineChart(
-                System.getProperty("user.dir") + File.separator + "test.svg", 
+                System.getProperty("user.dir") + File.separator + "test.png", 
                 "Technische Informatik I",
                 "Weeks", 
                 "Hours",

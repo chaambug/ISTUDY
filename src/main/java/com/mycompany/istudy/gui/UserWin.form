@@ -1512,7 +1512,7 @@
                           <Component id="jLabel26" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="moduleListCalendarjComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="16" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="monthjLabel" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="previousjButton" alignment="1" min="-2" max="-2" attributes="0"/>

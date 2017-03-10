@@ -121,10 +121,7 @@ public class Investedhoursperweekformodule implements Serializable {
             return false;
         }
         Investedhoursperweekformodule other = (Investedhoursperweekformodule) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override

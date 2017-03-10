@@ -17,6 +17,8 @@ import com.mycompany.istudy.gui.UserWin;
 import com.mycompany.istudy.principalservices.GuiServices;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import java.awt.HeadlessException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -40,7 +42,7 @@ import org.apache.log4j.Logger;
  */
 public class SubjectStreamController extends BaseController {
 
-    private final static Logger logger = Logger.getLogger(SubjectStreamController.class);
+    private final static Logger LOGGER = Logger.getLogger(SubjectStreamController.class);
 
     OrganiserController organiserController;
 
@@ -69,13 +71,15 @@ public class SubjectStreamController extends BaseController {
         DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
         root.removeAllChildren();
         root.setUserObject(s.getSubjectStream());
-        for (Semester semester : allSemesterOfStudent) {
+        allSemesterOfStudent.stream().map((semester) -> {
             DefaultMutableTreeNode semesterNode = new DefaultMutableTreeNode(String.format("Semester %s", semester.getNumber()));
             for (Modul modul : ModulManager.getInstance().getAllModule(semester, s)) {
                 semesterNode.add(new DefaultMutableTreeNode(modul.getModulname()));
             }
+            return semesterNode;
+        }).forEach((semesterNode) -> {
             root.add(semesterNode);
-        }
+        });
         model.nodeChanged(root);
         model.reload(root);
         expandAllNodes(instance.getModulAndSemesterOverviewJTree());
@@ -119,7 +123,7 @@ public class SubjectStreamController extends BaseController {
                             "Credit points should be in number format",
                             "Input error",
                             JOptionPane.ERROR_MESSAGE);
-                    logger.error("System error", e);
+                    LOGGER.error("System error", e);
                     return;
                 }
                 m.setMatrikelnummer(student);
@@ -132,7 +136,7 @@ public class SubjectStreamController extends BaseController {
                             "Study hours should be in number format",
                             "Input error",
                             JOptionPane.ERROR_MESSAGE);
-                    logger.error("System error", e);
+                    LOGGER.error("System error", e);
                     return;
                 }
                 List<Modul> allModules = ModulManager.getInstance().getAllModule();
@@ -151,8 +155,8 @@ public class SubjectStreamController extends BaseController {
                 instance.getCreditpoints().setText("");
                 instance.getStudyhours().setText("");
                 return;
-            } catch (Exception e) {
-                logger.error("System error", e);
+            } catch (NumberFormatException | HeadlessException e) {
+                LOGGER.error("System error", e);
             }
         }
         JOptionPane.showMessageDialog(instance,
@@ -177,7 +181,7 @@ public class SubjectStreamController extends BaseController {
             initSemesterBoard();
             organiserController.init();
         } catch (Exception e) {
-            logger.error("System error", e);
+            LOGGER.error("System error", e);
         }
     }
 
@@ -199,7 +203,7 @@ public class SubjectStreamController extends BaseController {
                 organiserController.init();
             }
         } catch (Exception e) {
-            logger.error("System error", e);
+            LOGGER.error("System error", e);
         }
     }
 
@@ -264,8 +268,8 @@ public class SubjectStreamController extends BaseController {
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-            } catch (Exception e) {
-                logger.error("System error", e);
+            } catch (NumberFormatException | HeadlessException e) {
+                LOGGER.error("System error", e);
             }
         }
         JOptionPane.showMessageDialog(instance,
@@ -316,8 +320,8 @@ public class SubjectStreamController extends BaseController {
                     instance.getActivateDeactivateSemesterButton().setText(ButtonConstants.ACTIVATE.toString());
                 }
             }
-        } catch (Exception e) {
-            logger.error("System error", e);
+        } catch (NumberFormatException | ParseException e) {
+            LOGGER.error("System error", e);
         }
     }
 
@@ -401,8 +405,8 @@ public class SubjectStreamController extends BaseController {
                             "Message",
                             JOptionPane.PLAIN_MESSAGE);
                 }
-            } catch (Exception e) {
-                logger.error("System error", e);
+            } catch (NumberFormatException | HeadlessException e) {
+                LOGGER.error("System error", e);
                 JOptionPane.showMessageDialog(instance,
                         "Check your input - Credit points and Study Hours have to be nummeric.",
                         "Input Error",
@@ -440,7 +444,7 @@ public class SubjectStreamController extends BaseController {
                         }
                     }
                 } catch (Exception e) {
-                    logger.error("System error", e);
+                    LOGGER.error("System error", e);
                 }
                 expandAllNodes(instance.getModulAndSemesterOverviewJTree());
                 updateSemesterAndModulTreeView();
@@ -553,7 +557,7 @@ public class SubjectStreamController extends BaseController {
                 try {
                     return String.valueOf(sdf.format(dateChooser.getCalendar().getTime()));
                 } catch (Exception e) {
-                    logger.error("System error", e);
+                    LOGGER.error("System error", e);
                     return null;
                 }
         }

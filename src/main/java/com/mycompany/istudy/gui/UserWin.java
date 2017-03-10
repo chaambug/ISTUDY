@@ -57,9 +57,9 @@ public class UserWin extends javax.swing.JFrame {
         controllers.add(graphicalViewController);
         controllers.add(calendarViewController);
 
-        for (BaseController specifyController : controllers) {
+        controllers.stream().forEach((specifyController) -> {
             specifyController.init();
-        }
+        });
     }
 
     private void initFrameSettings() {

@@ -5,7 +5,6 @@
  */
 package com.mycompany.istudy.controller;
 
-import com.mycompany.istudy.controller.pdf.IStudyPdfGenerator;
 import com.mycompany.istudy.db.entities.Investedhoursperweekformodule;
 import com.mycompany.istudy.db.entities.Modul;
 import com.mycompany.istudy.db.entities.Semester;
@@ -32,7 +31,7 @@ import org.apache.log4j.Logger;
  */
 public class GraphicalViewController extends BaseController{
     
-    private final static Logger logger = Logger.getLogger(IStudyPdfGenerator.class);
+    private final static Logger LOGGER = Logger.getLogger(GraphicalViewController.class);
     
     public GraphicalViewController(UserWin instance) {
         super(instance);
@@ -75,7 +74,7 @@ public class GraphicalViewController extends BaseController{
                     "Date of examination period and start of semester are missing...!",
                     "Semester dates missing",
                     JOptionPane.ERROR_MESSAGE);
-            logger.error("Error during creation of graphs", e);
+            LOGGER.error("Error during creation of graphs", e);
         }
         GraphicalView graphicalView = new GraphicalView("Module to Week", selectedModul, hoursWeek, optimalPerformance);
         instance.getModulPerformancejPanel().removeAll();
@@ -91,8 +90,8 @@ public class GraphicalViewController extends BaseController{
         ModulManager modulManager = ModulManager.getInstance();
         List<Modul> modulList = modulManager.getAllActiveModules(student);
         instance.getModuleListjComboBox().removeAllItems();
-        for (Modul module : modulList) {
+        modulList.stream().forEach((module) -> {
             instance.getModuleListjComboBox().addItem(module.getModulname());
-        }
+        });
     }
 }

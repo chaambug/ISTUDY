@@ -39,6 +39,7 @@ public class JaxBUtility {
      * Reads the XML-File
      *
      * @param inXmlPath path to the XML-File
+     * @param theClass
      * @return the unmarshaled xml root object
      * @throws JAXBException
      */

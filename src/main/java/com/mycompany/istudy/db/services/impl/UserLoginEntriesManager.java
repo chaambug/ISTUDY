@@ -23,7 +23,7 @@ public class UserLoginEntriesManager implements UserLoginEntriesManagerIntf{
     private final EntityManager em;
     private static UserLoginEntriesManager instance;
 
-    private final static Logger logger = Logger.getLogger(UserLoginEntriesManager.class);
+    private final static Logger LOGGER = Logger.getLogger(UserLoginEntriesManager.class);
 
     public UserLoginEntriesManager(EntityManager em) {
         this.em = em;
@@ -39,22 +39,22 @@ public class UserLoginEntriesManager implements UserLoginEntriesManagerIntf{
     @Override
     public void insertLoginEntry(Userloginentries obj) {
         try {
-            logger.info("service call insertLoginEntry");
+            LOGGER.info("service call insertLoginEntry");
             em.getTransaction().begin();
             em.persist(obj);
             em.getTransaction().commit();
         } catch (Exception e) {
-            logger.error("insertLoginEntry not successfull", e);
+            LOGGER.error("insertLoginEntry not successfull", e);
         }
     }
 
     @Override
     public List<Userloginentries> getLoginEntriesForUser(Student student) {
         try {
-            logger.info("service call getLoginEntriesForUser");
+            LOGGER.info("service call getLoginEntriesForUser");
             return em.createNamedQuery("Userloginentries.findByStudent", Userloginentries.class).setParameter("student", student).getResultList();
         } catch (Exception e) {
-            logger.error("getLoginEntriesForUser not successfull", e);
+            LOGGER.error("getLoginEntriesForUser not successfull", e);
         }
         return Collections.EMPTY_LIST;
     }

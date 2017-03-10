@@ -17,7 +17,7 @@ public class AcademicrecordsType {
 
     public List<RecordType> getRecord() {
         if (record == null) {
-            record = new ArrayList<RecordType>();
+            record = new ArrayList<>();
         }
         return this.record;
     }

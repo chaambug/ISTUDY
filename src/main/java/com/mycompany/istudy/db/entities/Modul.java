@@ -148,10 +148,7 @@ public class Modul implements Serializable {
             return false;
         }
         Modul other = (Modul) object;
-        if ((this.modulid == null && other.modulid != null) || (this.modulid != null && !this.modulid.equals(other.modulid))) {
-            return false;
-        }
-        return true;
+        return !((this.modulid == null && other.modulid != null) || (this.modulid != null && !this.modulid.equals(other.modulid)));
     }
 
     @Override

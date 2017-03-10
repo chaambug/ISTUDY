@@ -17,7 +17,7 @@ import org.junit.*;
  */
 public class PdfGeneratorTest {
   
-    private final static Logger logger = Logger.getLogger(PdfGeneratorTest.class);
+    private final static Logger LOGGER = Logger.getLogger(PdfGeneratorTest.class);
     
     PerformancePdfController pdf;
     
@@ -30,7 +30,7 @@ public class PdfGeneratorTest {
     
     @Test
     public void generatePdf() throws InterruptedException {
-        logger.info("TEST : generatePdf()");
+        LOGGER.info("TEST : generatePdf()");
         pdf.generatePDF(null, null);
         pdf.waitForThread();
     }  

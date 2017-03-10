@@ -1,6 +1,5 @@
-package com.mycompany.istudy.db.services.impl;
+package com.mycompany.istudy.principalservices;
 
-import com.mycompany.istudy.db.services.intf.IStudyDefaultJFreeSvgServiceIntf;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.chart.ChartFactory;
@@ -12,20 +11,20 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.jfree.chart.ChartUtilities;
 
-public class IStudyDefaultJFreeSvgService implements IStudyDefaultJFreeSvgServiceIntf {
+public class IStudyDefaultJFreeService implements IStudyDefaultJFreeChartServiceIntf {
 
-    private final static Logger logger = Logger.getLogger(IStudyDefaultJFreeSvgService.class);
+    private final static Logger LOGGER = Logger.getLogger(IStudyDefaultJFreeService.class);
 
     private final double width;
     private final double height;
 
-    public IStudyDefaultJFreeSvgService() {
+    public IStudyDefaultJFreeService() {
         //Default setting
         width = 640;
         height = 480;
     }
 
-    public IStudyDefaultJFreeSvgService(double width, double height) {
+    public IStudyDefaultJFreeService(double width, double height) {
         //Default setting
         this.width = width;
         this.height = height;
@@ -51,7 +50,7 @@ public class IStudyDefaultJFreeSvgService implements IStudyDefaultJFreeSvgServic
             Map<String, String> investedPoints,
             Map<String, String> expectedPoints) {
 
-        logger.info("service call create2DLineChart");
+        LOGGER.info("service call create2DLineChart");
         try {
             double xPoint;
             double yPoint;
@@ -81,11 +80,11 @@ public class IStudyDefaultJFreeSvgService implements IStudyDefaultJFreeSvgServic
 
             //Use createXYLineChart to create the chart
             JFreeChart XYLineChart = ChartFactory.createXYLineChart(descTop, descX, descY, svgXYDataSeries, PlotOrientation.VERTICAL, true, true, false);
-            ChartUtilities.saveChartAsPNG(new File(filePath.replace("svg", "JPEG")), XYLineChart, (int) width, (int) height);
+            ChartUtilities.saveChartAsPNG(new File(filePath), XYLineChart, (int) width, (int) height);
 
             return true;
         } catch (IOException | NumberFormatException i) {
-            logger.error("System error", i);
+            LOGGER.error("System error", i);
             return false;
         }
     }

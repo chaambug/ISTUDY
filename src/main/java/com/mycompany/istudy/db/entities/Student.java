@@ -272,10 +272,7 @@ public class Student implements Serializable {
             return false;
         }
         Student other = (Student) object;
-        if ((this.matrikelnummer == null && other.matrikelnummer != null) || (this.matrikelnummer != null && !this.matrikelnummer.equals(other.matrikelnummer))) {
-            return false;
-        }
-        return true;
+        return !((this.matrikelnummer == null && other.matrikelnummer != null) || (this.matrikelnummer != null && !this.matrikelnummer.equals(other.matrikelnummer)));
     }
 
     @Override

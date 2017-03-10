@@ -17,7 +17,7 @@ public class ModulesType {
 
     public List<ModuleType> getModule() {
         if (module == null) {
-            module = new ArrayList<ModuleType>();
+            module = new ArrayList<>();
         }
         return this.module;
     }

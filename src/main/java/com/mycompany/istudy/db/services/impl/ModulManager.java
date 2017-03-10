@@ -19,7 +19,7 @@ public class ModulManager implements ModulManagerIntf{
 
     private final EntityManager em;
     private static ModulManager instance;
-    private final static Logger logger = Logger.getLogger(ModulManager.class);
+    private final static Logger LOGGER = Logger.getLogger(ModulManager.class);
 
     private ModulManager() {
         em = Connection.getInstance().getEntityManager();
@@ -36,10 +36,10 @@ public class ModulManager implements ModulManagerIntf{
     @Override
     public List<Modul> getAllModule() {
         try {
-            logger.info("service call getAllModule");
+            LOGGER.info("service call getAllModule");
             return em != null ? em.createNamedQuery("Modul.findAll", Modul.class).getResultList() : null;
         } catch (Exception e) {
-            logger.error("getAllModule not successfull", e);
+            LOGGER.error("getAllModule not successfull", e);
         }
         return null;
     }
@@ -47,17 +47,18 @@ public class ModulManager implements ModulManagerIntf{
     @Override
     public List<Modul> getModuleByMatrikelnummer(int matrikelnummer) {
         try {
-            logger.info("service call getModuleByStudiengangId - id : " + matrikelnummer);
+            LOGGER.info("service call getModuleByStudiengangId - id : " + matrikelnummer);
             Query query = em.createQuery("SELECT e FROM Student e WHERE e.matrikelnummer=:arg1");
             query.setParameter("arg1", matrikelnummer);
             List<Modul> modulList = getAllModule();
             for (Modul m : modulList) {
                 if (m.getMatrikelnummer().equals(matrikelnummer)) {
+                    return modulList;
                 }
-                return modulList;
+                
             }
         } catch (Exception e) {
-            logger.error("getModuleByMatrikelnummer Module not successfull", e);
+            LOGGER.error("getModuleByMatrikelnummer Module not successfull", e);
         }
         return null;
     }
@@ -65,10 +66,10 @@ public class ModulManager implements ModulManagerIntf{
     @Override
     public Modul getModul(int modulid) {
         try {
-            logger.info("service call getModul - id : " + modulid);
+            LOGGER.info("service call getModul - id : " + modulid);
             return em.find(Modul.class, modulid);
         } catch (Exception e) {
-            logger.error("getModul not successfull", e);
+            LOGGER.error("getModul not successfull", e);
         }
         return null;
     }
@@ -76,50 +77,50 @@ public class ModulManager implements ModulManagerIntf{
     @Override
     public void insertModul(Modul inModul) {
         try {
-            logger.info("service call insertModul - name : " + inModul.getModulname());
+            LOGGER.info("service call insertModul - name : " + inModul.getModulname());
             em.getTransaction().begin();
             em.persist(inModul);
             em.getTransaction().commit();
             em.detach(inModul);
         } catch (Exception e) {
-            logger.error("insertModul not successfull", e);
+            LOGGER.error("insertModul not successfull", e);
         }
     }
 
     @Override
     public void deleteModul(Modul inModul) {
         try {
-            logger.info("service call deleteModul - name : " + inModul.getModulname());
+            LOGGER.info("service call deleteModul - name : " + inModul.getModulname());
             em.getTransaction().begin();
             em.remove(inModul);
             em.getTransaction().commit();
         } catch (Exception e) {
-            logger.error("deleteModul not successfull", e);
+            LOGGER.error("deleteModul not successfull", e);
         }
     }
 
     @Override
     public void updateModul(Modul inModul) {
         try {
-            logger.info("service call updateModul - name" + inModul.getModulname());
+            LOGGER.info("service call updateModul - name" + inModul.getModulname());
             em.getTransaction().begin();
             em.merge(inModul);
             em.getTransaction().commit();
         } catch (Exception e) {
-            logger.error("updateModul not successfull", e);
+            LOGGER.error("updateModul not successfull", e);
         }
     }
 
     @Override
     public List<Modul> getAllActiveModules(Student student) {
         try {
-            logger.info("service call getAllActiveModules");
+            LOGGER.info("service call getAllActiveModules");
             return em.createNamedQuery("Modul.findByStatusAndStudent", Modul.class)
                     .setParameter("value", true)
                     .setParameter("student", student)
                     .getResultList();
         } catch (Exception e) {
-            logger.error("getAllActiveModules not successfull", e);
+            LOGGER.error("getAllActiveModules not successfull", e);
         }
         return Collections.EMPTY_LIST;
     }
@@ -127,13 +128,13 @@ public class ModulManager implements ModulManagerIntf{
     @Override
     public Iterable<Modul> getAllModule(Semester semester, Student s) {
         try {
-            logger.info("service call getAllModule");
+            LOGGER.info("service call getAllModule");
             return em.createNamedQuery("Modul.findAllModulesByStudentAndSemester", Modul.class)
                     .setParameter("semester", semester)
                     .setParameter("student", s)
                     .getResultList();
         } catch (Exception e) {
-            logger.error("getAllModule not successfull", e);
+            LOGGER.error("getAllModule not successfull", e);
         }
         return Collections.EMPTY_LIST;
     }
@@ -141,24 +142,25 @@ public class ModulManager implements ModulManagerIntf{
     @Override
     public void deleteModules(Student student, Semester semester) {
         try {
-            logger.info("service call deleteModules");
+            LOGGER.info("service call deleteModules");
             List<Modul> allModules = getAllModule();
             em.getTransaction().begin();
-            for (Modul m : allModules) {
-                if (Objects.equals(m.getSemesternummer().getId(), semester.getId()) && Objects.equals(m.getMatrikelnummer().getMatrikelnummer(), student.getMatrikelnummer())) {
-                    em.remove(m);
-                }
-            }
+            allModules
+                    .stream()
+                    .filter((m) -> (Objects.equals(m.getSemesternummer().getId(), semester.getId()) && Objects.equals(m.getMatrikelnummer().getMatrikelnummer(), student.getMatrikelnummer())))
+                    .forEach((m) -> {
+                        em.remove(m);
+                    });
             em.getTransaction().commit();
         } catch (Exception e) {
-            logger.error("deleteModules not successfull", e);
+            LOGGER.error("deleteModules not successfull", e);
         }
     }
 
     @Override
     public Modul getModulByName(String text) {
         try {
-            logger.info("service call getModulByName");
+            LOGGER.info("service call getModulByName");
             List<Modul> modulList = getAllModule();
 
             for (Modul m : modulList) {
@@ -167,7 +169,7 @@ public class ModulManager implements ModulManagerIntf{
                 }
             }
         } catch (Exception e) {
-            logger.error("getModulByName not successfull", e);
+            LOGGER.error("getModulByName not successfull", e);
         }
         return null;
     }

@@ -1,9 +1,9 @@
-package com.mycompany.istudy.db.services.intf;
+package com.mycompany.istudy.principalservices;
 
 import java.util.Map;
 
 
-public interface IStudyDefaultJFreeSvgServiceIntf {
+public interface IStudyDefaultJFreeChartServiceIntf {
 
     public boolean create2DLineChart(
             String filePath,

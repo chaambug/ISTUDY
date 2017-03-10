@@ -10,7 +10,6 @@ package com.mycompany.istudy.principalservices;
  */
 import java.awt.Color; 
 import java.awt.BasicStroke; 
-import java.util.Iterator;
 import java.util.Map;
 import org.jfree.chart.ChartPanel; 
 import org.jfree.chart.JFreeChart; 
@@ -51,21 +50,17 @@ public class GraphicalView extends ApplicationFrame {
     private XYDataset createDataset(Map<Double,Double> investedHoursPerWeek, Map<Double,Double> hoursToBeInvested){
         final XYSeries moduleToWeek = new XYSeries("Actual Performance");
         
-        Iterator it = investedHoursPerWeek.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
+        investedHoursPerWeek.entrySet().stream().forEach((pair) -> {
             moduleToWeek.add((double) pair.getKey(), (double) pair.getValue());
-        }
+        });
         final XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(moduleToWeek);
         
         final XYSeries optimalWorkload = new XYSeries("Optimal Performance ");
         
-        it = hoursToBeInvested.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
+        hoursToBeInvested.entrySet().stream().forEach((pair) -> {
             optimalWorkload.add((double) pair.getKey(), (double) pair.getValue());
-        }
+        });
         dataset.addSeries(optimalWorkload);
         return dataset;
     }  

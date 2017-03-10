@@ -447,8 +447,8 @@ public class Registration extends javax.swing.JFrame {
             student.setTelefonnummer(phoneTextField.getText());
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-                Date date = sdf.parse(dateTextField.getText());
-                student.setGeburtsdatum(date);
+                Date theDate = sdf.parse(dateTextField.getText());
+                student.setGeburtsdatum(theDate);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this,
                         "Date should be in this format : dd-MM-yyyy",

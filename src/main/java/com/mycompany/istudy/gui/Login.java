@@ -9,12 +9,15 @@ import com.mycompany.istudy.db.connection.Connection;
 import com.mycompany.istudy.db.entities.Student;
 import com.mycompany.istudy.db.services.impl.StudentManager;
 import com.mycompany.istudy.principalservices.DataBaseStarter;
+import java.awt.HeadlessException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
 import org.apache.log4j.Logger;
 /**
  *
@@ -280,7 +283,7 @@ public class Login extends javax.swing.JFrame {
                         "User not found",
                         JOptionPane.ERROR_MESSAGE);
             }
-        } catch (Exception e) {
+        } catch (IOException | HeadlessException e) {
             e.printStackTrace(System.out);
         }
     }
@@ -330,7 +333,7 @@ public class Login extends javax.swing.JFrame {
                 l.setVisible(true);
                 l.setResizable(false);
                 l.setup();
-            } catch (Exception e) {
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
                 System.exit(-1);
             }
         } catch (Exception e) {
