@@ -21,10 +21,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 import javax.swing.table.DefaultTableModel;
 import org.apache.log4j.Logger;
 
@@ -85,21 +83,24 @@ public class HomeController extends BaseController {
     public void initInfoBoard() {
         try {
             //helper
-            Student student = StudentManager.getInstance().getStudent();
-
+            Student student;
+            List<Modul> allActiveModules;
+            student = StudentManager.getInstance().getStudent();
+            allActiveModules = ModulManager.getInstance().getAllActiveModules(student);
             //set active semester
             Semester activeSemester = SemesterManager.getInstance().getActiveSemester(student);
             instance.getActiveSemesterJLabelValue().setText(activeSemester == null ? "" : "" + activeSemester.getNumber());
 
             //next coming exam date
-            List<Modul> allActiveModules = ModulManager.getInstance().getAllActiveModules(student);
             List<Academicrecords> academicrecordList = new ArrayList<>();
-            for (Modul modul : allActiveModules) {
-                Academicrecords academicrecord = AcademicrecordsManager.getInstance().getAcademicrecord(student, modul);
-                if (academicrecord != null) {
-                    academicrecordList.add(academicrecord);
-                }
-            }
+            allActiveModules.stream()
+                    .map((modul) -> AcademicrecordsManager.getInstance()
+                    .getAcademicrecord(student, modul))
+                    .filter((academicrecord)
+                            -> (academicrecord != null))
+                    .forEachOrdered((Academicrecords academicrecord) -> {
+                        academicrecordList.add(academicrecord);
+                    });
 
             Collections.sort(academicrecordList, (Academicrecords o1, Academicrecords o2) -> {
                 try {
@@ -120,6 +121,25 @@ public class HomeController extends BaseController {
             if (!academicrecordList.isEmpty()) {
                 Academicrecords ar = academicrecordList.get(0);
                 instance.getNextExamJLabelValue().setText(ar.getExaminationdate() + " - " + ar.getModuleid().getModulname());
+            }
+            //Total of active modules
+            for (int i = 0; i < allActiveModules.size(); i++) {
+                int totalModules = 0;
+                totalModules += i;
+                instance.getActiveModulesJLabelValue().setText(Integer.toString(totalModules));
+            }
+
+            //Noten Durchnitt
+            for (Modul m : allActiveModules) {
+                //List<Academicrecords> academicrecordsList = m.getAcademicrecordsList();
+                for (Academicrecords academicrecords : academicrecordList) {
+                    double result = 0;
+                    double totalOfECTS = 0;
+                    for (int i = 0; i < academicrecordList.size(); i++) {
+                        result += (academicrecords.getGrade() * academicrecords.getModuleid().getEctspunkte());
+                        totalOfECTS = result / allActiveModules.size();
+                    }
+                }
             }
         } catch (Exception ex) {
             LOGGER.error("System error", ex);
