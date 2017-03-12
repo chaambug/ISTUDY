@@ -121,7 +121,7 @@ public class SubjectStreamController extends BaseController {
                 Modul m = new Modul();
                 try {
                     m.setEctspunkte(Integer.parseInt(ect));
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(instance,
                             "Credit points should be in number format",
                             "Input error",
@@ -183,7 +183,7 @@ public class SubjectStreamController extends BaseController {
             }
             initSemesterBoard();
             organiserController.init();
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             LOGGER.error("System error", e);
         }
     }
@@ -205,7 +205,7 @@ public class SubjectStreamController extends BaseController {
                 initSemesterBoard();
                 organiserController.init();
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             LOGGER.error("System error", e);
         }
     }
@@ -448,7 +448,7 @@ public class SubjectStreamController extends BaseController {
                             return;
                         }
                     }
-                } catch (Exception e) {
+                } catch (HeadlessException e) {
                     LOGGER.error("System error", e);
                 }
                 expandAllNodes(instance.getModulAndSemesterOverviewJTree());

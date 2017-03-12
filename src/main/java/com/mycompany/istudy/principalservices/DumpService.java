@@ -1,6 +1,7 @@
 package com.mycompany.istudy.principalservices;
 
 
+import java.io.IOException;
 import org.apache.log4j.Logger;
 
 import java.text.SimpleDateFormat;
@@ -32,7 +33,7 @@ public class DumpService {
 
             String command = String.format("%s -h %s -u %s %s > %s", mysql_dump_file, host, user, dbname, dumpName);
             CommandProcessor.processAndWrite(command, dumpName);
-        }catch (Exception e){
+        }catch (IOException e){
             logger.error("Error during creation of dump file", e);
             return false;
         }

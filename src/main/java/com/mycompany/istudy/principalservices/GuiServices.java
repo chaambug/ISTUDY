@@ -5,12 +5,7 @@
  */
 package com.mycompany.istudy.principalservices;
 
-import com.mycompany.istudy.db.entities.Modul;
-import com.mycompany.istudy.db.entities.Student;
-import com.mycompany.istudy.db.services.impl.ModulManager;
-import com.mycompany.istudy.db.services.impl.StudentManager;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
