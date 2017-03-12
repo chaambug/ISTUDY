@@ -5,6 +5,7 @@ import com.mycompany.istudy.db.connection.Connection;
 import com.mycompany.istudy.db.entities.Modul;
 import com.mycompany.istudy.db.entities.Semester;
 import com.mycompany.istudy.db.entities.Student;
+import java.util.ArrayList;
 import java.util.Collections;
 import org.apache.log4j.Logger;
 import javax.persistence.EntityManager;
@@ -44,6 +45,17 @@ public class ModulManager implements ModulManagerIntf{
         return null;
     }
 
+    @Override
+    public List<Modul> getAllModule(Student student) {
+        try {
+            LOGGER.info("service call getAllModule");
+            return em != null ? em.createNamedQuery("Modul.findByStudent", Modul.class).setParameter("student", student).getResultList() : new ArrayList<>();
+        } catch (Exception e) {
+            LOGGER.error("getAllModule not successfull", e);
+        }
+        return new ArrayList<>();
+    }
+    
     @Override
     public List<Modul> getModuleByMatrikelnummer(int matrikelnummer) {
         try {
@@ -158,13 +170,12 @@ public class ModulManager implements ModulManagerIntf{
     }
 
     @Override
-    public Modul getModulByName(String text) {
+    public Modul getModulByName(String modulName, Student student) {
         try {
             LOGGER.info("service call getModulByName");
             List<Modul> modulList = getAllModule();
-
             for (Modul m : modulList) {
-                if (m.getModulname().equals(text)) {
+                if (m.getModulname().equals(modulName) && Objects.equals(m.getMatrikelnummer().getMatrikelnummer(), student.getMatrikelnummer())) {
                     return m;
                 }
             }

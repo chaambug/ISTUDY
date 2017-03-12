@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Modul.findAllModulesByStudentAndSemester", query = "SELECT m FROM Modul m WHERE m.semesternummer = :semester AND m.matrikelnummer = :student")
     , @NamedQuery(name = "Modul.findByEctspunkte", query = "SELECT m FROM Modul m WHERE m.ectspunkte = :ectspunkte")
     , @NamedQuery(name = "Modul.findByStatus", query = "SELECT m FROM Modul m WHERE m.modulestatus = :value")
+    , @NamedQuery(name = "Modul.findByStudent", query = "SELECT m FROM Modul m WHERE m.matrikelnummer = :student")
     , @NamedQuery(name = "Modul.findByStatusAndStudent", query = "SELECT m FROM Modul m WHERE m.modulestatus = :value AND m.matrikelnummer = :student")
     , @NamedQuery(name = "Modul.findByStudyhours", query = "SELECT m FROM Modul m WHERE m.studyhours = :studyhours")})
 public class Modul implements Serializable {

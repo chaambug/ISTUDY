@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Objects;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -45,10 +46,12 @@ public class SubjectStreamController extends BaseController {
     private final static Logger LOGGER = Logger.getLogger(SubjectStreamController.class);
 
     OrganiserController organiserController;
+    GraphicalViewController graphicalViewController;
 
     public SubjectStreamController(UserWin instance) {
         super(instance);
         organiserController = new OrganiserController(instance);
+        graphicalViewController = new GraphicalViewController(instance);
     }
 
     @Override
@@ -141,7 +144,7 @@ public class SubjectStreamController extends BaseController {
                 }
                 List<Modul> allModules = ModulManager.getInstance().getAllModule();
                 for (Modul module : allModules) {
-                    if (module.getModulname().equals(instance.getModulename().getText())) {
+                    if (module.getModulname().equals(instance.getModulename().getText()) && Objects.equals(student.getMatrikelnummer(), module.getMatrikelnummer().getMatrikelnummer())) {
                         JOptionPane.showMessageDialog(instance,
                                 "Module already exists! ",
                                 "Multiple entry error",
@@ -239,7 +242,8 @@ public class SubjectStreamController extends BaseController {
         if (!instance.getSelectedModuleLabel().getText().isEmpty()) {
             instance.getSelectedModuleLabel().setForeground(Color.BLUE);
             ModulManager moduleManager = ModulManager.getInstance();
-            Modul module = moduleManager.getModulByName(moduleName);
+            Student student = StudentManager.getInstance().getStudent();
+            Modul module = moduleManager.getModulByName(moduleName, student);
             module.setModulestatus(value);
             moduleManager.updateModul(module);
         }
@@ -329,9 +333,9 @@ public class SubjectStreamController extends BaseController {
         if (moduleName == null) {
             moduleName = instance.getSelectedModuleLabel().getText();
         }
-
+        Student student = StudentManager.getInstance().getStudent();
         final ModulManager moduleManager = ModulManager.getInstance();
-        Modul theModul = moduleManager.getModulByName(moduleName);
+        Modul theModul = moduleManager.getModulByName(moduleName, student);
         if (theModul != null) {
             if (theModul.getModulestatus()) {
                 instance.getSelectedModuleLabel().setForeground(Color.BLUE);
@@ -365,15 +369,15 @@ public class SubjectStreamController extends BaseController {
         instance.getSemesterBoardPanel().setVisible(false);
         instance.getSelectedModuleLabel().setText(String.valueOf(lastPathComponent.getUserObject()));
         instance.getModulnameModulBPanel().setText(String.valueOf(lastPathComponent.getUserObject()));
+        Student student = StudentManager.getInstance().getStudent();
         ModulManager moduleManager = ModulManager.getInstance();
-        Modul module = moduleManager.getModulByName(String.valueOf(lastPathComponent.getUserObject()));
+        Modul module = moduleManager.getModulByName(String.valueOf(lastPathComponent.getUserObject()), student);
         String creditpoints = String.valueOf(module.getEctspunkte());
         String studyhours = String.valueOf(module.getStudyhours());
         instance.getCreditpointsModulBPanel().setText(creditpoints);
         instance.getStudyhoursModulBPanel().setText(studyhours);
         initModuleBoard(null);
         //check if the module has a record, else it should be create
-        Student student = StudentManager.getInstance().getStudent();
         if (AcademicrecordsManager.getInstance().getAllRecords(student, module).isEmpty()) {
             Academicrecords newTry = new Academicrecords();
             newTry.setId(0);
@@ -388,7 +392,8 @@ public class SubjectStreamController extends BaseController {
         if (!instance.getModulnameModulBPanel().getText().isEmpty()) {
             ModulManager moduleManager = ModulManager.getInstance();
             TreePath selectionPath = instance.getModulAndSemesterOverviewJTree().getSelectionPath();
-            Modul module = moduleManager.getModulByName(String.valueOf(((DefaultMutableTreeNode) selectionPath.getLastPathComponent()).getUserObject()));
+            Student student = StudentManager.getInstance().getStudent();
+            Modul module = moduleManager.getModulByName(String.valueOf(((DefaultMutableTreeNode) selectionPath.getLastPathComponent()).getUserObject()), student);
             try {
                 if (module != null) {
                     module.setModulname(instance.getModulnameModulBPanel().getText());
@@ -465,8 +470,8 @@ public class SubjectStreamController extends BaseController {
 
     public void createTryRow() {
         final String moduleName = instance.getSelectedModuleLabel().getText();
-        Modul module = ModulManager.getInstance().getModulByName(moduleName);
         Student student = StudentManager.getInstance().getStudent();
+        Modul module = ModulManager.getInstance().getModulByName(moduleName, student);
         Academicrecords newTry = new Academicrecords();
         newTry.setId(0);
         newTry.setStudentid(student);
@@ -477,8 +482,8 @@ public class SubjectStreamController extends BaseController {
 
     private void updateRecordsTable() {
         final String moduleName = instance.getSelectedModuleLabel().getText();
-        Modul module = ModulManager.getInstance().getModulByName(moduleName);
         Student student = StudentManager.getInstance().getStudent();
+        Modul module = ModulManager.getInstance().getModulByName(moduleName, student);
         DefaultTableModel model = (DefaultTableModel) instance.getAcademicRecordsJTable().getModel();
         GuiServices.deleteTableContent(instance.getAcademicRecordsJTable());
         int number = 1;
@@ -501,8 +506,8 @@ public class SubjectStreamController extends BaseController {
         if (result == JOptionPane.YES_OPTION) {
             int rowNumber = instance.getAcademicRecordsJTable().getSelectedRow();
             final String moduleName = instance.getSelectedModuleLabel().getText();
-            Modul module = ModulManager.getInstance().getModulByName(moduleName);
             Student student = StudentManager.getInstance().getStudent();
+            Modul module = ModulManager.getInstance().getModulByName(moduleName, student);
             List<Academicrecords> allRecords = AcademicrecordsManager.getInstance().getAllRecords(student, module);
             Academicrecords record = allRecords.get(rowNumber);
             AcademicrecordsManager.getInstance().removeRecord(record);
@@ -514,8 +519,8 @@ public class SubjectStreamController extends BaseController {
         int column = instance.getAcademicRecordsJTable().getSelectedColumn();
         int row = instance.getAcademicRecordsJTable().getSelectedRow();
         final String moduleName = instance.getSelectedModuleLabel().getText();
-        Modul module = ModulManager.getInstance().getModulByName(moduleName);
         Student student = StudentManager.getInstance().getStudent();
+        Modul module = ModulManager.getInstance().getModulByName(moduleName, student);
         switch (column) {
             //examination date
             case 1: {

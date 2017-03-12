@@ -32,7 +32,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Academicrecords.findById", query = "SELECT a FROM Academicrecords a WHERE a.id = :id")
     , @NamedQuery(name = "Academicrecords.findAllRecords", query = "SELECT a FROM Academicrecords a WHERE a.studentid = :student AND a.moduleid = :module")    
     , @NamedQuery(name = "Academicrecords.findRecordForStudentAndModul", query = "SELECT a FROM Academicrecords a WHERE a.studentid = :student AND a.moduleid = :module AND a.grade = 0") 
-    , @NamedQuery(name = "Academicrecords.findByGrade", query = "SELECT a FROM Academicrecords a WHERE a.grade = :grade")})
+    , @NamedQuery(name = "Academicrecords.findAllRecordsForStudentAndModulNot0AndNot5", query = "SELECT a FROM Academicrecords a WHERE a.studentid = :student AND a.moduleid = :module AND a.grade != 0 AND a.grade != 5")
+    , @NamedQuery(name = "Academicrecords.findAllRecordsForStudentAndModulWithGrad5", query = "SELECT a FROM Academicrecords a WHERE a.studentid = :student AND a.moduleid = :module AND a.grade = 5") 
+    , @NamedQuery(name = "Academicrecords.findByGrade", query = "SELECT a FROM Academicrecords a WHERE a.grade = :grade")
+    , @NamedQuery(name = "Academicrecords.findByStudent", query = "SELECT a FROM Academicrecords a WHERE a.studentid = :student")})
 public class Academicrecords implements Serializable {
 
     private static final long serialVersionUID = 1L;

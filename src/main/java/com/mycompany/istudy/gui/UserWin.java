@@ -6,6 +6,8 @@ import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,16 +27,28 @@ public class UserWin extends javax.swing.JFrame {
     private PerformancePdfController pdfControkller;
     private BaseController calendarViewController;
 
+    private final Login login;
+
     /**
      * Creates new form UserWin
      *
+     * @param login
      * @throws java.io.IOException
      */
-    public UserWin() throws IOException {
+    public UserWin(Login login) throws IOException {
+        this.login = login;
         initControllers();
         initComponents();
         initInformation();
         initFrameSettings();
+
+        //Default behavior for closing window
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent ev) {
+                login.setVisible(true);
+            }
+        });
     }
 
     private void initControllers() {
@@ -57,7 +71,7 @@ public class UserWin extends javax.swing.JFrame {
         controllers.add(graphicalViewController);
         controllers.add(calendarViewController);
 
-        controllers.stream().forEach((specifyController) -> {
+        controllers.forEach((specifyController) -> {
             specifyController.init();
         });
     }
@@ -65,6 +79,10 @@ public class UserWin extends javax.swing.JFrame {
     private void initFrameSettings() {
         setMinimumSize(new Dimension(1000, 670));
         this.setResizable(Boolean.FALSE);
+    }
+
+    private void iStudyListener() {
+        ((HomeController) homeController).initInfo();
     }
 
     /**
@@ -87,8 +105,6 @@ public class UserWin extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        loginentriesTable = new javax.swing.JTable();
         homeusername = new javax.swing.JLabel();
         homefirstname = new javax.swing.JLabel();
         homelastname = new javax.swing.JLabel();
@@ -96,7 +112,7 @@ public class UserWin extends javax.swing.JFrame {
         homefaculty = new javax.swing.JLabel();
         homesubject = new javax.swing.JLabel();
         homematno = new javax.swing.JLabel();
-        ProfilePanel1 = new javax.swing.JPanel();
+        infoBoardJPanel = new javax.swing.JPanel();
         activeSemesterJLabel = new javax.swing.JLabel();
         activeModulesJLabel = new javax.swing.JLabel();
         nextExamJLabel = new javax.swing.JLabel();
@@ -113,8 +129,17 @@ public class UserWin extends javax.swing.JFrame {
         failedExamsJLabelValue = new javax.swing.JLabel();
         passedExamsJLabel = new javax.swing.JLabel();
         passedExamsJLabelValue = new javax.swing.JLabel();
+        reportJPanel = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        areaLog = new javax.swing.JTextArea();
+        reportArea = new javax.swing.JTextArea();
+        lastLoginJPanel = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        loginentriesTable = new javax.swing.JTable();
+        detailsJPanel = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        moduleGradeJTable = new javax.swing.JTable();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        moduleTryJTable = new javax.swing.JTable();
         SubjectStreamPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         modulAndSemesterOverviewJTree = new javax.swing.JTree();
@@ -231,28 +256,6 @@ public class UserWin extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel8.setText("Matri. no.");
 
-        loginentriesTable.setForeground(new java.awt.Color(0, 51, 204));
-        loginentriesTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Time", "Date"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(loginentriesTable);
-
         homeusername.setForeground(new java.awt.Color(0, 51, 255));
         homeusername.setText("jLabel7");
 
@@ -281,7 +284,6 @@ public class UserWin extends javax.swing.JFrame {
             .addGroup(ProfilePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(ProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(ProfilePanelLayout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -343,12 +345,10 @@ public class UserWin extends javax.swing.JFrame {
                 .addGroup(ProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(homematno))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        ProfilePanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Info Board"));
+        infoBoardJPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Info Board"));
 
         activeSemesterJLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         activeSemesterJLabel.setText("Active semester");
@@ -398,85 +398,216 @@ public class UserWin extends javax.swing.JFrame {
         passedExamsJLabelValue.setForeground(new java.awt.Color(0, 51, 255));
         passedExamsJLabelValue.setText("-");
 
-        areaLog.setEditable(false);
-        areaLog.setBackground(new java.awt.Color(249, 249, 249));
-        areaLog.setColumns(20);
-        areaLog.setRows(5);
-        jScrollPane3.setViewportView(areaLog);
-
-        javax.swing.GroupLayout ProfilePanel1Layout = new javax.swing.GroupLayout(ProfilePanel1);
-        ProfilePanel1.setLayout(ProfilePanel1Layout);
-        ProfilePanel1Layout.setHorizontalGroup(
-            ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ProfilePanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout infoBoardJPanelLayout = new javax.swing.GroupLayout(infoBoardJPanel);
+        infoBoardJPanel.setLayout(infoBoardJPanelLayout);
+        infoBoardJPanelLayout.setHorizontalGroup(
+            infoBoardJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(infoBoardJPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
-                    .addGroup(ProfilePanel1Layout.createSequentialGroup()
-                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(averageJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(nextExamJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(activeSemesterJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-                            .addComponent(activeModulesJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(activeModulesJLabelValue, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                            .addComponent(activeSemesterJLabelValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(nextExamJLabelValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(averageJLabelValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(passedExamsJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(failedExamsJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(savedcpJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cpToAchieveJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(savedcpJLabelValue, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cpToAchieveJLabelValue, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(failedExamsJLabelValue, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(passedExamsJLabelValue, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(infoBoardJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(averageJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nextExamJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(activeSemesterJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                    .addComponent(activeModulesJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(infoBoardJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(activeModulesJLabelValue, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                    .addComponent(activeSemesterJLabelValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(averageJLabelValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(infoBoardJPanelLayout.createSequentialGroup()
+                        .addComponent(nextExamJLabelValue, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addGroup(infoBoardJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(passedExamsJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(failedExamsJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(savedcpJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cpToAchieveJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(infoBoardJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(savedcpJLabelValue, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cpToAchieveJLabelValue, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(failedExamsJLabelValue, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(passedExamsJLabelValue, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
-        ProfilePanel1Layout.setVerticalGroup(
-            ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ProfilePanel1Layout.createSequentialGroup()
+        infoBoardJPanelLayout.setVerticalGroup(
+            infoBoardJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(infoBoardJPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(ProfilePanel1Layout.createSequentialGroup()
-                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(infoBoardJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(infoBoardJPanelLayout.createSequentialGroup()
+                        .addGroup(infoBoardJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(savedcpJLabel)
                             .addComponent(savedcpJLabelValue))
                         .addGap(11, 11, 11)
-                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(infoBoardJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cpToAchieveJLabel)
                             .addComponent(cpToAchieveJLabelValue))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(infoBoardJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(failedExamsJLabel)
                             .addComponent(failedExamsJLabelValue))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(infoBoardJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(passedExamsJLabel)
                             .addComponent(passedExamsJLabelValue)))
-                    .addGroup(ProfilePanel1Layout.createSequentialGroup()
-                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(infoBoardJPanelLayout.createSequentialGroup()
+                        .addGroup(infoBoardJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(activeSemesterJLabel)
                             .addComponent(activeSemesterJLabelValue))
                         .addGap(11, 11, 11)
-                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(infoBoardJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(activeModulesJLabel)
                             .addComponent(activeModulesJLabelValue))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(infoBoardJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(nextExamJLabel)
                             .addComponent(nextExamJLabelValue))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(ProfilePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(infoBoardJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(averageJLabel)
                             .addComponent(averageJLabelValue, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        reportJPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Report"));
+
+        reportArea.setEditable(false);
+        reportArea.setBackground(new java.awt.Color(201, 216, 231));
+        reportArea.setColumns(20);
+        reportArea.setForeground(new java.awt.Color(0, 51, 255));
+        reportArea.setRows(5);
+        jScrollPane3.setViewportView(reportArea);
+
+        javax.swing.GroupLayout reportJPanelLayout = new javax.swing.GroupLayout(reportJPanel);
+        reportJPanel.setLayout(reportJPanelLayout);
+        reportJPanelLayout.setHorizontalGroup(
+            reportJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(reportJPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3)
+                .addContainerGap())
+        );
+        reportJPanelLayout.setVerticalGroup(
+            reportJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(reportJPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        lastLoginJPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Last Logins"));
+
+        loginentriesTable.setBackground(new java.awt.Color(201, 216, 231));
+        loginentriesTable.setForeground(new java.awt.Color(0, 51, 204));
+        loginentriesTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Time", "Date"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(loginentriesTable);
+        if (loginentriesTable.getColumnModel().getColumnCount() > 0) {
+            loginentriesTable.getColumnModel().getColumn(1).setHeaderValue("Date");
+        }
+
+        javax.swing.GroupLayout lastLoginJPanelLayout = new javax.swing.GroupLayout(lastLoginJPanel);
+        lastLoginJPanel.setLayout(lastLoginJPanelLayout);
+        lastLoginJPanelLayout.setHorizontalGroup(
+            lastLoginJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(lastLoginJPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        lastLoginJPanelLayout.setVerticalGroup(
+            lastLoginJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(lastLoginJPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        detailsJPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Details"));
+
+        moduleGradeJTable.setBackground(new java.awt.Color(201, 216, 231));
+        moduleGradeJTable.setForeground(new java.awt.Color(0, 51, 204));
+        moduleGradeJTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Module", "Grade"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane7.setViewportView(moduleGradeJTable);
+
+        moduleTryJTable.setBackground(new java.awt.Color(201, 216, 231));
+        moduleTryJTable.setForeground(new java.awt.Color(0, 51, 204));
+        moduleTryJTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Module", "Try", "Status"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane8.setViewportView(moduleTryJTable);
+
+        javax.swing.GroupLayout detailsJPanelLayout = new javax.swing.GroupLayout(detailsJPanel);
+        detailsJPanel.setLayout(detailsJPanelLayout);
+        detailsJPanelLayout.setHorizontalGroup(
+            detailsJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(detailsJPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        detailsJPanelLayout.setVerticalGroup(
+            detailsJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(detailsJPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(detailsJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -486,9 +617,14 @@ public class UserWin extends javax.swing.JFrame {
             HomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(HomePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(ProfilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(HomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ProfilePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lastLoginJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ProfilePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(HomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(infoBoardJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(reportJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(detailsJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         HomePanelLayout.setVerticalGroup(
@@ -496,8 +632,16 @@ public class UserWin extends javax.swing.JFrame {
             .addGroup(HomePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(HomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ProfilePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ProfilePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(HomePanelLayout.createSequentialGroup()
+                        .addComponent(infoBoardJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(detailsJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(reportJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(HomePanelLayout.createSequentialGroup()
+                        .addComponent(ProfilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lastLoginJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -686,11 +830,11 @@ public class UserWin extends javax.swing.JFrame {
             }
         });
 
-        jLabel15.setText("Module name");
+        jLabel15.setText("Credit points");
 
-        jLabel18.setText("Credit points");
+        jLabel18.setText("Study hours");
 
-        jLabel19.setText("Study hours");
+        jLabel19.setText("Module name");
 
         modulnameModulBPanel.setBackground(new java.awt.Color(240, 240, 240));
 
@@ -765,7 +909,7 @@ public class UserWin extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -816,7 +960,7 @@ public class UserWin extends javax.swing.JFrame {
                     .addComponent(selectedModuleLabel))
                 .addGap(18, 18, 18)
                 .addComponent(activateDeactivateModuleButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(moduleBoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
                     .addComponent(modulnameModulBPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -875,7 +1019,7 @@ public class UserWin extends javax.swing.JFrame {
         SubjectStreamPanelLayout.setVerticalGroup(
             SubjectStreamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SubjectStreamPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(SubjectStreamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deleteSemesterJButton)
@@ -1177,7 +1321,7 @@ public class UserWin extends javax.swing.JFrame {
                     .addComponent(previousjButton, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(nextjButton, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(calendarjScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+                .addComponent(calendarjScrollPane)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(CalenderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(calendarjComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1226,7 +1370,7 @@ public class UserWin extends javax.swing.JFrame {
                     .addComponent(moduleListjComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addComponent(ModulPerformancejPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(383, Short.MAX_VALUE))
+                .addContainerGap(409, Short.MAX_VALUE))
         );
 
         graphicalViewjTabbedPane.addTab("Graphical view", GraphicalnViewPanel);
@@ -1308,19 +1452,23 @@ public class UserWin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
-        System.exit(0);
+        this.dispose();
+        login.setVisible(true);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void moduleListjComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moduleListjComboBoxActionPerformed
         ((GraphicalViewController) graphicalViewController).createGraph();
+        iStudyListener();
     }//GEN-LAST:event_moduleListjComboBoxActionPerformed
 
     private void activeModuleJTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activeModuleJTableMouseClicked
         ((OrganiserController) organiserController).prepareTableToBookInvestedHours();
+        iStudyListener();
     }//GEN-LAST:event_activeModuleJTableMouseClicked
 
     private void pushInvestedHoursButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pushInvestedHoursButtonActionPerformed
         ((OrganiserController) organiserController).pushHours();
+        iStudyListener();
     }//GEN-LAST:event_pushInvestedHoursButtonActionPerformed
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
@@ -1342,14 +1490,17 @@ public class UserWin extends javax.swing.JFrame {
         else if (SwingUtilities.isMiddleMouseButton(evt)) {
             ((SubjectStreamController) subjectStreamController).realizeTryDetailEntering();
         }
+        iStudyListener();
     }//GEN-LAST:event_academicRecordsJTableMouseClicked
 
     private void editModuleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editModuleButtonActionPerformed
         ((SubjectStreamController) subjectStreamController).editModule();
+        iStudyListener();
     }//GEN-LAST:event_editModuleButtonActionPerformed
 
     private void deleteModuleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteModuleButtonActionPerformed
         ((SubjectStreamController) subjectStreamController).deleteModule();
+        iStudyListener();
     }//GEN-LAST:event_deleteModuleButtonActionPerformed
 
     private void creditpointsModulBPanelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creditpointsModulBPanelActionPerformed
@@ -1358,34 +1509,43 @@ public class UserWin extends javax.swing.JFrame {
 
     private void activateDeactivateModuleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activateDeactivateModuleButtonActionPerformed
         ((SubjectStreamController) subjectStreamController).activateDeactivateModule();
+        iStudyListener();
+        ((GraphicalViewController) graphicalViewController).init();
     }//GEN-LAST:event_activateDeactivateModuleButtonActionPerformed
 
     private void activateDeactivateSemesterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activateDeactivateSemesterButtonActionPerformed
         ((SubjectStreamController) subjectStreamController).activateDeactivateSemester();
+        iStudyListener();
     }//GEN-LAST:event_activateDeactivateSemesterButtonActionPerformed
 
     private void examinationStartDateJCalenderPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_examinationStartDateJCalenderPropertyChange
         ((SubjectStreamController) subjectStreamController).setExaminationStartDate();
+        iStudyListener();
     }//GEN-LAST:event_examinationStartDateJCalenderPropertyChange
 
     private void semesterStartDateJCalenderPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_semesterStartDateJCalenderPropertyChange
         ((SubjectStreamController) subjectStreamController).setSemesterStartDate();
+        iStudyListener();
     }//GEN-LAST:event_semesterStartDateJCalenderPropertyChange
 
     private void createModuleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createModuleButtonActionPerformed
         ((SubjectStreamController) subjectStreamController).createModul();
+        iStudyListener();
     }//GEN-LAST:event_createModuleButtonActionPerformed
 
     private void createSemesterJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createSemesterJButtonActionPerformed
         ((SubjectStreamController) subjectStreamController).createSemester();
+        iStudyListener();
     }//GEN-LAST:event_createSemesterJButtonActionPerformed
 
     private void deleteSemesterJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteSemesterJButtonActionPerformed
         ((SubjectStreamController) subjectStreamController).deleteSemester();
+        iStudyListener();
     }//GEN-LAST:event_deleteSemesterJButtonActionPerformed
 
     private void modulAndSemesterOverviewJTreeValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_modulAndSemesterOverviewJTreeValueChanged
         ((SubjectStreamController) subjectStreamController).setModuleAndSemestertrOverviewJtree(evt.getPath());
+        iStudyListener();
     }//GEN-LAST:event_modulAndSemesterOverviewJTreeValueChanged
 
     private void deleteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteMenuItemActionPerformed
@@ -1395,23 +1555,28 @@ public class UserWin extends javax.swing.JFrame {
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jfc.getSelectedFile();
             pdfControkller.generatePDF(selectedFile.getAbsolutePath(), this);
-        } 
+        }
+        iStudyListener();
     }//GEN-LAST:event_deleteMenuItemActionPerformed
 
     private void previousjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousjButtonActionPerformed
         ((CalendarViewController) calendarViewController).previousMonth();
+        iStudyListener();
     }//GEN-LAST:event_previousjButtonActionPerformed
 
     private void nextjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextjButtonActionPerformed
         ((CalendarViewController) calendarViewController).nextMonth();
+        iStudyListener();
     }//GEN-LAST:event_nextjButtonActionPerformed
 
     private void calendarjComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calendarjComboBoxActionPerformed
         ((CalendarViewController) calendarViewController).changeYear();
+        iStudyListener();
     }//GEN-LAST:event_calendarjComboBoxActionPerformed
 
     private void moduleListCalendarjComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moduleListCalendarjComboBoxActionPerformed
         ((CalendarViewController) calendarViewController).showInvestedHoursForModule();
+        iStudyListener();
     }//GEN-LAST:event_moduleListCalendarjComboBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1421,7 +1586,6 @@ public class UserWin extends javax.swing.JFrame {
     private javax.swing.JPanel ModulPerformancejPanel;
     private javax.swing.JPanel OrganiserPanel;
     private javax.swing.JPanel ProfilePanel;
-    private javax.swing.JPanel ProfilePanel1;
     private javax.swing.JPanel SubjectStreamPanel;
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JTable academicRecordsJTable;
@@ -1432,7 +1596,6 @@ public class UserWin extends javax.swing.JFrame {
     private javax.swing.JLabel activeModulesJLabelValue;
     private javax.swing.JLabel activeSemesterJLabel;
     private javax.swing.JLabel activeSemesterJLabelValue;
-    private javax.swing.JTextArea areaLog;
     private javax.swing.JLabel averageJLabel;
     private javax.swing.JLabel averageJLabelValue;
     private javax.swing.JComboBox<String> calendarjComboBox;
@@ -1450,6 +1613,7 @@ public class UserWin extends javax.swing.JFrame {
     private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JButton deleteModuleButton;
     private javax.swing.JButton deleteSemesterJButton;
+    private javax.swing.JPanel detailsJPanel;
     private javax.swing.JMenu editMenu;
     private javax.swing.JButton editModuleButton;
     private com.toedter.calendar.JDateChooser examinationStartDateJCalender;
@@ -1467,6 +1631,7 @@ public class UserWin extends javax.swing.JFrame {
     private javax.swing.JLabel homesubject;
     private javax.swing.JLabel homeuniversity;
     private javax.swing.JLabel homeusername;
+    private javax.swing.JPanel infoBoardJPanel;
     private javax.swing.JTable investedHoursForAModuleJTable;
     private javax.swing.JTextField investedHoursJTextField;
     private javax.swing.JCheckBox jCheckBox1;
@@ -1506,15 +1671,20 @@ public class UserWin extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JPanel lastLoginJPanel;
     private javax.swing.JTable loginentriesTable;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JTree modulAndSemesterOverviewJTree;
     private javax.swing.JPanel moduleBoardPanel;
+    private javax.swing.JTable moduleGradeJTable;
     private javax.swing.JLabel moduleLabel;
     private javax.swing.JComboBox<String> moduleListCalendarjComboBox;
     private javax.swing.JComboBox<String> moduleListjComboBox;
+    private javax.swing.JTable moduleTryJTable;
     private javax.swing.JTextField modulename;
     private javax.swing.JTextField modulnameModulBPanel;
     private javax.swing.JLabel monthjLabel;
@@ -1526,6 +1696,8 @@ public class UserWin extends javax.swing.JFrame {
     private javax.swing.JLabel passedExamsJLabelValue;
     private javax.swing.JButton previousjButton;
     private javax.swing.JButton pushInvestedHoursButton;
+    private javax.swing.JTextArea reportArea;
+    private javax.swing.JPanel reportJPanel;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
     private javax.swing.JLabel savedcpJLabel;
@@ -1661,7 +1833,7 @@ public class UserWin extends javax.swing.JFrame {
     public JComboBox<String> getModuleListjComboBox() {
         return moduleListjComboBox;
     }
-    
+
     public JComboBox<String> getModuleListCalendarjComboBox() {
         return moduleListCalendarjComboBox;
     }
@@ -1706,130 +1878,75 @@ public class UserWin extends javax.swing.JFrame {
         return activeModulesJLabel;
     }
 
-    public void setActiveModulesJLabel(JLabel activeModulesJLabel) {
-        this.activeModulesJLabel = activeModulesJLabel;
-    }
-
     public JLabel getActiveModulesJLabelValue() {
         return activeModulesJLabelValue;
     }
-
-    public void setActiveModulesJLabelValue(JLabel activeModulesJLabelValue) {
-        this.activeModulesJLabelValue = activeModulesJLabelValue;
-    }
-
+    
     public JLabel getActiveSemesterJLabel() {
         return activeSemesterJLabel;
-    }
-
-    public void setActiveSemesterJLabel(JLabel activeSemesterJLabel) {
-        this.activeSemesterJLabel = activeSemesterJLabel;
     }
 
     public JLabel getActiveSemesterJLabelValue() {
         return activeSemesterJLabelValue;
     }
 
-    public void setActiveSemesterJLabelValue(JLabel activeSemesterJLabelValue) {
-        this.activeSemesterJLabelValue = activeSemesterJLabelValue;
-    }
-
     public JLabel getAverageJLabel() {
         return averageJLabel;
-    }
-
-    public void setAverageJLabel(JLabel averageJLabel) {
-        this.averageJLabel = averageJLabel;
     }
 
     public JLabel getAverageJLabelValue() {
         return averageJLabelValue;
     }
 
-    public void setAverageJLabelValue(JLabel averageJLabelValue) {
-        this.averageJLabelValue = averageJLabelValue;
-    }
-
     public JLabel getCpToAchieveJLabel() {
         return cpToAchieveJLabel;
-    }
-
-    public void setCpToAchieveJLabel(JLabel cpToAchieveJLabel) {
-        this.cpToAchieveJLabel = cpToAchieveJLabel;
     }
 
     public JLabel getCpToAchieveJLabelValue() {
         return cpToAchieveJLabelValue;
     }
 
-    public void setCpToAchieveJLabelValue(JLabel cpToAchieveJLabelValue) {
-        this.cpToAchieveJLabelValue = cpToAchieveJLabelValue;
-    }
-
     public JLabel getFailedExamsJLabel() {
         return failedExamsJLabel;
-    }
-
-    public void setFailedExamsJLabel(JLabel failedExamsJLabel) {
-        this.failedExamsJLabel = failedExamsJLabel;
     }
 
     public JLabel getFailedExamsJLabelValue() {
         return failedExamsJLabelValue;
     }
 
-    public void setFailedExamsJLabelValue(JLabel failedExamsJLabelValue) {
-        this.failedExamsJLabelValue = failedExamsJLabelValue;
-    }
-
     public JLabel getNextExamJLabel() {
         return nextExamJLabel;
-    }
-
-    public void setNextExamJLabel(JLabel nextExamJLabel) {
-        this.nextExamJLabel = nextExamJLabel;
     }
 
     public JLabel getNextExamJLabelValue() {
         return nextExamJLabelValue;
     }
 
-    public void setNextExamJLabelValue(JLabel nextExamJLabelValue) {
-        this.nextExamJLabelValue = nextExamJLabelValue;
-    }
-
     public JLabel getPassedExamsJLabel() {
         return passedExamsJLabel;
-    }
-
-    public void setPassedExamsJLabel(JLabel passedExamsJLabel) {
-        this.passedExamsJLabel = passedExamsJLabel;
     }
 
     public JLabel getPassedExamsJLabelValue() {
         return passedExamsJLabelValue;
     }
 
-    public void setPassedExamsJLabelValue(JLabel passedExamsJLabelValue) {
-        this.passedExamsJLabelValue = passedExamsJLabelValue;
-    }
-
     public JLabel getSavedcpJLabel() {
         return savedcpJLabel;
-    }
-
-    public void setSavedcpJLabel(JLabel savedcpJLabel) {
-        this.savedcpJLabel = savedcpJLabel;
     }
 
     public JLabel getSavedcpJLabelValue() {
         return savedcpJLabelValue;
     }
 
-    public void setSavedcpJLabelValue(JLabel savedcpJLabelValue) {
-        this.savedcpJLabelValue = savedcpJLabelValue;
+    public JTable getModuleGradeJTable() {
+        return moduleGradeJTable;
     }
-    
-    
 
+    public JTable getModuleTryJTable() {
+        return moduleTryJTable;
+    }
+
+    public JTextArea getReportArea() {
+        return reportArea;
+    }
 }

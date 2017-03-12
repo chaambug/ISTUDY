@@ -271,10 +271,11 @@ public class Login extends javax.swing.JFrame {
                 if (user.equals(aStudent.getBenutzername()) && pass.equals(aStudent.getPasswort())) {
                     studentManager.setStudent(aStudent);
                     userFound = true;
-                    uw = new UserWin();
+                    uw = new UserWin(this);
                     uw.setVisible(true);
                     loginButton.setText("LOGOUT");
                     reportTextArea.append(">> " + user + " login successfull\n");
+                    this.dispose();
                 }
             }
             if (!userFound) {

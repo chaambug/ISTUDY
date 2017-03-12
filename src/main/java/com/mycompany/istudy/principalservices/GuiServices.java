@@ -5,7 +5,12 @@
  */
 package com.mycompany.istudy.principalservices;
 
+import com.mycompany.istudy.db.entities.Modul;
+import com.mycompany.istudy.db.entities.Student;
+import com.mycompany.istudy.db.services.impl.ModulManager;
+import com.mycompany.istudy.db.services.impl.StudentManager;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -16,25 +21,27 @@ import javax.swing.table.DefaultTableModel;
  * @author Varuni
  */
 public class GuiServices {
+
     public static void deleteTableContent(JTable obj) {
         DefaultTableModel model = (DefaultTableModel) obj.getModel();
         for (int i = (model.getRowCount() - 1); i >= 0; i--) {
             model.removeRow(i);
         }
     }
-    
+
     public static long getCalendarWeeks(Date d1, Date d2) throws Exception {
         final long millis = (d2.getTime() - d1.getTime());
         return TimeUnit.DAYS.convert(millis, TimeUnit.MILLISECONDS) / 7;
     }
 
-    public static void deleteNotificationTextAreaContent(JTextArea notificationTextArea) {
-        notificationTextArea.setText(null);              
-        
+    public static void deleteNotificationTextAreaContent
+        (JTextArea notificationTextArea) {
+        notificationTextArea.setText(null);
+
     }
+
     public static long getCalenderDays(Date d1, Date d2) throws Exception {
         final long millis = (d2.getTime() - d1.getTime());
         return TimeUnit.DAYS.convert(millis, TimeUnit.MILLISECONDS);
     }
-}   
-
+}

@@ -23,4 +23,10 @@ public interface AcademicrecordsManagerIntf {
     public void removeRecord(Academicrecords obj);
     
     public Academicrecords getAcademicrecord(Student student, Modul modul);
+    
+    public List<Academicrecords> getAcademicrecord(Student student);
+    
+    public List<Academicrecords> getAcademicrecordGrad5(Student student, Modul modul);
+    
+    public List<Academicrecords> getAcademicrecordNot0AndNot5(Student student, Modul modul);
 }

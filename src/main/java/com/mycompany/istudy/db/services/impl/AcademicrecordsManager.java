@@ -10,6 +10,7 @@ import com.mycompany.istudy.db.connection.Connection;
 import com.mycompany.istudy.db.entities.Academicrecords;
 import com.mycompany.istudy.db.entities.Modul;
 import com.mycompany.istudy.db.entities.Student;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -90,4 +91,51 @@ public class AcademicrecordsManager implements AcademicrecordsManagerIntf {
         }
         return null;
     }
+
+    @Override
+    public List<Academicrecords> getAcademicrecordGrad5(Student student, Modul modul) {
+        try {
+            LOGGER.info("service call getAcademicrecordGrad5");
+            List<Academicrecords> resultList = em.createNamedQuery("Academicrecords.findAllRecordsForStudentAndModulWithGrad5", Academicrecords.class)
+                    .setParameter("student", student)
+                    .setParameter("module", modul)
+                    .getResultList();
+                return resultList;
+        } catch (Exception e) {
+            LOGGER.error("getAcademicrecordGrad5 not successfull", e);
+        }
+        return new ArrayList<>();
+    }
+    
+    @Override
+    public List<Academicrecords> getAcademicrecordNot0AndNot5(Student student, Modul modul) {
+        try {
+            LOGGER.info("service call getAcademicrecordNot0AndNot5");
+            List<Academicrecords> resultList = em.createNamedQuery("Academicrecords.findAllRecordsForStudentAndModulNot0AndNot5", Academicrecords.class)
+                    .setParameter("student", student)
+                    .setParameter("module", modul)
+                    .getResultList();
+                return resultList;
+        } catch (Exception e) {
+            LOGGER.error("getAcademicrecordNot0AndNot5 not successfull", e);
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<Academicrecords> getAcademicrecord(Student student) {
+        try {
+            LOGGER.info("service call getAcademicrecord for the student");
+            List<Academicrecords> resultList = em.createNamedQuery("Academicrecords.findByStudent", Academicrecords.class)
+                    .setParameter("student", student)
+                    .getResultList();
+
+            return resultList;
+
+        } catch (Exception e) {
+            LOGGER.error("getAcademicrecord not successfull", e);
+        }
+        return new ArrayList<>();
+    }
+
 }

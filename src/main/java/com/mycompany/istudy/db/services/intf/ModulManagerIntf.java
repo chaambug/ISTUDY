@@ -11,6 +11,8 @@ import java.util.List;
 public interface ModulManagerIntf {
 
     public List<Modul> getAllModule();
+    
+    public List<Modul> getAllModule(Student student);
 
     public List<Modul> getModuleByMatrikelnummer(int matrikelnummer);
 
@@ -28,5 +30,5 @@ public interface ModulManagerIntf {
 
     public void deleteModules(Student student, Semester semester);
 
-    public Modul getModulByName(String text);
+    public Modul getModulByName(String modulName, Student student);
 }

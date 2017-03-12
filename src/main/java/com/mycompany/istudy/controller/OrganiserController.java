@@ -8,6 +8,7 @@ package com.mycompany.istudy.controller;
 import com.mycompany.istudy.db.entities.Investedhoursperweekformodule;
 import com.mycompany.istudy.db.entities.Modul;
 import com.mycompany.istudy.db.entities.Semester;
+import com.mycompany.istudy.db.entities.Student;
 import com.mycompany.istudy.db.services.impl.InvestedHoursPerWeekForModuleManager;
 import com.mycompany.istudy.db.services.impl.ModulManager;
 import com.mycompany.istudy.db.services.impl.SemesterManager;
@@ -80,10 +81,11 @@ public class OrganiserController extends BaseController{
     
     public void prepareTableToBookInvestedHours() {
         final int row = instance.getActiveModuleJTable().getSelectedRow();
+        Student student = StudentManager.getInstance().getStudent();
         if (row != -1) {
             try {
                 String moduleName = (String) instance.getActiveModuleJTable().getValueAt(row, 1);
-                Modul modul = ModulManager.getInstance().getModulByName(moduleName);
+                Modul modul = ModulManager.getInstance().getModulByName(moduleName, student);
                 Semester activeSemester = SemesterManager.getInstance().getActiveSemester(StudentManager.getInstance().getStudent());
                 updateInvestedHoursForAModuleJTable(modul, activeSemester);
 
@@ -132,7 +134,8 @@ public class OrganiserController extends BaseController{
 
         if (row != -1) {
             String moduleName = (String) instance.getActiveModuleJTable().getValueAt(row, 1);
-            Modul modul = ModulManager.getInstance().getModulByName(moduleName);
+            Student student = StudentManager.getInstance().getStudent();
+            Modul modul = ModulManager.getInstance().getModulByName(moduleName, student);
             try {
 
                 if (instance.getWeekJComboBox().getItemCount() == 0) {
@@ -181,6 +184,5 @@ public class OrganiserController extends BaseController{
                     "Bad access",
                     JOptionPane.ERROR_MESSAGE);
         }
-        graphicalViewController.createGraph();
     }
 }

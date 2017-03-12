@@ -62,11 +62,12 @@ public class CalendarViewController extends BaseController {
     }
 
     public void refreshCalendar(int month, int year) {
+        Student student = StudentManager.getInstance().getStudent();
         Object selectedItem = instance.getModuleListjComboBox().getSelectedItem();
         if (selectedItem != null) {
             String selectedModul = selectedItem.toString();
             if (selectedModul != null) {
-                Modul modul = ModulManager.getInstance().getModulByName(selectedModul);
+                Modul modul = ModulManager.getInstance().getModulByName(selectedModul, student);
                 investedHoursPerDayOfActualMonth = new ArrayList<>();
                 //TODO: get list of hours for modul and month from DB
                 for (int i = 0; i < 31; i++) {
