@@ -199,6 +199,12 @@ public class UserWin extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         activeModuleJTable = new javax.swing.JTable();
         jLabel23 = new javax.swing.JLabel();
+        GraphicalnViewPanel = new javax.swing.JPanel();
+        ModulPerformancejPanel = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
+        moduleListjComboBox = new javax.swing.JComboBox<>();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
         CalenderPanel = new javax.swing.JPanel();
         calendarjScrollPane = new javax.swing.JScrollPane();
         calendarjTable = new javax.swing.JTable();
@@ -209,11 +215,7 @@ public class UserWin extends javax.swing.JFrame {
         calendarjComboBox = new javax.swing.JComboBox<>();
         jLabel26 = new javax.swing.JLabel();
         moduleListCalendarjComboBox = new javax.swing.JComboBox<>();
-        GraphicalnViewPanel = new javax.swing.JPanel();
-        ModulPerformancejPanel = new javax.swing.JPanel();
-        jLabel24 = new javax.swing.JLabel();
-        moduleListjComboBox = new javax.swing.JComboBox<>();
-        jLabel25 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -411,7 +413,7 @@ public class UserWin extends javax.swing.JFrame {
                     .addComponent(activeModulesJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(infoBoardJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(activeModulesJLabelValue, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                    .addComponent(activeModulesJLabelValue, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
                     .addComponent(activeSemesterJLabelValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(averageJLabelValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(infoBoardJPanelLayout.createSequentialGroup()
@@ -733,12 +735,12 @@ public class UserWin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
                     .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(currentSemesterJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(examinationStartDateJCalender, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+                    .addComponent(examinationStartDateJCalender, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
                     .addComponent(semesterStartDateJCalender, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(semesterLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(activateDeactivateSemesterButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1100,7 +1102,7 @@ public class UserWin extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel22)
                         .addGap(52, 52, 52)
-                        .addComponent(pushInvestedHoursButton, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)))
+                        .addComponent(pushInvestedHoursButton, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -1236,6 +1238,61 @@ public class UserWin extends javax.swing.JFrame {
 
         graphicalViewjTabbedPane.addTab("Organiser", OrganiserPanel);
 
+        ModulPerformancejPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Mthematik 1"));
+        ModulPerformancejPanel.setLayout(new java.awt.BorderLayout());
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel24.setText("Weekly Performance");
+
+        moduleListjComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moduleListjComboBoxActionPerformed(evt);
+            }
+        });
+
+        jLabel25.setText("Please select the Module");
+
+        jLabel27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/istudy/gui/img/bar-chart.png"))); // NOI18N
+        jLabel27.setText("jLabel27");
+
+        javax.swing.GroupLayout GraphicalnViewPanelLayout = new javax.swing.GroupLayout(GraphicalnViewPanel);
+        GraphicalnViewPanel.setLayout(GraphicalnViewPanelLayout);
+        GraphicalnViewPanelLayout.setHorizontalGroup(
+            GraphicalnViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(GraphicalnViewPanelLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(GraphicalnViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel24)
+                    .addComponent(ModulPerformancejPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(GraphicalnViewPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel25)
+                        .addGap(74, 74, 74)
+                        .addComponent(moduleListjComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 565, Short.MAX_VALUE)
+                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(91, 91, 91))
+        );
+        GraphicalnViewPanelLayout.setVerticalGroup(
+            GraphicalnViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(GraphicalnViewPanelLayout.createSequentialGroup()
+                .addGroup(GraphicalnViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(GraphicalnViewPanelLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel24)
+                        .addGap(22, 22, 22)
+                        .addGroup(GraphicalnViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel25)
+                            .addComponent(moduleListjComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(34, 34, 34)
+                        .addComponent(ModulPerformancejPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(GraphicalnViewPanelLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel27)))
+                .addContainerGap(377, Short.MAX_VALUE))
+        );
+
+        graphicalViewjTabbedPane.addTab("Graphical view", GraphicalnViewPanel);
+
         CalenderPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         calendarjTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -1283,6 +1340,9 @@ public class UserWin extends javax.swing.JFrame {
             }
         });
 
+        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/istudy/gui/img/calendar2.png"))); // NOI18N
+        jLabel28.setText("jLabel28");
+
         javax.swing.GroupLayout CalenderPanelLayout = new javax.swing.GroupLayout(CalenderPanel);
         CalenderPanel.setLayout(CalenderPanelLayout);
         CalenderPanelLayout.setHorizontalGroup(
@@ -1306,22 +1366,29 @@ public class UserWin extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(nextjButton))
                         .addComponent(calendarjScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)))
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64))
         );
         CalenderPanelLayout.setVerticalGroup(
             CalenderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CalenderPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(CalenderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel26)
-                    .addComponent(moduleListCalendarjComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(CalenderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(monthjLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(previousjButton, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(nextjButton, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(calendarjScrollPane)
+                    .addGroup(CalenderPanelLayout.createSequentialGroup()
+                        .addGroup(CalenderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel26)
+                            .addComponent(moduleListCalendarjComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(CalenderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(monthjLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(previousjButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(nextjButton, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(calendarjScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE))
+                    .addGroup(CalenderPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel28)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(CalenderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(calendarjComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1330,50 +1397,6 @@ public class UserWin extends javax.swing.JFrame {
         );
 
         graphicalViewjTabbedPane.addTab("Calender", CalenderPanel);
-
-        ModulPerformancejPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Mthematik 1"));
-        ModulPerformancejPanel.setLayout(new java.awt.BorderLayout());
-
-        jLabel24.setText("Weekly Performance");
-
-        moduleListjComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                moduleListjComboBoxActionPerformed(evt);
-            }
-        });
-
-        jLabel25.setText("Please select the Module");
-
-        javax.swing.GroupLayout GraphicalnViewPanelLayout = new javax.swing.GroupLayout(GraphicalnViewPanel);
-        GraphicalnViewPanel.setLayout(GraphicalnViewPanelLayout);
-        GraphicalnViewPanelLayout.setHorizontalGroup(
-            GraphicalnViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(GraphicalnViewPanelLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(GraphicalnViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(GraphicalnViewPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel25)
-                        .addGap(74, 74, 74)
-                        .addComponent(moduleListjComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel24)
-                    .addComponent(ModulPerformancejPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(684, Short.MAX_VALUE))
-        );
-        GraphicalnViewPanelLayout.setVerticalGroup(
-            GraphicalnViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(GraphicalnViewPanelLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabel24)
-                .addGap(22, 22, 22)
-                .addGroup(GraphicalnViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel25)
-                    .addComponent(moduleListjComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addComponent(ModulPerformancejPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(409, Short.MAX_VALUE))
-        );
-
-        graphicalViewjTabbedPane.addTab("Graphical view", GraphicalnViewPanel);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -1654,6 +1677,8 @@ public class UserWin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

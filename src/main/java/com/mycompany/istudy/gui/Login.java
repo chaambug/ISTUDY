@@ -68,7 +68,7 @@ public class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("iStudy - login");
 
-        icon.setIcon(new javax.swing.ImageIcon("C:\\Users\\Varuni\\Documents\\NetBeansProjects\\ISTUDY\\src\\main\\resources\\com\\mycompany\\istudy\\gui\\img\\loginlogo.png")); // NOI18N
+        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/istudy/gui/img/open-book.png"))); // NOI18N
 
         mainTitleLabel.setFont(new java.awt.Font("SansSerif", 1, 36)); // NOI18N
         mainTitleLabel.setText("iStudy Management System");
@@ -128,7 +128,7 @@ public class Login extends javax.swing.JFrame {
 
         reportsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Reports"));
 
-        reportTextArea.setBackground(new java.awt.Color(240, 240, 240));
+        reportTextArea.setBackground(new java.awt.Color(201, 216, 231));
         reportTextArea.setColumns(20);
         reportTextArea.setRows(5);
 
@@ -154,16 +154,17 @@ public class Login extends javax.swing.JFrame {
         loginMainPanelLayout.setHorizontalGroup(
             loginMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(loginMainPanelLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(icon)
-                .addGap(18, 18, 18)
-                .addComponent(mainTitleLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginMainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(reportsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(LoginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(loginMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(loginMainPanelLayout.createSequentialGroup()
+                        .addComponent(reportsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LoginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(loginMainPanelLayout.createSequentialGroup()
+                        .addComponent(icon)
+                        .addGap(18, 18, 18)
+                        .addComponent(mainTitleLabel)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         loginMainPanelLayout.setVerticalGroup(
@@ -171,12 +172,12 @@ public class Login extends javax.swing.JFrame {
             .addGroup(loginMainPanelLayout.createSequentialGroup()
                 .addGroup(loginMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(loginMainPanelLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(icon))
+                        .addContainerGap()
+                        .addComponent(icon, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(loginMainPanelLayout.createSequentialGroup()
-                        .addGap(39, 39, 39)
+                        .addGap(52, 52, 52)
                         .addComponent(mainTitleLabel)))
-                .addGap(66, 66, 66)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(loginMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(LoginPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(reportsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
