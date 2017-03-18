@@ -19,6 +19,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.apache.log4j.Logger;
+
 /**
  *
  * @author Varuni
@@ -246,13 +247,14 @@ public class Login extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    private void processTheLogin() {
+    protected void processTheLogin() {
         StudentManager studentManager = StudentManager.getInstance();
         if (loginButton.getText().equals("LOGOUT")) {
             loginButton.setText("LOGIN");
@@ -263,23 +265,18 @@ public class Login extends javax.swing.JFrame {
             studentManager.setStudent(null);
             return;
         }
-        boolean userFound = false;
         try {
             final String user = usernameTextfield.getText();
             final String pass = ((JTextField) passwordPassfield).getText();
-
-            for (Student aStudent : studentManager.getAllStudents()) {
-                if (user.equals(aStudent.getBenutzername()) && pass.equals(aStudent.getPasswort())) {
-                    studentManager.setStudent(aStudent);
-                    userFound = true;
-                    uw = new UserWin(this);
-                    uw.setVisible(true);
-                    loginButton.setText("LOGOUT");
-                    reportTextArea.append(">> " + user + " login successfull\n");
-                    this.dispose();
-                }
-            }
-            if (!userFound) {
+            final Student student = studentManager.isValidUser(user, pass);
+            if (student != null) {
+                studentManager.setStudent(student);
+                uw = new UserWin(this);
+                uw.setVisible(true);
+                loginButton.setText("LOGOUT");
+                reportTextArea.append(">> " + user + " login successfull\n");
+                this.dispose();
+            } else {
                 JOptionPane.showMessageDialog(this,
                         "The given account is not valid",
                         "User not found",
@@ -288,6 +285,7 @@ public class Login extends javax.swing.JFrame {
         } catch (IOException | HeadlessException e) {
             e.printStackTrace(System.out);
         }
+        long end = System.currentTimeMillis();
     }
 
 
@@ -311,10 +309,7 @@ public class Login extends javax.swing.JFrame {
         processTheLogin();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+    public void startIStudy() {
         try {
             try {
                 for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -339,8 +334,16 @@ public class Login extends javax.swing.JFrame {
                 System.exit(-1);
             }
         } catch (Exception e) {
-            // If Nimbus is not available, you can set the GUI to another look and feel.
+            logger.error("Fatal error", e);
         }
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        Login l = new Login();
+        l.startIStudy();
     }
 
     private void setup() {
@@ -369,5 +372,4 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel usernameLabel;
     private javax.swing.JTextField usernameTextfield;
     // End of variables declaration//GEN-END:variables
-
 }

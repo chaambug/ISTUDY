@@ -116,4 +116,21 @@ public class StudentManager implements StudentManagerIntf{
             LOGGER.error("updateStudent not successfull", e);
         }
     }
+
+    @Override
+    public Student isValidUser(String user, String pwd) {
+         try {
+            LOGGER.info("service call isValidUser - user : " + user + " - Password length : " + pwd.length());
+            List<Student> students = em.createNamedQuery("Student.isValid", Student.class)
+                    .setParameter("username", user)
+                    .setParameter("password", pwd)
+                    .getResultList();
+            if (students != null && students.size() > 0) {
+                return students.get(0);
+            }
+        } catch (Exception e) {
+            LOGGER.error("isValidUser not successfull", e);
+        }
+        return null;
+    }
 }

@@ -7,7 +7,7 @@ import com.mycompany.istudy.db.entities.Modul;
 import com.mycompany.istudy.db.entities.Student;
 import com.mycompany.istudy.db.services.impl.ModulManager;
 import com.mycompany.istudy.db.services.impl.StudentManager;
-import javax.swing.*;
+import javax.swing.*;   
 import javax.swing.table.DefaultTableModel;
 import java.util.GregorianCalendar;
 import com.mycompany.istudy.gui.UserWin;

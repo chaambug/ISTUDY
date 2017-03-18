@@ -1,0 +1,3 @@
+# generated xml entites
+1) navigate to jdk bin directory
+xjc -d d:\generated -p com.mycompany.istudy.xml.entities C:\Users\Varuni\Documents\NetBeansProjects\ISTUDY\src\main\resources\xml.xsd

@@ -20,4 +20,6 @@ public interface StudentManagerIntf{
     public boolean deleteStudent(Student delStudent);
 
     public void updateStudent(Student updateStudent);
+    
+    public Student isValidUser(String user, String pwd);
 }

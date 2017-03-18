@@ -1,7 +1,16 @@
-<?xml version="1.0"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
-    <xs:element name="student" type="studentType"/>
-    <xs:complexType name="weekType">
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="studentType">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="universityType" name="university"/>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="matnr"/>
+            <xs:attribute type="xs:string" name="firstname"/>
+            <xs:attribute type="xs:string" name="lastname"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="weekType" >
         <xs:simpleContent>
             <xs:extension base="xs:string">
                 <xs:attribute type="xs:string" name="nrofweek" use="optional"/>
@@ -12,6 +21,7 @@
         <xs:sequence>
             <xs:element type="weekType" name="week" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
+        <xs:attribute type="xs:string" name="chartPath" use="optional"/>
     </xs:complexType>
     <xs:complexType name="recordType">
         <xs:simpleContent>
@@ -23,7 +33,7 @@
     </xs:complexType>
     <xs:complexType name="academicrecordsType">
         <xs:sequence>
-            <xs:element type="recordType" name="record" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="recordType" name="record"  maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="moduleType">
@@ -35,6 +45,8 @@
         <xs:attribute type="xs:string" name="etcpostrings" use="optional"/>
         <xs:attribute type="xs:string" name="studyhours" use="optional"/>
         <xs:attribute type="xs:string" name="needStudyHoursPerWeek" use="optional"/>
+        <xs:attribute type="xs:string" name="studyWeeks" use="optional"/>
+        <xs:attribute type="xs:string" name="attempt" use="optional"/>
     </xs:complexType>
     <xs:complexType name="modulesType">
         <xs:sequence>
@@ -56,18 +68,18 @@
     </xs:complexType>
     <xs:complexType name="universityType">
         <xs:sequence>
+            <xs:element type="xs:string" name="activeSemester"/>
+            <xs:element type="xs:string" name="activeModules"/>
+            <xs:element type="xs:string" name="average"/>
+            <xs:element type="xs:string" name="cpSaved"/>
+            <xs:element type="xs:string" name="cpToAchieve"/>
+            <xs:element type="xs:string" name="failedExams"/>
+            <xs:element type="xs:string" name="passedExames"/>
             <xs:element type="semestersType" name="semesters"/>
         </xs:sequence>
         <xs:attribute type="xs:string" name="university"/>
         <xs:attribute type="xs:string" name="faculty"/>
         <xs:attribute type="xs:string" name="subjectstream"/>
     </xs:complexType>
-    <xs:complexType name="studentType">
-        <xs:sequence>
-            <xs:element type="universityType" name="university"/>
-        </xs:sequence>
-        <xs:attribute type="xs:string" name="matnr"/>
-        <xs:attribute type="xs:string" name="firstname"/>
-        <xs:attribute type="xs:string" name="lastname"/>
-    </xs:complexType>
 </xs:schema>
+

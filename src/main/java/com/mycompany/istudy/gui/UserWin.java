@@ -2,6 +2,8 @@ package com.mycompany.istudy.gui;
 
 import com.mycompany.istudy.controller.pdf.PerformancePdfController;
 import com.mycompany.istudy.controller.*;
+import com.mycompany.istudy.db.entities.Student;
+import com.mycompany.istudy.db.services.impl.StudentManager;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -26,8 +28,8 @@ public class UserWin extends javax.swing.JFrame {
     private BaseController graphicalViewController;
     private PerformancePdfController pdfControkller;
     private BaseController calendarViewController;
-
     private final Login login;
+    private final ChangePwd changePwd;
 
     /**
      * Creates new form UserWin
@@ -37,6 +39,7 @@ public class UserWin extends javax.swing.JFrame {
      */
     public UserWin(Login login) throws IOException {
         this.login = login;
+        changePwd = new ChangePwd(this);
         initControllers();
         initComponents();
         initInformation();
@@ -46,9 +49,15 @@ public class UserWin extends javax.swing.JFrame {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent ev) {
-                login.setVisible(true);
+                defaultExitBehavior();
             }
         });
+    }
+
+    public void defaultExitBehavior() {
+        login.setVisible(true);
+        changePwd.dispose();
+        dispose();
     }
 
     private void initControllers() {
@@ -74,6 +83,9 @@ public class UserWin extends javax.swing.JFrame {
         controllers.forEach((specifyController) -> {
             specifyController.init();
         });
+
+        final Student student = StudentManager.getInstance().getStudent();
+        this.setTitle(String.format("Welcome to iStudy management system, %s %s", student.getVorname(), student.getNachname()));
     }
 
     private void initFrameSettings() {
@@ -218,15 +230,10 @@ public class UserWin extends javax.swing.JFrame {
         jLabel28 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
-        openMenuItem = new javax.swing.JMenuItem();
-        saveMenuItem = new javax.swing.JMenuItem();
-        saveAsMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         deleteMenuItem = new javax.swing.JMenuItem();
-        helpMenu = new javax.swing.JMenu();
-        contentsMenuItem = new javax.swing.JMenuItem();
-        aboutMenuItem = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         jCheckBox1.setText("jCheckBox1");
 
@@ -1401,19 +1408,6 @@ public class UserWin extends javax.swing.JFrame {
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
 
-        openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Open");
-        fileMenu.add(openMenuItem);
-
-        saveMenuItem.setMnemonic('s');
-        saveMenuItem.setText("Save");
-        fileMenu.add(saveMenuItem);
-
-        saveAsMenuItem.setMnemonic('a');
-        saveAsMenuItem.setText("Save As ...");
-        saveAsMenuItem.setDisplayedMnemonicIndex(5);
-        fileMenu.add(saveAsMenuItem);
-
         exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Exit");
         exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -1437,20 +1431,15 @@ public class UserWin extends javax.swing.JFrame {
         });
         editMenu.add(deleteMenuItem);
 
+        jMenuItem1.setText("Change password");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        editMenu.add(jMenuItem1);
+
         menuBar.add(editMenu);
-
-        helpMenu.setMnemonic('h');
-        helpMenu.setText("Help");
-
-        contentsMenuItem.setMnemonic('c');
-        contentsMenuItem.setText("Contents");
-        helpMenu.add(contentsMenuItem);
-
-        aboutMenuItem.setMnemonic('a');
-        aboutMenuItem.setText("About");
-        helpMenu.add(aboutMenuItem);
-
-        menuBar.add(helpMenu);
 
         setJMenuBar(menuBar);
 
@@ -1472,6 +1461,7 @@ public class UserWin extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
@@ -1602,6 +1592,10 @@ public class UserWin extends javax.swing.JFrame {
         iStudyListener();
     }//GEN-LAST:event_moduleListCalendarjComboBoxActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        changePwd.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel CalenderPanel;
     private javax.swing.JPanel GraphicalnViewPanel;
@@ -1610,7 +1604,6 @@ public class UserWin extends javax.swing.JFrame {
     private javax.swing.JPanel OrganiserPanel;
     private javax.swing.JPanel ProfilePanel;
     private javax.swing.JPanel SubjectStreamPanel;
-    private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JTable academicRecordsJTable;
     private javax.swing.JButton activateDeactivateModuleButton;
     private javax.swing.JButton activateDeactivateSemesterButton;
@@ -1624,7 +1617,6 @@ public class UserWin extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> calendarjComboBox;
     private javax.swing.JScrollPane calendarjScrollPane;
     private javax.swing.JTable calendarjTable;
-    private javax.swing.JMenuItem contentsMenuItem;
     private javax.swing.JLayeredPane controllLayeredPane;
     private javax.swing.JLabel cpToAchieveJLabel;
     private javax.swing.JLabel cpToAchieveJLabelValue;
@@ -1646,7 +1638,6 @@ public class UserWin extends javax.swing.JFrame {
     private javax.swing.JPanel feedInfoPanel;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JTabbedPane graphicalViewjTabbedPane;
-    private javax.swing.JMenu helpMenu;
     private javax.swing.JLabel homefaculty;
     private javax.swing.JLabel homefirstname;
     private javax.swing.JLabel homelastname;
@@ -1686,6 +1677,7 @@ public class UserWin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1716,15 +1708,12 @@ public class UserWin extends javax.swing.JFrame {
     private javax.swing.JLabel nextExamJLabel;
     private javax.swing.JLabel nextExamJLabelValue;
     private javax.swing.JButton nextjButton;
-    private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JLabel passedExamsJLabel;
     private javax.swing.JLabel passedExamsJLabelValue;
     private javax.swing.JButton previousjButton;
     private javax.swing.JButton pushInvestedHoursButton;
     private javax.swing.JTextArea reportArea;
     private javax.swing.JPanel reportJPanel;
-    private javax.swing.JMenuItem saveAsMenuItem;
-    private javax.swing.JMenuItem saveMenuItem;
     private javax.swing.JLabel savedcpJLabel;
     private javax.swing.JLabel savedcpJLabelValue;
     private javax.swing.JLabel selectedModuleLabel;
@@ -1906,7 +1895,7 @@ public class UserWin extends javax.swing.JFrame {
     public JLabel getActiveModulesJLabelValue() {
         return activeModulesJLabelValue;
     }
-    
+
     public JLabel getActiveSemesterJLabel() {
         return activeSemesterJLabel;
     }

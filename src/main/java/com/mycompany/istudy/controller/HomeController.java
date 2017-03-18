@@ -98,6 +98,31 @@ public class HomeController extends BaseController {
     }
 
     public void initInfoBoard() {
+        List<String> result = getInfo();
+        instance.getActiveSemesterJLabelValue().setText(result.get(0));
+        instance.getNextExamJLabelValue().setText(result.get(1));
+        instance.getActiveModulesJLabelValue().setText(result.get(2));
+        instance.getAverageJLabelValue().setText(result.get(3));
+        instance.getSavedcpJLabelValue().setText(result.get(4));
+        instance.getCpToAchieveJLabelValue().setText(result.get(5));
+        instance.getFailedExamsJLabelValue().setText(result.get(6));
+        instance.getPassedExamsJLabelValue().setText(result.get(7));
+    }
+    
+    /**
+     * index 0 : ActiveSemester
+     * index 1 : NextExam
+     * index 2 : ActiveModule
+     * index 3 : Average
+     * index 4 : savedCp
+     * index 5 : cpToAchieve
+     * index 6 : failedExams
+     * index 7 : passedExams
+     * 
+     * @return retrieved info list
+     */
+    public List<String> getInfo() {
+        List<String> infoList = new ArrayList<>();
         try {
             //helper
             Student student;
@@ -110,8 +135,8 @@ public class HomeController extends BaseController {
             //set active semester
             Semester activeSemester = SemesterManager.getInstance()
                     .getActiveSemester(student);
-            instance.getActiveSemesterJLabelValue()
-                    .setText(activeSemester == null ? "0" : ""
+            
+            infoList.add(activeSemester == null ? "0" : ""
                             + activeSemester.getNumber());
 
             //next coming exam date
@@ -143,17 +168,16 @@ public class HomeController extends BaseController {
 
             if (!academicrecordList.isEmpty()) {
                 Academicrecords ar = academicrecordList.get(0);
-                instance.getNextExamJLabelValue()
-                        .setText(ar.getExaminationdate() + " - "
+                infoList.add(ar.getExaminationdate() + " - "
                                 + ar.getModuleid().getModulname());
+                
             } else {
-                instance.getNextExamJLabelValue()
-                        .setText("");
+                infoList.add("");
             }
 
             //Total of active modules
-            instance.getActiveModulesJLabelValue().setText(String.valueOf(allActiveModules.size()));
-
+            infoList.add(String.valueOf(allActiveModules.size()));
+            
             //Average of total points            
             double result;
             double sumOfMultiplicationOfGradeAndCredits = 0.0;
@@ -178,24 +202,19 @@ public class HomeController extends BaseController {
             }
 
             result = sumOfMultiplicationOfGradeAndCredits / sumOfAllSavedCredits;
-            instance.getAverageJLabelValue()
-                    .setText(Double.toString(sumOfAllSavedCredits == 0 ? 0 : result));
-
+            infoList.add(Double.toString(sumOfAllSavedCredits == 0 ? 0 : result));
             //Credit points to be achieved
-            instance.getSavedcpJLabelValue().setText(String.valueOf(sumOfAllSavedCredits));
-
+            infoList.add(String.valueOf(sumOfAllSavedCredits)); 
             //achieved credit points
-            instance.getCpToAchieveJLabelValue().setText(String.valueOf(sumOfAllCreditsToAchieve));
-
+            infoList.add(String.valueOf(sumOfAllCreditsToAchieve));
             //No.of failed exams
-            instance.getFailedExamsJLabelValue().setText(String.valueOf(sumeOfFailedExams));
-
+            infoList.add(String.valueOf(sumeOfFailedExams));
             //No.of passed exams
-            instance.getPassedExamsJLabelValue().setText(String.valueOf(sumeOfPassedExams));
-
+            infoList.add(String.valueOf(sumeOfPassedExams));
         } catch (Exception ex) {
             LOGGER.error("System error", ex);
         }
+        return infoList;
     }
 
     private void initDetails() {
@@ -217,7 +236,7 @@ public class HomeController extends BaseController {
                 recored.getGrade()});
         });
 
-        //module and try table
+        //module and attempt table
         List<Modul> modules = ModulManager.getInstance().getAllModule(student);
         Map<String, String> modulTryList = new HashMap<>();
 

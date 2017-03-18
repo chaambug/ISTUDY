@@ -5,6 +5,7 @@
  */
 package com.mycompany.istudy.controller.pdf;
 
+import com.mycompany.istudy.controller.HomeController;
 import com.mycompany.istudy.db.services.impl.StudentManager;
 import com.mycompany.istudy.db.services.impl.AcademicrecordsManager;
 import com.mycompany.istudy.db.services.impl.InvestedHoursPerWeekForModuleManager;
@@ -99,13 +100,22 @@ public class PerformancePdfController extends IStudyPdfGenerator {
         universityType.setUniversity(student.getNameOfUni());
         universityType.setSubjectstream(student.getSubjectStream());
         universityType.setSemesters(semestersType);
+        HomeController homeController = new HomeController(null);
+        List<String> info = homeController.getInfo();
+        universityType.setActiveModules(info.get(0));
+        universityType.setActiveSemester(info.get(2));
+        universityType.setAverage(info.get(3));
+        universityType.setCpSaved(info.get(4));
+        universityType.setCpToAchieve(info.get(5));
+        universityType.setFailedExams(info.get(6));
+        universityType.setPassedExames(info.get(7));
         return universityType;
     }
 
     //3
     private SemestersType createSemestersType(List<SemesterType> semesterList) {
         SemestersType semestersType = new SemestersType();
-        semestersType.setSemester(semesterList);
+        semestersType.getSemester().addAll(semesterList);
         return semestersType;
     }
 
@@ -132,7 +142,7 @@ public class PerformancePdfController extends IStudyPdfGenerator {
     //6
     private ModulesType createModulesType(Semester semester) {
         ModulesType modulesType = new ModulesType();
-        modulesType.setModule(createModuleTypeList(semester));
+        modulesType.getModule().addAll(createModuleTypeList(semester));
         return modulesType;
     }
 
@@ -155,6 +165,7 @@ public class PerformancePdfController extends IStudyPdfGenerator {
         moduleType.setNeedStudyHoursPerWeek(getNeedStudyHoursPerWeek(semester, modul));
         moduleType.setStudyWeeks(String.valueOf(getKwForModule(semester)));
         moduleType.setInvested(createInvestedType(semester, modul));
+        moduleType.setAttempt(String.valueOf(AcademicrecordsManager.getInstance().getAcademicrecordGrad5(student, modul).size() + 1));
         moduleType.setAcademicrecords(createAcademicrecordsType(modul));
         return moduleType;
     }
@@ -162,7 +173,7 @@ public class PerformancePdfController extends IStudyPdfGenerator {
     //9
     private InvestedType createInvestedType(Semester semester, Modul modul) {
         InvestedType investedType = new InvestedType();
-        investedType.setWeek(createWeekTypeList(semester, modul));
+        investedType.getWeek().addAll(createWeekTypeList(semester, modul));
         return investedType;
     }
 
@@ -187,7 +198,7 @@ public class PerformancePdfController extends IStudyPdfGenerator {
     //12
     private AcademicrecordsType createAcademicrecordsType(Modul modul) {
         AcademicrecordsType academicrecordsType = new AcademicrecordsType();
-        academicrecordsType.setRecord(createRecordTypeList(modul));
+        academicrecordsType.getRecord().addAll(createRecordTypeList(modul));
         return academicrecordsType;
     }
 
@@ -354,8 +365,8 @@ public class PerformancePdfController extends IStudyPdfGenerator {
 
             semester.stream().forEach((SemesterType sem) -> {
                 sem.getModules().getModule().stream().forEach((module) -> {
-                    String generatedChartCsvFilePath = generateSvg(module);
-                    module.getInvested().setSvgPath(generatedChartCsvFilePath);
+                    String generatedChartFilePath = generateChart(module);
+                    module.getInvested().setChartPath(generatedChartFilePath);
                 });
             });
         } catch (Exception e) {
@@ -363,7 +374,7 @@ public class PerformancePdfController extends IStudyPdfGenerator {
         }
     }
 
-    private String generateSvg(ModuleType module) {
+    private String generateChart(ModuleType module) {
         /**
          * 1) module name 2) current time
          */
