@@ -280,7 +280,7 @@ public class PerformancePdfController extends IStudyPdfGenerator {
 
     /**
      * 
-     * All paths are loaded from properties and configured for geberating process
+     * All paths are loaded from properties and configured for generating process
      */
     private void initAttributes() {
         student = StudentManager.getInstance().getStudent();

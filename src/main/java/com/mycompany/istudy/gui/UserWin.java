@@ -30,6 +30,7 @@ public class UserWin extends javax.swing.JFrame {
     private BaseController calendarViewController;
     private final Login login;
     private final ChangePwd changePwd;
+    private final ChangeAccountData changeAccountData;
 
     /**
      * Creates new form UserWin
@@ -40,6 +41,7 @@ public class UserWin extends javax.swing.JFrame {
     public UserWin(Login login) throws IOException {
         this.login = login;
         changePwd = new ChangePwd(this);
+        changeAccountData = new ChangeAccountData(this);
         initControllers();
         initComponents();
         initInformation();
@@ -234,6 +236,7 @@ public class UserWin extends javax.swing.JFrame {
         editMenu = new javax.swing.JMenu();
         deleteMenuItem = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         jCheckBox1.setText("jCheckBox1");
 
@@ -1439,6 +1442,14 @@ public class UserWin extends javax.swing.JFrame {
         });
         editMenu.add(jMenuItem1);
 
+        jMenuItem2.setText("Change Account Data");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        editMenu.add(jMenuItem2);
+
         menuBar.add(editMenu);
 
         setJMenuBar(menuBar);
@@ -1596,6 +1607,10 @@ public class UserWin extends javax.swing.JFrame {
         changePwd.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        changeAccountData.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel CalenderPanel;
     private javax.swing.JPanel GraphicalnViewPanel;
@@ -1678,6 +1693,7 @@ public class UserWin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

@@ -71,5 +71,5 @@ public class JFreeChartTest {
                 "Hours",
                 invested,
                 expected));
-    }  
+    }   
 }

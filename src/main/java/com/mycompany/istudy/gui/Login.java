@@ -255,6 +255,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     protected void processTheLogin() {
+        Long start = System.currentTimeMillis();
         StudentManager studentManager = StudentManager.getInstance();
         if (loginButton.getText().equals("LOGOUT")) {
             loginButton.setText("LOGIN");
@@ -286,6 +287,7 @@ public class Login extends javax.swing.JFrame {
             e.printStackTrace(System.out);
         }
         long end = System.currentTimeMillis();
+       System.out.println("Process time : " + (end- start)+ "ms");
     }
 
 
