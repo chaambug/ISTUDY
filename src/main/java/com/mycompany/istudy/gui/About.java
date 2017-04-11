@@ -11,7 +11,7 @@ import javax.swing.GroupLayout;
 
 /**
  *
- * @author Varuni
+ * @author Cham
  */
 public class About extends javax.swing.JFrame {
 

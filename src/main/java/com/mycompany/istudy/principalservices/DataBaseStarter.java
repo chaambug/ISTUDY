@@ -6,7 +6,8 @@ import java.util.Properties;
 import javax.swing.JTextArea;
 
 /**
- * Created by Varuni on 15.12.2016.
+ * This class starts the xampp database server in a thread.
+ * Created by Cham on 15.12.2016.
  */
 public class DataBaseStarter extends Thread{
 

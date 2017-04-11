@@ -15,8 +15,8 @@ import javax.persistence.EntityManager;
 import org.apache.log4j.Logger;
 
 /**
- *
- * @author Varuni
+ * Manager class for the Entity UserLoginEntries
+ * @author Cham
  */
 public class UserLoginEntriesManager implements UserLoginEntriesManagerIntf{
 
@@ -28,7 +28,11 @@ public class UserLoginEntriesManager implements UserLoginEntriesManagerIntf{
     public UserLoginEntriesManager(EntityManager em) {
         this.em = em;
     }
-
+    
+    /**
+     * returns instance of this class (Singleton)
+     * @return instance of UserLoginEntriesManager
+     */
     public static UserLoginEntriesManager getInstance() {
         if (instance != null) {
             return instance;

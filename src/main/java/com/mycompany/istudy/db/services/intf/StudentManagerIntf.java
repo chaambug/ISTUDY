@@ -5,7 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Chamvaru on 18.06.2016.
+ * Interface for the Manager class of Student entity.
+ * Created by Cham on 18.06.2016.
  */
 public interface StudentManagerIntf{
 

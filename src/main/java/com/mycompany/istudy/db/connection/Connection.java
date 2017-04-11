@@ -6,7 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
 /**
- * Created by Chamvaru on 17.06.2016.
+ * The Connection class creates and holds the connection to the database.
+ * Created by Cham on 17.06.2016.
  */
 public class Connection {
 
@@ -22,19 +23,30 @@ public class Connection {
             LOGGER.error("Error during creation connection pool to the database", e);
         }
     }
-
-
+    
+    /**
+     * 
+     * Initializes a new database connection.
+     */
     public static void initInstance() {
         if (connection == null) {
             connection = new Connection();
         }
     }
-
+    
+    /**
+     * Returns the connection instance.
+     * @return instance of database connection.
+     */
     public static Connection getInstance() {
         initInstance();
         return connection;
     }
-
+    
+    /**
+     * Returns the EntityManaer
+     * @return EntityManaer
+     */
     public EntityManager getEntityManager() {
         return em;
     }

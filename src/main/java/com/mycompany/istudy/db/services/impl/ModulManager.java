@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Created by Chamvaru on 17.06.2016.
+ * Manager class for the Entity Modul
+ * Created by Cham on 17.06.2016.
  */
 public class ModulManager implements ModulManagerIntf{
 
@@ -26,14 +27,22 @@ public class ModulManager implements ModulManagerIntf{
         em = Connection.getInstance().getEntityManager();
 
     }
-
+    
+    /**
+     * returns instance of this class (Singleton)
+     * @return instance of ModulManager
+     */
     public static ModulManager getInstance() {
         if (instance == null) {
             instance = new ModulManager();
         }
         return instance;
     }
-
+    
+    /**
+     * Gets all modules.
+     * @return all modules as list.
+     */
     @Override
     public List<Modul> getAllModule() {
         try {
@@ -45,6 +54,10 @@ public class ModulManager implements ModulManagerIntf{
         return null;
     }
 
+    /**
+     * Gets all modules of the given student
+     * @return all modules as list.
+     */    
     @Override
     public List<Modul> getAllModule(Student student) {
         try {
@@ -56,6 +69,11 @@ public class ModulManager implements ModulManagerIntf{
         return new ArrayList<>();
     }
     
+     /**
+     * Gets all modules of a specific Student by matrikelnummer.
+     * @param matrikelnummer the number for the student.
+     * @return list of all modules the student has.
+     */
     @Override
     public List<Modul> getModuleByMatrikelnummer(int matrikelnummer) {
         try {

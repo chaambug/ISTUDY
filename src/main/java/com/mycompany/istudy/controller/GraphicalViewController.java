@@ -26,8 +26,9 @@ import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 
 /**
- *
- * @author Varuni
+ * Controller class of the graphiccal view.
+ * 
+ * @author Chaam
  */
 public class GraphicalViewController extends BaseController {
 
@@ -36,11 +37,20 @@ public class GraphicalViewController extends BaseController {
     public GraphicalViewController(UserWin instance) {
         super(instance);
     }
+    
+    /**
+     * Initializes the list of active modules.
+     */
 
     @Override
     public void init() {
         actualizeListOfActiveModules();
     }
+    
+    /**
+     * Creates a graph which shows the user the performance of the selected modul.
+     * It shows the hours the user learned per week and the hours the user should have learned per week.
+     */
 
     public void createGraph() {
         Object selectedItem = instance.getModuleListjComboBox().getSelectedItem();

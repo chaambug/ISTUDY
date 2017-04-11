@@ -8,8 +8,9 @@ package com.mycompany.istudy.controller;
 import com.mycompany.istudy.gui.UserWin;
 
 /**
- * Ploym.
- * @author Varuni
+ * This abstract class is the base class for all Controllers.
+ * It holds an instance of the main window class "UserWin"
+ * @author Chaam
  */
     public abstract class BaseController {
     

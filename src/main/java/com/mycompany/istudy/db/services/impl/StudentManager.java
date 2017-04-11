@@ -9,7 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Chamvaru on 18.06.2016.
+ * Manager class for the Entity  Student
+ * Created by Cham on 18.06.2016.
  */
 public class StudentManager implements StudentManagerIntf{
 
@@ -29,7 +30,11 @@ public class StudentManager implements StudentManagerIntf{
     public void setStudent(Student student) {
         this.student = student;
     }
-
+    
+    /**
+     * returns instance of this class (Singleton)
+     * @return instance of StudentManager
+     */
     public static StudentManager getInstance() {
         if (instance != null) {
             return instance;

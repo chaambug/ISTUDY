@@ -17,8 +17,8 @@ import javax.persistence.EntityManager;
 import org.apache.log4j.Logger;
 
 /**
- *
- * @author Varuni
+ * Manager class for the Entity Academicrecords
+ * @author Cham
  */
 public class AcademicrecordsManager implements AcademicrecordsManagerIntf {
 
@@ -36,7 +36,11 @@ public class AcademicrecordsManager implements AcademicrecordsManagerIntf {
         }
         return instance;
     }
-
+    
+     /**
+     * return instance of this class (Singleton)
+     * @return instance of AcademicrecordsManager
+     */
     @Override
     public void insertTry(Academicrecords obj) {
         try {
@@ -48,7 +52,13 @@ public class AcademicrecordsManager implements AcademicrecordsManagerIntf {
             LOGGER.error("insertTry not successfull", e);
         }
     }
-
+    
+    /**
+     * Gets all Academicrecords for a given module and student.
+     * @param student the student for which the records are.
+     * @param modul the modul for which the records are.
+     * @return a list of the Academicrecords.
+     */
     @Override
     public List<Academicrecords> getAllRecords(Student student, Modul modul) {
         try {
@@ -62,7 +72,11 @@ public class AcademicrecordsManager implements AcademicrecordsManagerIntf {
         }
         return Collections.EMPTY_LIST;
     }
-
+    
+     /**
+     * Removes a record.
+     * @param obj record to be removed.
+     */
     @Override
     public void removeRecord(Academicrecords obj) {
         try {
@@ -74,8 +88,13 @@ public class AcademicrecordsManager implements AcademicrecordsManagerIntf {
             LOGGER.error("removeRecord not successfull", e);
         }
     }
-
-    @Override
+    /**
+     * Get all academic records for the given modul and student
+     * @param student
+     * @param modul
+     * @return list of academic records
+     */
+    @Override 
     public Academicrecords getAcademicrecord(Student student, Modul modul) {
         try {
             LOGGER.info("service call getAcademicrecord");
@@ -91,7 +110,14 @@ public class AcademicrecordsManager implements AcademicrecordsManagerIntf {
         }
         return null;
     }
-
+    
+    /**
+     * Get all academic records which include the grade 5 (failed exam) 
+     * for the given modul and student
+     * @param student
+     * @param modul
+     * @return list of academic records
+     */
     @Override
     public List<Academicrecords> getAcademicrecordGrad5(Student student, Modul modul) {
         try {
@@ -107,6 +133,13 @@ public class AcademicrecordsManager implements AcademicrecordsManagerIntf {
         return new ArrayList<>();
     }
     
+     /**
+     * Get all academic records which exclude the grade 5 and 0 (passed exam) 
+     * for the given modul and student
+     * @param student
+     * @param modul
+     * @return list of academic records
+     */    
     @Override
     public List<Academicrecords> getAcademicrecordNot0AndNot5(Student student, Modul modul) {
         try {
@@ -121,7 +154,13 @@ public class AcademicrecordsManager implements AcademicrecordsManagerIntf {
         }
         return new ArrayList<>();
     }
-
+    
+     /**
+     * Get all the academic records for the given student
+     * @param student
+     * @param modul
+     * @return list of academic records
+     */
     @Override
     public List<Academicrecords> getAcademicrecord(Student student) {
         try {

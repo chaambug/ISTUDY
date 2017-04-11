@@ -10,8 +10,9 @@ import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 
 /**
- *
- * @author Varuni
+ * This class manages the generation of PDF files. The User can generate PDF files with an overview of his study performance. 
+ * 
+ * @author Chaam
  */
 public abstract class IStudyPdfGenerator implements Runnable {
 
@@ -22,7 +23,9 @@ public abstract class IStudyPdfGenerator implements Runnable {
     private Thread t;
 
     abstract void generate() throws Exception;
-
+/**
+ * Run method generates the PDF file in a Thread.
+ */
     @Override
     public void run() {
         try {
@@ -43,7 +46,10 @@ public abstract class IStudyPdfGenerator implements Runnable {
             LOGGER.error("System error", e);
         }
     }
-
+/**
+ * Starts thread which generates PDF file.
+ * @param instance Instance of IStudyPdfGenerator.
+ */
     protected void startGenerating(IStudyPdfGenerator instance) {
         t = new Thread(instance, "iStudyPdfGeneratorThread");
         t.start();

@@ -6,7 +6,8 @@ import com.mycompany.istudy.db.entities.Student;
 import java.util.List;
 
 /**
- * Created by Chamvaru on 17.06.2016.
+ * Interface for the Manager class of Modul entity.
+ * Created by Cham on 17.06.2016.
  */
 public interface ModulManagerIntf {
 

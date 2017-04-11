@@ -40,8 +40,9 @@ import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
 /**
- *
- * @author Varuni
+ * PerformancePdfController contains the logic for PDF file generation.
+ * It inherits the class IStudyPdfGenerator.
+ * @author Chaam
  */
 public class PerformancePdfController extends IStudyPdfGenerator {
 
@@ -58,14 +59,21 @@ public class PerformancePdfController extends IStudyPdfGenerator {
     public PerformancePdfController() {
         initAttributes();
     }
-
+/**
+ * Generates a PDF file.
+ * @param outputDir path of output.
+ * @param instance instance of main view "UserWin".
+ */
     public void generatePDF(String outputDir, UserWin instance) {
         this.instance = instance;
         this.outputDir = outputDir;
         //start thread to generate pdf
         startGenerating(this);
     }
-
+/**
+ * Generates XML and PDF.
+ * @throws Exception 
+ */
     @Override
     void generate() throws Exception {
         initAttributes();

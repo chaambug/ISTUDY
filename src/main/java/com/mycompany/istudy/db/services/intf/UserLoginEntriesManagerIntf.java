@@ -10,8 +10,8 @@ import com.mycompany.istudy.db.entities.Userloginentries;
 import java.util.List;
 
 /**
- *
- * @author Varuni
+ * Interface for the Manager class of UserLoginEntries entity.
+ * @author Cham
  */
 public interface UserLoginEntriesManagerIntf {
 

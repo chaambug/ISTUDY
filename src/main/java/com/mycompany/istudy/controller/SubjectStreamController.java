@@ -38,8 +38,8 @@ import javax.swing.tree.TreePath;
 import org.apache.log4j.Logger;
 
 /**
- *
- * @author Varuni
+ * Controller class of SubjectStream.
+ * @author Chaam
  */
 public class SubjectStreamController extends BaseController {
 
@@ -53,7 +53,10 @@ public class SubjectStreamController extends BaseController {
         organiserController = new OrganiserController(instance);
         graphicalViewController = new GraphicalViewController(instance);
     }
-
+    
+    /**
+     * Initializes the Panels and updates the semester and modul treeview.
+     */
     @Override
     public void init() {
         initPanels();
@@ -64,7 +67,10 @@ public class SubjectStreamController extends BaseController {
         instance.getModuleBoardPanel().setVisible(false);
         instance.getSemesterBoardPanel().setVisible(false);
     }
-
+    
+    /**
+     * Updates semester and mudul treeview.
+     */
     public void updateSemesterAndModulTreeView() {
         StudentManager studentManager = StudentManager.getInstance();
         SemesterManager semesterManager = SemesterManager.getInstance();
@@ -87,7 +93,11 @@ public class SubjectStreamController extends BaseController {
         model.reload(root);
         expandAllNodes(instance.getModulAndSemesterOverviewJTree());
     }
-
+    
+    /**
+     * Expands all nodes of a tree.
+     * @param tree the tree where all the notes get expanded.
+     */
     public void expandAllNodes(JTree tree) {
         int j = tree.getRowCount();
         int i = 0;
@@ -97,7 +107,9 @@ public class SubjectStreamController extends BaseController {
             j = tree.getRowCount();
         }
     }
-
+    /**
+     * Creates a new module for the user.
+     */
     public void createModul() {
         DefaultTreeModel model = (DefaultTreeModel) instance.getModulAndSemesterOverviewJTree().getModel();
         TreePath selectionPath = instance.getModulAndSemesterOverviewJTree().getSelectionPath();
@@ -167,7 +179,10 @@ public class SubjectStreamController extends BaseController {
                 "Selection error",
                 JOptionPane.ERROR_MESSAGE);
     }
-
+    
+    /**
+     * Sets the start date of a semester.
+     */
     public void setSemesterStartDate() {
         try {
             final String semesterNo = instance.getSemesterLabel().getText().trim().replace("Semester ", "");
@@ -187,7 +202,11 @@ public class SubjectStreamController extends BaseController {
             LOGGER.error("System error", e);
         }
     }
-
+    
+    /**
+     * 
+     * Sets the start date of the examination period.
+     */
     public void setExaminationStartDate() {
         try {
             final String semesterNo = instance.getSemesterLabel().getText().trim().replace("Semester ", "");
@@ -209,7 +228,10 @@ public class SubjectStreamController extends BaseController {
             LOGGER.error("System error", e);
         }
     }
-
+    
+     /**
+     * Activates or deactivates a semester.
+     */
     public void activateDeactivateSemester() {
         if (ButtonConstants.ACTIVATE.toString().equals(instance.getActivateDeactivateSemesterButton().getText())) {
             activateDeactivateSemester(instance.getCurrentSemesterJLabel().getText(), true);
@@ -227,7 +249,10 @@ public class SubjectStreamController extends BaseController {
             SemesterManager.getInstance().setSemesterActive(semester, value);
         }
     }
-
+    
+     /**
+     * Activates or deactivates a module.
+     */
     public void activateDeactivateModule() {
         if (ButtonConstants.ACTIVATE.toString().equals(instance.getActivateDeactivateModuleButton().getText())) {
             activateDeactivateModule(instance.getSelectedModuleLabel().getText(), true);
@@ -248,7 +273,10 @@ public class SubjectStreamController extends BaseController {
             moduleManager.updateModul(module);
         }
     }
-
+    
+    /**
+     * Deletes a semester.
+     */
     public void deleteSemester() {
         DefaultTreeModel model = (DefaultTreeModel) instance.getModulAndSemesterOverviewJTree().getModel();
         DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
@@ -281,7 +309,10 @@ public class SubjectStreamController extends BaseController {
                 "Selection error",
                 JOptionPane.ERROR_MESSAGE);
     }
-
+    
+    /**
+     * Creates a new semester.
+     */
     public void createSemester() {
         SemesterManager sm = SemesterManager.getInstance();
         final List<Semester> allSemesterOfStudent = sm.getAllSemesterOfStudent(StudentManager.getInstance().getStudent());
@@ -346,7 +377,11 @@ public class SubjectStreamController extends BaseController {
             }
         }
     }
-
+    
+    /**
+     * Sets the module and semester overview tree.
+     * @param selectionPath Path of the tree.
+     */
     public void setModuleAndSemestertrOverviewJtree(TreePath selectionPath) {
         DefaultMutableTreeNode lastPathComponent = (DefaultMutableTreeNode) selectionPath.getLastPathComponent();
         if (lastPathComponent.getParent() != null) {
@@ -387,7 +422,9 @@ public class SubjectStreamController extends BaseController {
         }
         updateRecordsTable();
     }
-
+    /**
+     * Edits the module.
+     */
     public void editModule() {
         if (!instance.getModulnameModulBPanel().getText().isEmpty()) {
             ModulManager moduleManager = ModulManager.getInstance();
@@ -419,7 +456,9 @@ public class SubjectStreamController extends BaseController {
             }
         }
     }
-
+    /**
+     * Deletes the module.
+     */
     public void deleteModule() {
         if (!instance.getModulnameModulBPanel().getText().isEmpty()) {
             ModulManager modulmanager = ModulManager.getInstance();
@@ -467,7 +506,10 @@ public class SubjectStreamController extends BaseController {
                 "Message",
                 JOptionPane.PLAIN_MESSAGE);
     }
-
+    
+    /**
+     * Creates a new Attempt row.
+     */
     public void createTryRow() {
         final String moduleName = instance.getSelectedModuleLabel().getText();
         Student student = StudentManager.getInstance().getStudent();
@@ -492,6 +534,9 @@ public class SubjectStreamController extends BaseController {
         }
     }
 
+    /**
+     * Removes Attempt row.
+     */
     public void removeTryRow() {
         Object[] options = {"Yes, please", "No way!"};
         int result = (Integer) JOptionPane.showOptionDialog(instance,
@@ -515,6 +560,9 @@ public class SubjectStreamController extends BaseController {
         }
     }
 
+    /**
+     * Realizes try detail entering.
+     */
     public void realizeTryDetailEntering() {
         int column = instance.getAcademicRecordsJTable().getSelectedColumn();
         int row = instance.getAcademicRecordsJTable().getSelectedRow();

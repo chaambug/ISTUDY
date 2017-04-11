@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 import javax.persistence.EntityManager;
 
 /**
- *
+ * Manager class for the Entity Semester
  * @author Varuni
  */
 public class SemesterManager implements SemesterManagerIntf{
@@ -28,14 +28,23 @@ public class SemesterManager implements SemesterManagerIntf{
     public SemesterManager(EntityManager em) {
         this.em = em;
     }
-
+    
+    /**
+     * returns instance of this class (Singleton)
+     * @return instance of SemesterManager
+     */
     public static SemesterManager getInstance() {
         if (instance != null) {
             return instance;
         }
         return (instance = new SemesterManager(Connection.getInstance().getEntityManager()));
     }
-
+    
+    /**
+     * returns a list if semester of the given student
+     * @param student
+     * @return 
+     */
     @Override
     public List<Semester> getAllSemesterOfStudent(Student student) {
         try {
@@ -49,6 +58,11 @@ public class SemesterManager implements SemesterManagerIntf{
         return null;
 
     }
+    
+    /**
+     * ein neues semester wird angelegt
+     * @param obj 
+     */
 
     @Override
     public void insertSemester(Semester obj) {
@@ -61,7 +75,11 @@ public class SemesterManager implements SemesterManagerIntf{
             LOGGER.error("insertSemester not successfull", e);
         }
     }
-
+    
+    /**
+     * ein semester wird gelöscht
+     * @param nr 
+     */
     @Override
     public void deleteSemester(int nr) {
         try {
@@ -80,6 +98,12 @@ public class SemesterManager implements SemesterManagerIntf{
             LOGGER.error("deleteSemester not successfull", e);
         }
     }
+    
+    /**
+     * get semeseter for the given semester number
+     * @param number
+     * @return 
+     */
 
     @Override
     public Semester getSemesterByNumber(int number) {
@@ -97,7 +121,11 @@ public class SemesterManager implements SemesterManagerIntf{
         }
         return null;
     }
-
+    
+    /**
+     * update semester
+     * @param semester 
+     */
     @Override
     public void updateSemester(Semester semester) {
         try {
@@ -109,7 +137,11 @@ public class SemesterManager implements SemesterManagerIntf{
             LOGGER.error("updateSemester not successfull", e);
         }
     }
-
+    
+    /**
+     * get a list of all the semester
+     * @return 
+     */
     @Override
     public List<Semester> getAllSemester() {
         try {

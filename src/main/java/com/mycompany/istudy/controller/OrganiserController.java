@@ -23,8 +23,9 @@ import javax.swing.table.DefaultTableModel;
 import org.apache.log4j.Logger;
 
 /**
- *
- * @author Varuni
+ * The Controller class of the Organiser view. 
+ * 
+ * @author Chaam
  */
 public class OrganiserController extends BaseController{
 
@@ -36,7 +37,10 @@ public class OrganiserController extends BaseController{
         super(instance);
         graphicalViewController = new GraphicalViewController(instance);
     }
-
+    
+    /**
+     * initializes the organiser view.
+     */
     @Override
     public void init() {
         instance.getWeekJComboBox().removeAllItems();
@@ -79,6 +83,9 @@ public class OrganiserController extends BaseController{
         }
     }
     
+     /**
+     * Prepares the table where the user can enter the invested hours for each module.
+     */    
     public void prepareTableToBookInvestedHours() {
         final int row = instance.getActiveModuleJTable().getSelectedRow();
         Student student = StudentManager.getInstance().getStudent();
@@ -119,7 +126,9 @@ public class OrganiserController extends BaseController{
             model.addRow(new Object[]{entry.getWeek(), entry.getInvestedHours()});
         });
     }
-    
+    /**
+     * Sets the invested hours for a module which the user has inserted in a textfield of the view. 
+    */   
     public void pushHours() {
         final int row = instance.getActiveModuleJTable().getSelectedRow();
         Semester activeSemester = SemesterManager.getInstance().getActiveSemester(StudentManager.getInstance().getStudent());

@@ -21,8 +21,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.apache.log4j.Logger;
 
 /**
- *
- * @author Varuni
+ * GUI-design class for the Login window
+ * @author Cham
  */
 public class Login extends javax.swing.JFrame {
 
@@ -310,7 +310,11 @@ public class Login extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         processTheLogin();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-
+    /**
+     * When the Login window is being called, starts automatically the 
+     * MySQL server  
+     * 
+     */ 
     public void startIStudy() {
         try {
             try {

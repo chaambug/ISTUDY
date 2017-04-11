@@ -6,7 +6,8 @@ import java.io.InputStreamReader;
 import org.apache.log4j.Logger;
 
 /**
- * Created by Varuni on 15.12.2016.
+ * This class processes commands from a shell.
+ * Created by Cham on 15.12.2016.
  */
 public class CommandProcessor {
 
@@ -16,6 +17,13 @@ public class CommandProcessor {
         //Create processor to run command
         Process process = Runtime.getRuntime().exec(command);
     }
+    
+    /**
+     * Process the shell command and write the output stream in given file path 
+     * @param command
+     * @param path
+     * @throws IOException 
+     */
     public static void processAndWrite(String command, String path) throws IOException {
         //Create processor to run command
         String[] commandd = {"cmd", "/c", command};

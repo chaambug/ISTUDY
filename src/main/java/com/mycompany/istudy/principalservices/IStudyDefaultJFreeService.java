@@ -12,6 +12,11 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.jfree.chart.ChartUtilities;
 
+/**
+ * Implements the IStudyDefaultJFreeChartService Interface
+ * @author Cham
+ */
+
 public class IStudyDefaultJFreeService implements IStudyDefaultJFreeChartServiceIntf {
 
     private final static Logger LOGGER = Logger.getLogger(IStudyDefaultJFreeService.class);
@@ -33,7 +38,6 @@ public class IStudyDefaultJFreeService implements IStudyDefaultJFreeChartService
 
     /**
      * This method generates a 2D line chart with svg format
-     *
      * @param filePath file (Ex. D:\\myLineChart.svg)
      * @param descTop
      * @param descX
@@ -80,8 +84,11 @@ public class IStudyDefaultJFreeService implements IStudyDefaultJFreeChartService
             svgXYDataSeries.addSeries(expectedData);
 
             //Use createXYLineChart to create the chart
-            JFreeChart XYLineChart = ChartFactory.createXYLineChart(descTop, descX, descY, svgXYDataSeries, PlotOrientation.VERTICAL, true, true, false);
-            ChartUtilities.saveChartAsPNG(new File(filePath), XYLineChart, (int) width, (int) height);
+            JFreeChart XYLineChart = ChartFactory.createXYLineChart(descTop, 
+                    descX, descY, svgXYDataSeries, PlotOrientation.VERTICAL, 
+                    true, true, false);
+            ChartUtilities.saveChartAsPNG(new File(filePath), XYLineChart, 
+                    (int) width, (int) height);
 
             return true;
         } catch (IOException | NumberFormatException i) {

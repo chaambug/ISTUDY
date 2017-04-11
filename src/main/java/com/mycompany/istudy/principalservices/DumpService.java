@@ -9,12 +9,18 @@ import java.util.Date;
 import java.util.Properties;
 
 /**
- * Created by Varuni on 15.12.2016.
+ * This class provides the service to create a database dump of the
+ * actual database with all data in it.
+ * Created by Cham on 15.12.2016.
  */
 public class DumpService {
 
     private final static Logger logger = Logger.getLogger(DumpService.class);
 
+    /**
+     * Make a copy of the database and save it in the given file path
+     * @return 
+     */
     public boolean createDump(){
         try{
             String pattern = "yyyyMMddhhmmss";

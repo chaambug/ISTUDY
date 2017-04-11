@@ -33,8 +33,9 @@ import javax.swing.table.DefaultTableModel;
 import org.apache.log4j.Logger;
 
 /**
- *
- * @author Varuni
+ * HomeController is the controller class of the home screen.
+ * 
+ * @author Chaam
  */
 public class HomeController extends BaseController {
 
@@ -43,7 +44,10 @@ public class HomeController extends BaseController {
     public HomeController(UserWin instance) {
         super(instance);
     }
-
+    
+    /**
+     * Initializes the home screen which shows user information, user login entries and notifications.
+     */
     @Override
     public void init() {
         StudentManager sm = StudentManager.getInstance();
@@ -75,7 +79,12 @@ public class HomeController extends BaseController {
 
         initInfoBoard();
     }
-
+    
+     /**
+     * Calculates the days to the exam period.
+     * @return
+     * @throws Exception 
+     */
     public int totalDaysToExam() throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         Date todaysDate = new Date();
@@ -90,13 +99,18 @@ public class HomeController extends BaseController {
         }
         return days;
     }
-
+    /**
+     * The Info board, Details and Report Panels are being actualised, everytime
+     * the initInfo() method is being called.  
+     */
     public void initInfo() {
         initInfoBoard();
         initDetails();
         initReport();
     }
-
+/**
+ * Actualise the following list of Information
+ */
     public void initInfoBoard() {
         List<String> result = getInfo();
         instance.getActiveSemesterJLabelValue().setText(result.get(0));

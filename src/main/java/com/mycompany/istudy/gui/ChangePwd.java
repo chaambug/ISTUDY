@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author Varuni
+ * @author Cham
  */
 public class ChangePwd extends javax.swing.JFrame {
 

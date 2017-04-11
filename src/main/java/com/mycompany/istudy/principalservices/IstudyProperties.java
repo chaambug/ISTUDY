@@ -9,8 +9,8 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- *
- * @author Varuni
+ * include all the konfiguration data including file paths
+ * @author Cham
  */
 public class IstudyProperties {
     
@@ -26,6 +26,11 @@ public class IstudyProperties {
     public final String XML_FILE = "xmlFile";
     public final String PDF_OUTPUT_DIR = "pdfOutputDir";
     
+    /**
+     * load the Properties class into the classloader
+     * @return
+     * @throws Exception 
+     */
     public Properties getConfig() throws Exception {
             ClassLoader classLoader = getClass().getClassLoader();
             Properties result = new Properties();

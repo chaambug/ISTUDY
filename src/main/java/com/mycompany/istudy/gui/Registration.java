@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author Varuni
+ * @author Cham
  */
 public class Registration extends javax.swing.JFrame {
 

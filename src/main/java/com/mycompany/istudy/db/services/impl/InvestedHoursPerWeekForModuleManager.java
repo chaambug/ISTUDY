@@ -11,7 +11,8 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 /**
- * Created by Chamvaru on 17.06.2016.
+ * Manager class for the Entity InvestedHoursPerWeekForModule
+ * Created by Cham on 17.06.2016.
  */
 public class InvestedHoursPerWeekForModuleManager implements InvestedHoursPerWeekForModuleManagerIntf{
 
@@ -23,14 +24,24 @@ public class InvestedHoursPerWeekForModuleManager implements InvestedHoursPerWee
         em = Connection.getInstance().getEntityManager();
 
     }
-
+    
+     /**
+     * return instance of this class (Singleton)
+     * @return instance of InvestedHoursPerWeekForModuleManager
+     */
     public static InvestedHoursPerWeekForModuleManager getInstance() {
         if (instance == null) {
             instance = new InvestedHoursPerWeekForModuleManager();
         }
         return instance;
     }
-
+    
+    /**
+     * Gets all invested hours peer week entries for a module in an active semester.
+     * @param module the module for which the entries will be returned.
+     * @param activeSemester the active semester.
+     * @return list of Investedhoursperweekformodule
+     */
     @Override
     public List<Investedhoursperweekformodule> getAllEntriesForModule(Modul module, Semester activeSemester) {
         try {
@@ -44,7 +55,14 @@ public class InvestedHoursPerWeekForModuleManager implements InvestedHoursPerWee
         }
         return Collections.EMPTY_LIST;
     }
-
+    
+    /**
+     * Gets invested hours for a week for a module in a semester. 
+     * @param module the module for the invested hours.
+     * @param week the week in which the invested hours were invested.
+     * @param activeSemester the semster in which these hours where invested.
+     * @return the invested hours in the week for the module. 
+     */
     @Override
     public Investedhoursperweekformodule getByModuleAndWeek(Modul module, int week, Semester activeSemester) {
         try {
@@ -60,7 +78,12 @@ public class InvestedHoursPerWeekForModuleManager implements InvestedHoursPerWee
         }
         return null;
     }
-
+    
+    /**
+     * Updates the entity Investedhoursperweekformodule
+     * 
+     * @param entity the entity to be updated.
+     */
     @Override
     public void updateEntity(Investedhoursperweekformodule entity) {
         try {
@@ -72,7 +95,11 @@ public class InvestedHoursPerWeekForModuleManager implements InvestedHoursPerWee
             LOGGER.error("updateEntity not successfull", e);
         }
     }
-
+    
+    /**
+     * Inserts the entity Investedhoursperweekformodule.
+     * @param entity entity to be inserted.
+     */
     @Override
     public void insertEntity(Investedhoursperweekformodule entity) {
         try {

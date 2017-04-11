@@ -11,8 +11,8 @@ import com.mycompany.istudy.db.entities.Student;
 import java.util.List;
 
 /**
- *
- * @author Varuni
+ * nterface for the Manager class of Academicrecords entity.
+ * @author Cham
  */
 public interface AcademicrecordsManagerIntf {
 

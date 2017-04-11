@@ -5,8 +5,10 @@
  */
 package com.mycompany.istudy.principalservices;
 /**
- *
- * @author Varuni
+ * This class shows a graphical interface to the user.
+ * It shows the actual study status of the student for modules (invested hours,
+ * hours which should be invested, etc.)
+ * @author Cham
  */
 import java.awt.Color; 
 import java.awt.BasicStroke; 
@@ -26,8 +28,16 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 public class GraphicalView extends ApplicationFrame {
     
     private final JFreeChart xylineChart;
-    
-    public GraphicalView(String applicationTitle, String chartTitle, Map<Double,Double> investedHoursPerWeek, Map<Double,Double> hoursToBeInvested) {
+    /**
+     * Overwrites the method of createXYLineChart from ChartFactory interface
+     * and creates a XYLine Chart.
+     * @param applicationTitle
+     * @param chartTitle
+     * @param investedHoursPerWeek
+     * @param hoursToBeInvested 
+     */
+    public GraphicalView(String applicationTitle, String chartTitle, Map<Double,
+            Double> investedHoursPerWeek, Map<Double,Double> hoursToBeInvested){
         super(applicationTitle);
         xylineChart = ChartFactory.createXYLineChart(
                 chartTitle,
@@ -47,7 +57,8 @@ public class GraphicalView extends ApplicationFrame {
         setContentPane(chartPanel);
     }
 
-    private XYDataset createDataset(Map<Double,Double> investedHoursPerWeek, Map<Double,Double> hoursToBeInvested){
+    private XYDataset createDataset(Map<Double,Double> investedHoursPerWeek, 
+            Map<Double,Double> hoursToBeInvested){
         final XYSeries moduleToWeek = new XYSeries("Actual Performance");
         
         investedHoursPerWeek.entrySet().stream().forEach((pair) -> {

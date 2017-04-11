@@ -1,7 +1,8 @@
 package com.mycompany.istudy.controller;
 
 /**
- * Created by Varuni on 22.02.2017.
+ * CalendarViewController is the controller class of the calendar view.
+ * Created by Chaam on 22.02.2017.
  */
 import com.mycompany.istudy.db.entities.Modul;
 import com.mycompany.istudy.db.entities.Student;
@@ -23,7 +24,10 @@ public class CalendarViewController extends BaseController {
     public CalendarViewController(UserWin instance) {
         super(instance);
     }
-
+/**
+ * Initializes the Calendar of the calendar view with the days of the week, the actual
+ * year and month.
+ */ 
     @Override
     public void init() {
         //TableCalendarRenderer tCalendarrenderer = new TableCalendarRenderer();
@@ -60,6 +64,11 @@ public class CalendarViewController extends BaseController {
         refreshCalendar(theRealMonth, theRealYear);
         actualizeListOfActiveModulesForCalendar();
     }
+    /**
+     * Refreshes the calendar with given month and year.
+     * @param month to show in the calendar
+     * @param year to show in the calendar
+     */
 
     public void refreshCalendar(int month, int year) {
         Student student = StudentManager.getInstance().getStudent();
@@ -114,7 +123,7 @@ public class CalendarViewController extends BaseController {
                 if (investedHoursPerDayOfActualMonth == null) {
                     modelCalendarTable.setValueAt(i, row, column);
                 } else {
-                    modelCalendarTable.setValueAt(i + "  sdfolizseflkgjhsdfgjkhsdfkgjshdfglkjsdhfglkjsdfhglsdkjf  " + investedHoursPerDayOfActualMonth.get(i - 1) + " Std.", row, column);
+                    modelCalendarTable.setValueAt(i + "  " + investedHoursPerDayOfActualMonth.get(i - 1) + " Std.", row, column);
                 }
 
             }
@@ -123,6 +132,9 @@ public class CalendarViewController extends BaseController {
             instance.getcalendarjTable().setDefaultRenderer(instance.getcalendarjTable().getColumnClass(0), new TableCalendarRenderer());
         }
     }
+    /**
+     * Shows the next month in the calendar view.
+     */
 
     public void nextMonth() {
         if (currentMonth == 11) { //Foward one year
@@ -133,6 +145,10 @@ public class CalendarViewController extends BaseController {
         }
         refreshCalendar(currentMonth, currentYear);
     }
+    
+    /**
+     * Shows the previous month in the calendar view.
+     */
 
     public void previousMonth() {
         if (currentMonth == 0) { //Back one year
@@ -143,6 +159,10 @@ public class CalendarViewController extends BaseController {
         }
         refreshCalendar(currentMonth, currentYear);
     }
+    
+    /**
+     * Changes the year of the calendar to the year the user selected in the combo box.
+     */
 
     public void changeYear() {
         if (instance.getCalendarjComboBox().getSelectedItem() != null) {
@@ -151,6 +171,10 @@ public class CalendarViewController extends BaseController {
             refreshCalendar(currentMonth, currentYear);
         }
     }
+    
+    /**
+     * Actualise the drop down menu of active modules in the Calender
+     */
 
     public void actualizeListOfActiveModulesForCalendar() {
         StudentManager studentManager = StudentManager.getInstance();
@@ -162,6 +186,10 @@ public class CalendarViewController extends BaseController {
             instance.getModuleListCalendarjComboBox().addItem(module.getModulname());
         });
     }
+    
+   /**
+    * Shows invested hours of the week in the Caslender 
+    */
 
     public void showInvestedHoursForModule() {
 

@@ -12,13 +12,13 @@ import javax.xml.bind.Unmarshaller;
 import java.io.File;
 
 /**
- *
- * @author Varuni
+ * JaxBUtility for reading and writing xml files.
+ * @author Cham
  */
 public class JaxBUtility {
+    
     /**
      * Creates a xml file
-     *
      * @param inXmlPath path for xml file, that is to create
      * @param inObject the xml object
      * @throws JAXBException
@@ -37,7 +37,6 @@ public class JaxBUtility {
 
     /**
      * Reads the XML-File
-     *
      * @param inXmlPath path to the XML-File
      * @param theClass
      * @return the unmarshaled xml root object

@@ -10,8 +10,8 @@ import com.mycompany.istudy.db.entities.Student;
 import java.util.List;
 
 /**
- *
- * @author Varuni
+ * Interface for the Manager class of Semester entity.
+ * @author Cham
  */
 public interface SemesterManagerIntf {
     

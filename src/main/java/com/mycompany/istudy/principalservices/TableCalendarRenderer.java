@@ -12,8 +12,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
- *
- * @author Varuni
+ * This class extends the Default table cell renderer for the calendar table.
+ * @author Cham
  */
 public class TableCalendarRenderer extends DefaultTableCellRenderer {
     public static int realYear, realMonth, realDay, currentYear, currentMonth;
